@@ -1,6 +1,6 @@
 #include "normal.h"
 
-Normal::Normal(string v, string m, double cos, double dc, bool w, bool ds, bool col, bool pl): Stampante(v,m,cos,dc,w,ds,col), plotter(pl){}
+Normal::Normal(string v, string m, double cos, double dc, bool w, bool ds, bool col,bool use, bool ph, bool pl): Stampante(v,m,cos,dc,w,ds,col,use,ph), plotter(pl){}
 
 Normal::Normal(const Normal& n): Stampante(n), plotter(n.plotter){}
 

@@ -1,6 +1,6 @@
 #include "stampante.h"
 
-Stampante::Stampante(string v, string m, double cos, double dc, bool w, bool ds, bool col): Item(v,m,cos,dc), wifi(w), doubleside(ds), color(col){}
+Stampante::Stampante(string v, string m, double cos, double dc, bool w, bool ds, bool col, bool use, bool ph): Item(v,m,cos,dc), wifi(w), doubleside(ds), color(col), used(use), photo(ph){}
 
 Stampante::Stampante(const Stampante& printer): Item(printer), wifi(printer.wifi), doubleside(printer.doubleside), color(printer.color){}
 

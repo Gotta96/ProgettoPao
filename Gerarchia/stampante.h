@@ -6,10 +6,9 @@
 
 class Stampante : public Item{
 private:
-    bool wifi;
-    bool doubleside, color, used, photo;
+    bool wifi, doubleside, color, used, photo;
 public:
-    Stampante(string ="", string ="", double =0.0, double =0.0, bool =false, bool =false, bool =false);
+    Stampante(string ="", string ="", double =0.0, double =0.0,bool =false, bool =false, bool =false, bool =false, bool =false);
     Stampante(const Stampante&);
     Stampante* clone() const override =0;
     ~Stampante() override;

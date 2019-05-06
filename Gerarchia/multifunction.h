@@ -6,7 +6,7 @@ class Multifunction : public Stampante{
 private:
     bool scanner, fax;
 public:
-    Multifunction(string ="", string ="", double =0.0, double =0.0, bool =false, bool =false, bool =false, bool =false, bool =false);
+    Multifunction(string ="", string ="", double =0.0, double =0.0, bool =false,bool =false, bool =false, bool =false, bool =false, bool =false, bool =false);
     Multifunction(const Multifunction&);
     Multifunction* clone() const override;
     ~Multifunction() override;

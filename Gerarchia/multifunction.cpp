@@ -1,6 +1,6 @@
 #include "multifunction.h"
 
-Multifunction::Multifunction(string v, string m, double cos, double dc, bool w, bool ds, bool col, bool scan, bool fa): Stampante (v,m,cos,dc,w,ds,col), scanner(scan), fax(fa){}
+Multifunction::Multifunction(string v, string m, double cos, double dc, bool w, bool ds, bool col,bool use, bool ph, bool scan, bool fa): Stampante (v,m,cos,dc,w,ds,col,use,ph), scanner(scan), fax(fa){}
 
 Multifunction::Multifunction(const Multifunction& m): Stampante(m), scanner(m.haveScanner()), fax(m.haveFax()){}
 
