@@ -4,18 +4,20 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        Gerarchia/consumable.cpp \
-        Gerarchia/item.cpp \
+        Model/carrello.cpp \
+        Model/Gerarchia/consumable.cpp \
+        Model/Gerarchia/item.cpp \
         main.cpp \
-        Gerarchia/multifunction.cpp \
-        Gerarchia/normal.cpp \
-        Gerarchia/stampante.cpp
+        Model/Gerarchia/multifunction.cpp \
+        Model/Gerarchia/normal.cpp \
+        Model/Gerarchia/stampante.cpp
 
 HEADERS += \
-    Gerarchia/consumable.h \
-    Template/container.h \
-    Template/deepptr.h \
-    Gerarchia/item.h \
-    Gerarchia/multifunction.h \
-    Gerarchia/normal.h \
-    Gerarchia/stampante.h
+    Model/carrello.h \
+    Model/Gerarchia/consumable.h \
+    Model/Template/container.h \
+    Model/Template/deepptr.h \
+    Model/Gerarchia/item.h \
+    Model/Gerarchia/multifunction.h \
+    Model/Gerarchia/normal.h \
+    Model/Gerarchia/stampante.h
