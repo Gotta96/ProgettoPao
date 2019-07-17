@@ -6,6 +6,7 @@
 
 class Stampante : public Item{
 private:
+    double daycost;
     bool wifi, doubleside, color, used, photo;
 public:
     Stampante(string ="", string ="", double =0.0, double =0.0,bool =false, bool =false, bool =false, bool =false, bool =false);
@@ -23,6 +24,7 @@ public:
     bool isColor() const;
     bool isUsed() const;
     bool isPhoto() const;
+    double getDaycost() const;
 
     std::string print() const override;
 };

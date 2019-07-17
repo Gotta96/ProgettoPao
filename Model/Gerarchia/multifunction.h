@@ -18,6 +18,8 @@ public:
 
     bool haveScanner() const;
     bool haveFax() const;
+
+    std::string print() const override;
 };
 
 #endif // MULTIFUNCTION_H

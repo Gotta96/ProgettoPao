@@ -26,3 +26,7 @@ bool Multifunction::haveFax() const{
     return fax;
 }
 
+std::string Multifunction::print() const{
+    return Stampante::print() + "\n"+  "Scanner: " + (scanner ? "Si" : "No") + " Fax: " + (fax ? "Si" : "No");
+}
+

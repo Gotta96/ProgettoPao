@@ -7,7 +7,7 @@ class Normal : public Stampante{
 private:
     bool plotter;
 public:
-    Normal(string ="", string ="", double =0.0, double =0.0, bool =false, bool =false,bool =false, bool =false, bool =false, bool =false);
+    Normal(string ="", string ="", double =0.0, double =0.0, bool =false,bool =false, bool =false, bool =false);
     Normal(const Normal&);
     virtual Normal* clone() const override;
     ~Normal() override;
@@ -18,6 +18,8 @@ public:
     bool operator!=(const Item&) const override;
 
     bool isPlotter() const;
+
+    std::string print() const override;
 };
 
 #endif // NORMAL_H

@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-template <class T>
-class Container;
+//template <class T>
+//class Container;
 
 //template <class T>
 //std::ostream& operator<<(std::ostream&,const Container<T>&);
@@ -36,9 +36,10 @@ public:
     Container();
     Container(const T&);
     Container(const Container&);
+    ~Container();
+
     Container<T> operator=(const Container<T>&);     //aggiunta 19/12/18
     nodo* getFirst() const;     //aggiunta il 19/12/18*/
-    ~Container();
     bool is_empty() const;
     bool remove(const T&);
     bool search(const T&) const;
@@ -97,7 +98,9 @@ template <class T>
 bool Container<T>::search(nodo* n, const T& itm){
     if(!n)
         return false;
-    return (n->info == itm || search(n->next,itm));
+    if(n->info == itm)
+        return true;
+    return search(n->next,itm);
 }
 
 template <class T>
@@ -122,7 +125,7 @@ template <class T>
 Container<T>::Container(const Container& l1): first(copy(l1.first)){}    //costruttore di copia
 
 template <class T>
-Container<T> Container<T>::operator=(const Container<T>& cl){
+Container<T> Container<T>::operator=(const Container& cl){
     if(first != (cl.getFirst())){
         delete first;
         first = copy(cl.getFirst());
@@ -240,7 +243,7 @@ Container<T>::Iterator::Iterator(const Container<T>& list): pointed(copy(list.ge
 
 template<class T>
 typename Container<T>::Iterator Container<T>::Begin(){
-    return Iterator(first);
+    return Iterator(first) ;
 }
 
 template<class T>

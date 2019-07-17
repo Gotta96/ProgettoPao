@@ -1,6 +1,6 @@
 #include "normal.h"
 
-Normal::Normal(string v, string m, double cos, double dc, bool w, bool ds, bool col,bool use, bool ph, bool pl): Stampante(v,m,cos,dc,w,ds,col,use,ph), plotter(pl){}
+Normal::Normal(string v, string m, double cos, double dc, bool w, bool col,bool use, bool pl): Stampante(v,m,cos,dc,w,false,col,use,false), plotter(pl){}
 
 Normal::Normal(const Normal& n): Stampante(n), plotter(n.plotter){}
 
@@ -20,4 +20,8 @@ bool Normal::operator!=(const Item& i) const{
 
 bool Normal::isPlotter() const{
     return plotter;
+}
+
+std::string Normal::print() const{
+    return Stampante::print() + "\n" + "Plotter: " + (plotter ? "Si" : "No");
 }

@@ -1,6 +1,6 @@
 #include "consumable.h"
 
-Consumable::Consumable(string v, string m , double cos , double dc, unsigned int s, bool rest, bool origin): Item(v,m,cos,dc), size(s), restore(rest), original(origin){}
+Consumable::Consumable(string v, string m , double cos, unsigned int s, bool rest, bool origin): Item(v,m,cos), size(s), restore(rest), original(origin){}
 
 Consumable::Consumable(const Consumable& c): Item(c), size(c.getSize()), restore(c.isRestored()), original(c.isOriginal()){}
 

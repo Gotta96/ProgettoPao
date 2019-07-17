@@ -6,8 +6,9 @@ class Consumable : public Item{
 private:
     unsigned int size;
     bool restore, original;
+    string color;
 public:
-    Consumable(string ="", string ="", double =0.0, double =0.0, unsigned int =0, bool =false, bool =true);
+    Consumable(string ="", string ="", double =0.0, unsigned int =0, bool =false, bool =true);
     Consumable(const Consumable&);
     Consumable* clone() const override;
     ~Consumable() override;

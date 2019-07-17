@@ -1,12 +1,15 @@
 TEMPLATE = app
-CONFIG += console c++11
-CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += c++11
+QT += gui
+QT += widgets
+QMAKE_CXXFLAGS += -std=c++11
+DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         Model/carrello.cpp \
         Model/Gerarchia/consumable.cpp \
         Model/Gerarchia/item.cpp \
+        View/mainwindow.cpp \
         main.cpp \
         Model/Gerarchia/multifunction.cpp \
         Model/Gerarchia/normal.cpp \
@@ -20,4 +23,5 @@ HEADERS += \
     Model/Gerarchia/item.h \
     Model/Gerarchia/multifunction.h \
     Model/Gerarchia/normal.h \
-    Model/Gerarchia/stampante.h
+    Model/Gerarchia/stampante.h \
+    View/mainwindow.h
