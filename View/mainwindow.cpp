@@ -6,42 +6,52 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           find(new QLineEdit(this)),
                                           quantity(new QSpinBox(this)),
                                           date(new QDateEdit(QDate::currentDate(),this)),
-                                          elements(new QListView(this)),
-                                          rent(new QListView(this)),
-                                          buyed(new QListView(this)),
+                                          elements(new SmartListView(this)),
+                                          rent(new SmartListView(this)),
+                                          buyed(new SmartListView(this)),
                                           details(new QLabel("----Dettagli----",this)),
                                           image(new QLabel("---IMG---",this)),
                                           totrent(new QLabel("0",this)),
                                           totbuyed(new QLabel("0",this)),
-                                          tot(new QLabel("0",this)) {
+                                          tot(new QLabel("0",this)){
+
+    //Imposto che in ogni SamrtListView posso selezionare un solo elemento
+    elements->setSelectionMode(QAbstractItemView::SingleSelection);
+    rent->setSelectionMode(QAbstractItemView::SingleSelection);
+    buyed->setSelectionMode(QAbstractItemView::SingleSelection);
+
     //creazione elementi base, seguo la procedura bottom up
 
     QWidget *mainWidget= new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout();
     QMenuBar *menu= new QMenuBar(this);
     QMenu *file = new QMenu("File",this);
-    QMenu *modify = new QMenu("Modifica",this);
+    QMenu *modify = new QMenu("File",this);
+    QAction *modifyCatalog = new QAction("Modifica elemento catalogo",this);
+    QAction *addToCatalog = new QAction("Aggiungi elemento catalogo",this);
     QAction *load = new QAction("Carica", this);
     QAction *save = new QAction("Salva file", this);
     QAction *pdf = new QAction("PDF Export", this);
     QAction *exit = new QAction("Esci", this);
-    QAction *addElementToList = new QAction("Aggiungi elemento", this);
-    QAction *removeElementToList = new QAction("Rimuovi elemento", this);
-    QAction *modifyElement = new QAction("Modifica elemento", this);
-    QLabel *labname = new QLabel("Nome: ");                     //mettere parent
-    QLabel *labiva = new QLabel("P.IVA: ");                     //mettere parent
-    QLabel *labdate = new QLabel("Data: ");                     //mettere parent
-    QLabel *labcatalog = new QLabel("Catalogo:");               //mettere parent
-    QLabel *labfind = new QLabel("Cerca: ");                    //mettere parent
-    QLabel *labrent = new QLabel("Noleggio:");                  //mettere parent
-    QLabel *labbuyed = new QLabel("Compra:");                   //mettere parent
-    QLabel *labquantity = new QLabel("Quantita': ");            //mettere parent
-    QLabel *labtotrent = new QLabel("Totale noleggiato: ");     //mettere parent
-    QLabel *labtotbuyed = new QLabel("Totale comprato: ");      //mettere parent
-    QLabel *labtot = new QLabel("Totale: ");                    //mettere parent
-    QPushButton *buttonrent = new QPushButton("Noleggia");      //mettere parent
-    QPushButton *buttonbuy = new QPushButton("Compra");         //mettere parent
-    //QPushButton *buttonfind = new QPushButton("Cerca");         //mettere parent      forse inutile causa aggiornamento dato da autocompletamento
+//    QAction *addElementToList = new QAction("Aggiungi elemento", this);
+//    QAction *removeElementToList = new QAction("Rimuovi elemento", this);
+//    QAction *modifyElement = new QAction("Modifica elemento", this);
+    QLabel *labname = new QLabel("Nome: ");
+    QLabel *labiva = new QLabel("P.IVA: ");
+    QLabel *labdate = new QLabel("Data: ");
+    QLabel *labcatalog = new QLabel("Catalogo:");
+    QLabel *labfind = new QLabel("Cerca: ");
+    QLabel *labrent = new QLabel("Noleggio:");
+    QLabel *labbuyed = new QLabel("Compra:");
+    QLabel *labquantity = new QLabel("Quantita': ");
+    QLabel *labtotrent = new QLabel("Totale noleggiato: ");
+    QLabel *labtotbuyed = new QLabel("Totale comprato: ");
+    QLabel *labtot = new QLabel("Totale: ");
+    QPushButton *buttonrent = new QPushButton("Noleggia");
+    QPushButton *buttonbuy = new QPushButton("Compra");
+    QPushButton *buttonRemoveRent = new QPushButton("Rimuovi noleggio");
+    QPushButton *buttonRemoveBuyed = new QPushButton("Rimuovi compera");
+    //QPushButton *buttonfind = new QPushButton("Cerca");       //forse inutile causa aggiornamento dato da autocompletamento
 
     //creazione dei layout per gli elementi
 
@@ -79,12 +89,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     file->addAction(pdf);
     file->addAction(exit);
     menu->addMenu(file);
-    modify->addAction(addElementToList);
-    modify->addAction(removeElementToList);
-    modify->addAction(modifyElement);
+    modify->addAction(modifyCatalog);
+    modify->addAction(addToCatalog);
     menu->addMenu(modify);
-
-
 
     //Layout di resume dei vari totali
 
@@ -120,8 +127,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     twolists->addLayout(boxbuy);
     boxrent->addWidget(labrent);
     boxrent->addWidget(rent);
+    boxrent->addWidget(buttonRemoveRent);
     boxbuy->addWidget(labbuyed);
     boxbuy->addWidget(buyed);
+    boxbuy->addWidget(buttonRemoveBuyed);
 
     //Layout di resume dei vari dettagli dell'elemento selezionato
 
@@ -141,13 +150,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //Layout di sinistra della vista di principale utilizzo
 
     left->addLayout(resumeelements);
+    left->addLayout(buttonsquantity);
     left->addLayout(findsection);
 
     //Layout di destra della vista di principale utilizzo
 
     right->addLayout(resumedetails);
     right->addLayout(twolists);
-    right->addLayout(buttonsquantity);
     right->addLayout(boxresume);
 
     //Layout vista principale
@@ -174,4 +183,81 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainLayout->addLayout(layoutfinal);
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
+
+    connect(modifyCatalog, SIGNAL(triggered()), SIGNAL(openModifyCatalogWindow()));
+    connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
+    connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
+    connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
+    connect(exit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(modifyCatalog, SIGNAL(triggered()),this, SLOT(openModify()));
+    connect(addToCatalog, SIGNAL(triggered()),this, SLOT(openAdd()));
+    connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
+    connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
+    connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
+    connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT());
+    connect(elements, SIGNAL(clicked()), this, SLOT(catalogSelected()));
+    connect(rent, SIGNAL(clicked()), this, SLOT(rentSelected()));
+    connect(buyed, SIGNAL(clicked()), this, SLOT(buyedSelected()));
+
+
+}
+
+void MainWindow::updateDetails(QString info, QString ){
+    details->setText(info);
+    //finire di impostare l'immagine
+}
+
+void MainWindow::updateTotals(QStringList prezzi){
+    totrent->setText(prezzi[0]);
+    totbuyed->setText(prezzi[1]);
+    tot->setText(prezzi[0]+prezzi[1]);
+}
+
+void MainWindow::generateRent()
+{
+    emit clickedNoleggia(elements->getIndex(),quantity->value());
+}
+
+void MainWindow::generateBuyed()
+{
+    emit clickedCompra(elements->getIndex(),quantity->value());
+}
+
+void MainWindow::destroyRent()
+{
+    emit clickedRemoveRent(rent->getIndex());
+}
+
+void MainWindow::destroyBuyed()
+{
+    emit clickedRemoveBuyed(buyed->getIndex());
+}
+
+void MainWindow::catalogSelected()
+{
+    rent->unSelectIndex();
+    buyed->unSelectIndex();
+}
+
+void MainWindow::rentSelected()
+{
+    elements->unSelectIndex();
+    buyed->unSelectIndex();
+}
+
+void MainWindow::buySelected()
+{
+    elements->unSelectIndex();
+    rent->unSelectIndex();
+}
+
+void MainWindow::openModify()
+{
+
+}
+
+void MainWindow::openAdd()
+{
+    insWindow = new InsertionWindow();
+    insWindow->show();
 }

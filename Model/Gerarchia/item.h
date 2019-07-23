@@ -16,6 +16,9 @@ class Item{
 
         virtual bool operator==(const Item&) const;
         virtual bool operator!=(const Item&) const;
+        virtual bool operator<(const Item&) const;
+        virtual bool operator>(const Item&) const;
+//        virtual bool compareBaseDetails(const Item&) const;
 
         Item& operator=(const Item&) const;       //??
         string getVendor() const;

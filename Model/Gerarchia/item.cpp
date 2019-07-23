@@ -14,6 +14,32 @@ bool Item::operator!=(const Item& i) const{
     return vendor!=i.getVendor() || model!=i.getModel();
 }
 
+bool Item::operator<(const Item& i) const{
+    if(vendor<i.getVendor())
+        return true;
+    else{
+        if(vendor==i.getVendor())
+            if(model<i.getModel())
+                return true;
+    }
+    return false;
+}
+
+bool Item::operator>(const Item& i) const{
+    if(vendor>i.getVendor())
+        return true;
+    else{
+        if(vendor==i.getVendor())
+            if(model>i.getModel())
+                return true;
+    }
+    return false;
+}
+
+//bool Item::compareBaseDetails(const Item& i) const{
+//    return vendor==i.getVendor() && model==i.getModel();
+//}
+
 string Item::getVendor() const{
     return vendor;
 }

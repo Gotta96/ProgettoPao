@@ -32,6 +32,7 @@ private:
 
     static bool equal(const nodo*, const nodo*);
 
+
 public:
     Container();
     Container(const T&);
@@ -41,12 +42,18 @@ public:
     Container<T> operator=(const Container<T>&);     //aggiunta 19/12/18
     nodo* getFirst() const;     //aggiunta il 19/12/18*/
     bool is_empty() const;
-    bool remove(const T&);
+//    bool remove(const T&);
+    bool removeOne(const T&);
+    bool removeOneAtIndex(const unsigned int i);
     bool search(const T&) const;
-    void add(const T&);
-    int itemsCounter(const T&) const;
+    void addInOrder(T&);
+    int itemsCounter(const T&);     //aggiunere const_ness
     bool operator==(const Container&) const;
     bool operator!=(const Container&) const;
+
+    T* searchAtIndex(unsigned int i);   //aggiungere const_ness
+    int size();   //creare il const_iterator e aggiungere la const nei metodiche la richiedono, modificare i corpi delle funzioni sistemando con iteratore adeguato
+    void replace(const T&, unsigned int);     //constollare se giusta
 
     class Iterator{
         friend class Container<T>;
@@ -64,6 +71,7 @@ public:
         bool operator !=(const Iterator&) const;
         bool hasNext() const;
         T& next() const;
+//        bool eraseOneAtIndex(unsigned int i);
     };
     Iterator Begin();
     Iterator End();
@@ -144,8 +152,61 @@ bool Container<T>::is_empty() const{
     return !first;
 }
 
+//template <class T>
+//typename Container<T>::nodo* Container<T>::putInOrder(){    //da modificare per ridurre complessità
+//    if(is_empty())
+//        return nullptr;
+//    nodo* tmp=first;
+//    while(tmp->next){
+//        if(tmp->info > tmp->next->info){
+//            nodo* aux= tmp;
+
+//        }
+//    }
+
+//}
+
+//template <class T>
+//bool Container<T>::remove(const T& itm){
+//    if(is_empty())
+//        return false;
+
+//    if(!first->next){
+//        if(first->info==itm){
+//            delete first;
+//            first=nullptr;
+//            return true;
+//        }
+//    }
+//    else{
+//        nodo* prev=first;
+//        nodo* att=first->next;
+
+//        if(prev->info==itm){
+//            first=first->next;
+//            prev->next=nullptr;
+//            delete prev;
+//            return true;
+//        }
+
+//        while(att->next!=nullptr && (att->info) != itm){
+//            prev=prev->next;
+//            att=att->next;
+//        }
+
+//        if(att->info==itm){
+//            prev->next=att->next;
+//            att->next=nullptr;
+//            delete att;
+//            return true;
+//        }
+//    }
+
+//    return false;
+//}
+
 template <class T>
-bool Container<T>::remove(const T& itm){
+bool Container<T>::removeOne(const T& itm){
     if(is_empty())
         return false;
 
@@ -184,12 +245,51 @@ bool Container<T>::remove(const T& itm){
 }
 
 template <class T>
+bool Container<T>::removeOneAtIndex(const unsigned int i){
+    if(is_empty())
+        return false;
+
+    if(!first->next){
+        if(i==0){
+            delete first;
+            first=nullptr;
+            return true;
+        }
+    }
+    else{
+        nodo* prev=first;
+        nodo* att=first->next;
+
+        if(i==0){
+            first=first->next;
+            prev->next=nullptr;
+            delete prev;
+            return true;
+        }
+
+        for(unsigned int k=0; att->next && k<i; k++){
+            prev=prev->next;
+            att=att->next;
+        }
+
+        if(att){
+            prev->next=att->next;
+            att->next=nullptr;
+            delete att;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+template <class T>
 bool Container<T>::search(const T& itm)const{
     return search(first, itm);
 }
 
 template <class T>
-int Container<T>::itemsCounter(const T& i) const{
+int Container<T>::itemsCounter(const T& i){
     int counter=0;
     for(auto cit=Begin(); cit != End(); cit++)
         if((**cit)==i)
@@ -198,12 +298,21 @@ int Container<T>::itemsCounter(const T& i) const{
 }
 
 template <class T>
-void Container<T>::add(const T& itm){
+void Container<T>::addInOrder(T& itm){
     if(first!=nullptr){
         nodo* tmp=first;
-         while(tmp->next != nullptr)
+        while(tmp->next && (tmp->next->info < itm)){
             tmp=tmp->next;
-        tmp->next=new nodo(itm);
+        }
+        if(!tmp->next){
+            if(tmp->info > itm)
+                first= new nodo(itm,tmp);
+            else
+                tmp->next=new nodo(itm);
+        }
+        else {
+            tmp->next=new nodo(itm,tmp->next);
+        }
     }
     else
         first= new nodo(itm);
@@ -229,6 +338,33 @@ template <class T>
 bool Container<T>::operator!=(const Container& c) const{
     return !(equal(first, c.first));
 }
+
+template <class T>
+T* Container<T>::searchAtIndex(unsigned int i){
+    if(i>= size())
+        return nullptr;
+    nodo* att = first;
+    for(unsigned int k=0; k<i; k++)
+        att=att->next;
+    return &(att->info);
+}
+
+template<class T>
+int Container<T>::size(){
+    int counter=0;
+    Container<T>::Iterator it=Begin();
+    while(it!=End()){
+        counter ++;
+        ++it;
+    }
+    return counter;
+}
+
+template<class T>
+void Container<T>::replace(const T& itm, unsigned int i){
+    T* att = searchAtIndex(i);
+    *att=itm;
+}           //da controllare
 
 template<class T>
 Container<T>::Iterator::Iterator(Container::nodo *n, bool passed): pointed(n), pte(passed){}
@@ -299,5 +435,12 @@ T& Container<T>::Iterator::next() const{
     if(pointed->next)
         return (pointed->next->info);
 }
+
+//template <class T>
+//bool Container<T>::Iterator::eraseOneAtIndex(unsigned int i){
+//    if
+//    for(unsigned int k=0; k<i-1; i++)
+//        pointed=pointed+1;
+//}
 
 #endif // CONTAINER_H

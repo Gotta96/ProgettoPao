@@ -5,7 +5,7 @@
 #include <map>
 
 using std::map;
-using std::pair;
+//using std::pair;
 
 
 class Carrello{
@@ -18,6 +18,7 @@ public:
 
     void insertIntoCart(Item*, unsigned int);
     bool removeIntoCart(Item*);
+    bool removeIntoCartAtIndex(unsigned int);
     map<Item*, unsigned int>::iterator searchIntoCart(Item*);
     unsigned int removeQuantity(Item*, unsigned int);
     unsigned int getQuantity(Item*);

@@ -25,6 +25,17 @@ bool Carrello::removeIntoCart(Item* i){
     return false;
 }
 
+bool Carrello::removeIntoCartAtIndex(unsigned int i){
+    auto it=cart.begin();
+    if(i<cart.size()){
+        for(unsigned int k=0; k<i; k++)
+            it++;
+        cart.erase(it);
+        return true;
+    }
+     return false;
+}
+
 map<Item*,unsigned int>::iterator Carrello::searchIntoCart(Item * i){
     return cart.find(i);
 }

@@ -25,6 +25,8 @@ public:
     DeepPtr& operator=(const DeepPtr&);
     bool operator==(const DeepPtr&) const;
     bool operator!=(const DeepPtr&) const;
+    bool operator>(const DeepPtr&) const;
+    bool operator<(const DeepPtr&) const;
     std::string printDptr() const;
 };
 
@@ -75,6 +77,16 @@ bool DeepPtr<T>::operator==(const DeepPtr& dptr) const{
 template <class T>
 bool DeepPtr<T>::operator!=(const DeepPtr& dptr) const{
     return *pted!=*(dptr.pted);
+}
+
+template<class T>
+bool DeepPtr<T>::operator<(const DeepPtr& dptr) const{
+    return *pted<*(dptr.pted);
+}
+
+template<class T>
+bool DeepPtr<T>::operator>(const DeepPtr& dptr) const{
+    return *pted>*(dptr.pted);
 }
 
 template <class T>
