@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QVBoxLayout *mainLayout = new QVBoxLayout();
     QMenuBar *menu= new QMenuBar(this);
     QMenu *file = new QMenu("File",this);
-    QMenu *modify = new QMenu("File",this);
+    QMenu *modify = new QMenu("Modifica",this);
     QAction *modifyCatalog = new QAction("Modifica elemento catalogo",this);
     QAction *addToCatalog = new QAction("Aggiungi elemento catalogo",this);
     QAction *load = new QAction("Carica", this);
@@ -183,6 +183,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainLayout->addLayout(layoutfinal);
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
+
+//    mainWidget->setFixedWidth(800);
+//    mainWidget->setFixedHeight(600);
 
     connect(modifyCatalog, SIGNAL(triggered()), SIGNAL(openModifyCatalogWindow()));
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));

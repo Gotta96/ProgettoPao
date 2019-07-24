@@ -12,6 +12,7 @@ SOURCES += \
         Model/model.cpp \
         View/mainwindow.cpp \
         View/smartlistview.cpp \
+        View/insertionwindow.cpp \
         controller.cpp \
         main.cpp \
         Model/Gerarchia/multifunction.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     Model/Gerarchia/stampante.h \
     Model/carrello.h \
     Model/model.h \
+    View/insertionwindow.h \
     View/mainwindow.h \
     View/smartlistview.h \
     controller.h

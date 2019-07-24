@@ -46,8 +46,8 @@ public slots:
     void openAdd();
 
 signals:
-    void openModifyCatalogWindow();
-    void openAddToCatalogWndow();
+//    void openModifyCatalogWindow();
+//    void openAddToCatalogWndow();
     void openLoadWindow();
     void openSaveWindow();
     void openSavePDFWindow();
