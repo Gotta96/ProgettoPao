@@ -3,12 +3,6 @@
 
 #include <iostream>
 
-//template <class T>
-//class DeepPtr;
-
-//template <class T>
-//std::ostream& operator<<(std::ostream&, const DeepPtr<T>&);
-
 //dichiarazione del template
 
 template <class T>
@@ -17,12 +11,12 @@ class DeepPtr{
 private:
     T* pted;     //T puntato
 public:
-    DeepPtr(const T* const =nullptr);
-    DeepPtr(const DeepPtr&);
+    DeepPtr(const T* const =nullptr);   //non esegue copia profonda
+    DeepPtr(const DeepPtr&);    //esegue copia profonda
+    DeepPtr& operator=(const DeepPtr&);
     T* operator->() const;
     T& operator*() const;
     ~DeepPtr();
-    DeepPtr& operator=(const DeepPtr&);
     bool operator==(const DeepPtr&) const;
     bool operator!=(const DeepPtr&) const;
     bool operator>(const DeepPtr&) const;
@@ -31,22 +25,28 @@ public:
 };
 
 template <class T>
-DeepPtr<T>::DeepPtr(const T* const itm){
-  if(itm)
-      pted=itm->clone();
-  else pted=nullptr;
+DeepPtr<T>::DeepPtr(const T* const itm): pted(itm){
+//  if(itm)
+//      pted=itm->clone();
+//  else pted=nullptr;
 }
-
 
 template <class T>
 DeepPtr<T>::DeepPtr(const DeepPtr& dptr){
-      pted=dptr->clone();
+      if(dptr== nullptr)
+          pted=nullptr;
+      else
+          pted=dptr.pted->clone;
 }
 
 template <class T>
-DeepPtr<T>::~DeepPtr(){
-    if(pted)
-        delete pted;      //elimina il T puntato dal mio puntatore con gestione della memoria
+DeepPtr<T>& DeepPtr<T>::operator=(const DeepPtr& dptr){
+        if(this != &dptr){
+            if(pted)
+                delete pted;
+            pted = dptr.pted->clone();
+    }
+    return *this;
 }
 
 template <class T>
@@ -56,18 +56,16 @@ T* DeepPtr<T>::operator->() const{
 
 template <class T>
 T& DeepPtr<T>::operator*() const{
-        return *pted;   //controllo se l'elemento puntato dal nostro Deeptr esiste, in caso positivo ritorno l'oggetto puntato altrimenti oggetto vuoto
+        return *pted;
 }
 
 template <class T>
-DeepPtr<T>& DeepPtr<T>::operator=(const DeepPtr& dptr){
-        if(this != &dptr){
-            if(pted)
-                delete pted;
-            pted = dptr->clone();
-    }
-    return *this;
+DeepPtr<T>::~DeepPtr(){
+    if(pted)
+        delete pted;      //elimina il T puntato dal mio puntatore con gestione della memoria
 }
+
+// dubbio sulle cose successive
 
 template <class T>
 bool DeepPtr<T>::operator==(const DeepPtr& dptr) const{

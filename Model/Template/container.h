@@ -3,11 +3,7 @@
 
 #include <iostream>
 
-//template <class T>
-//class Container;
 
-//template <class T>
-//std::ostream& operator<<(std::ostream&,const Container<T>&);
 
 template <class T>
 class Container{
