@@ -33,6 +33,7 @@ public:
 public slots:
     void updateDetails(QString info, QString imgpath);
     void updateTotals(QStringList prezzi);
+    void addToCatalog(QStringList);
     void generateRent();
     void generateBuyed();
     void destroyRent();

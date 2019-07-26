@@ -45,7 +45,7 @@ void Model::addIntoBuy(unsigned int i, unsigned int q){
     buyed.insertIntoCart(insert,q);
 }
 
-void Model::editItem(const QStringList e, unsigned int i){
+void Model::editItem(const QStringList e, unsigned int i){      //modificare guardano la QSTringList nell'insertion window
     DeepPtr<Item> elemento;
     if(e.first().toStdString() == "normal")
         elemento = new Normal(e.at(1).toStdString(), e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toDouble(),e.at(5)=="true"? 0:1, e.at(6)=="true"? 0:1,e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1);
@@ -58,34 +58,36 @@ void Model::editItem(const QStringList e, unsigned int i){
     catalogo.replace(elemento,i);
 }
 
-QString Model::getCatalogElementDetails(unsigned int i)
-{
-
+QString Model::getCatalogElementDetails(unsigned int ind){
+    return QString::fromStdString((catalogo.searchAtIndex(ind))->printDptr());
 }
 
-QString Model::getRentElementDetails(unsigned int i)
-{
-
+QString Model::getRentElementDetails(unsigned int ind){
+    return QString::fromStdString(rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->print());
 }
 
-QString Model::getBuyElementDetails(unsigned int i)
-{
-
+QString Model::getBuyElementDetails(unsigned int ind){
+    return QString::fromStdString(buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->print());
 }
 
-QString Model::getCatalogElement(unsigned int i)
-{
-
+QStringList Model::getCatalogElement(unsigned int ind){         //da rivedere assieme al return index
+    QStringList ret;
+    ret.push_back(QString::fromStdString((catalogo.searchAtIndex(ind))->printDptr()));
+    return ret;
 }
 
-QString Model::getRentElement(unsigned int i)
-{
-
+QStringList Model::getRentElement(unsigned int ind){
+    QStringList ret;
+    ret.push_back(QString::fromStdString(rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getVendor()));
+    ret.push_back(QString::fromStdString(rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getModel()));
+    return ret;
 }
 
-QString Model::getBuyElement(unsigned int i)
-{
-
+QStringList Model::getBuyElement(unsigned int ind){
+    QStringList ret;
+    ret.push_back(QString::fromStdString(buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getVendor()));
+    ret.push_back(QString::fromStdString(buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getModel()));
+    return ret;
 }
 
 unsigned int Model::getQuantityRent(unsigned int i){
@@ -96,24 +98,20 @@ unsigned int Model::getQuantityBuy(unsigned int i){
     return buyed.searchIntoCart((&(**(catalogo.searchAtIndex(i)))))->second;
 }
 
-void Model::setQuantityRent(unsigned int i)
-{
-
+void Model::setQuantityRent(unsigned int ind, unsigned int q){
+    rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->second=q;
 }
 
-void Model::setQuantityBuy(unsigned int i)
-{
-
+void Model::setQuantityBuy(unsigned int ind, unsigned int q){
+    buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->second=q;
 }
 
-void Model::setIva()
-{
-
+void Model::setIva(QString i){
+    clientPiva=i;
 }
 
-void Model::setName()
-{
-
+void Model::setName(QString n){
+    clientName=n;
 }
 
 QString Model::getName(){
@@ -124,26 +122,25 @@ QString Model::getIva(){
     return clientPiva;
 }
 
-void Model::setDate()
-{
-
+void Model::setDate(QDate d){
+    preventiveDate=d;
 }
 
 QDate Model::getDate(){
     return preventiveDate;
 }
 
-void Model::setFilename(const QString flname)
-{
+//void Model::setFilename(const QString flname)
+//{
 
-}
+//}
 
-void Model::loadData()
-{
+////void Model::loadData()
+//{
 
-}
+//}
 
-void Model::serializeData()
-{
+//void Model::serializeData()
+//{
 
-}
+//}

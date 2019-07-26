@@ -187,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 //    mainWidget->setFixedWidth(800);
 //    mainWidget->setFixedHeight(600);
 
-    connect(modifyCatalog, SIGNAL(triggered()), SIGNAL(openModifyCatalogWindow()));
+//    connect(modifyCatalog, SIGNAL(triggered()), SIGNAL(openModifyCatalogWindow()));
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
     connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
     connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
@@ -197,8 +197,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
     connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
-    connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT());
-    connect(elements, SIGNAL(clicked()), this, SLOT(catalogSelected()));
+    connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT(destroyRent()));
+    connect(buttonRemoveBuyed, SIGNAL(clicked()), this, SLOT(destroyBuyed()));
+    connect(elements, SIGNAL(itemSelectionChange()), this, SLOT(catalogSelected()));
     connect(rent, SIGNAL(clicked()), this, SLOT(rentSelected()));
     connect(buyed, SIGNAL(clicked()), this, SLOT(buyedSelected()));
 
@@ -214,6 +215,12 @@ void MainWindow::updateTotals(QStringList prezzi){
     totrent->setText(prezzi[0]);
     totbuyed->setText(prezzi[1]);
     tot->setText(prezzi[0]+prezzi[1]);
+}
+
+void MainWindow::addToCatalog(QStringList e){
+//    QString prova;
+//    prova=e.first();
+//    elements->;
 }
 
 void MainWindow::generateRent()

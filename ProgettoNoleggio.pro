@@ -11,6 +11,7 @@ SOURCES += \
         Model/carrello.cpp \
         Model/model.cpp \
         View/mainwindow.cpp \
+        View/modifywindow.cpp \
         View/smartlistview.cpp \
         View/insertionwindow.cpp \
         controller.cpp \
@@ -31,5 +32,6 @@ HEADERS += \
     Model/model.h \
     View/insertionwindow.h \
     View/mainwindow.h \
+    View/modifywindow.h \
     View/smartlistview.h \
     controller.h

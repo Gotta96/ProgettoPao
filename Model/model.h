@@ -2,12 +2,14 @@
 #define MODEL_H
 
 #include <QObject>
+#include <QDate>
+#include "Gerarchia/item.h"
 #include "Gerarchia/normal.h"
 #include "Gerarchia/multifunction.h"
 #include "Gerarchia/consumable.h"
+#include "Gerarchia/stampante.h"
 #include "Model/Template/container.h"
 #include "Model/Template/deepptr.h"
-#include "QDate"
 #include "Model/carrello.h"
 
 class Model : public QObject
@@ -23,35 +25,35 @@ public:
     explicit Model(QObject *parent = nullptr);
 
 public slots:
-    bool removeIntoCatalog(unsigned int i);
-    bool removeIntoRent(unsigned int i);
-    bool removeIntoBuy(unsigned int i);
-    void addIntoCatalog(const QStringList e);
-    void addIntoRent(unsigned int i,unsigned int q);
-    void addIntoBuy(unsigned int i,unsigned int q);
-    void editItem(const QStringList e, unsigned int i);
-    QString getCatalogElementDetails(unsigned int i);
-    QString getRentElementDetails(unsigned int i);
-    QString getBuyElementDetails(unsigned int i);
-    QString getCatalogElement(unsigned int i);
-    QString getRentElement(unsigned int i);
-    QString getBuyElement(unsigned int i);
-    unsigned int getQuantityRent(unsigned int i);
-    unsigned int getQuantityBuy(unsigned int i);
-    void setQuantityRent(unsigned int i);
-    void setQuantityBuy(unsigned int i);
+    bool removeIntoCatalog(unsigned int);
+    bool removeIntoRent(unsigned int);
+    bool removeIntoBuy(unsigned int);
+    void addIntoCatalog(const QStringList);
+    void addIntoRent(unsigned int, unsigned int);
+    void addIntoBuy(unsigned int, unsigned int);
+    void editItem(const QStringList, unsigned int);
+    QString getCatalogElementDetails(unsigned int);
+    QString getRentElementDetails(unsigned int);
+    QString getBuyElementDetails(unsigned int);
+    QStringList getCatalogElement(unsigned int);
+    QStringList getRentElement(unsigned int);
+    QStringList getBuyElement(unsigned int);
+    unsigned int getQuantityRent(unsigned int);
+    unsigned int getQuantityBuy(unsigned int);
+    void setQuantityRent(unsigned int, unsigned int);
+    void setQuantityBuy(unsigned int, unsigned int);
 
-    void setIva();
-    void setName();
+    void setIva(QString);
+    void setName(QString);
     QString getName();
     QString getIva();
 
-    void setDate();
+    void setDate(QDate);
     QDate getDate();
 
-    void setFilename(const QString flname);
-    void loadData();
-    void serializeData();
+//    void setFilename(const QString flname);
+//    void loadData();
+//    void serializeData();
 
 
 signals:

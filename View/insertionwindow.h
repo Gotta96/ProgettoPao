@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QStringList>
+//#include <QString>
 
 class InsertionWindow : public QDialog
 {

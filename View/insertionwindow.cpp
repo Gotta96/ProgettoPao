@@ -258,22 +258,45 @@ void InsertionWindow::showMultifunction()
 void InsertionWindow::confirm()
 {
     QStringList *tmp = new QStringList();
-    if(consumable)
-        tmp->push_back("0");
-    else
-        tmp->push_back("1");
+    if(consumable->isChecked())
+        tmp->push_back("c");
+    else{
+        if(printer->isChecked()){
+            tmp->push_back("p");
+            if(normale->isChecked())
+                tmp->push_back("n");
+            else {
+                if(multifunction->isChecked())
+                    tmp->push_back("m");
+                else
+                    tmp->push_back("null");
+            }
+        }
+    }
+
     tmp->push_back(marca->text());
     tmp->push_back(modello->text());
     tmp->push_back(cost->text());
-    if(consumable){
-
+    if(consumable->isChecked()){
+        tmp->push_back(size->text());
+        tmp->push_back(colorName->text());
+        tmp->push_back(restore->isChecked()? "1":"0");
+        tmp->push_back(original->isChecked()? "1":"0");
     }
     else {
-        if(normale){
-
+        tmp->push_back(daycost->text());
+        tmp->push_back(wifi->isChecked()? "1":"0");
+        tmp->push_back(doubleside->isChecked()? "1":"0");
+        tmp->push_back(color->isChecked()? "1":"0");
+        tmp->push_back(used->isChecked()? "1":"0");
+        tmp->push_back(photo->isChecked()? "1":"0");
+        if(normale->isChecked()){
+            tmp->push_back(plotter->isChecked()? "1":"0");
         }
         else {
-
+            if(multifunction->isChecked())
+            tmp->push_back(scanner->isChecked()? "1":"0");
+            tmp->push_back(fax->isChecked()? "1":"0");
         }
     }
     emit sendItemsDetails(*tmp);

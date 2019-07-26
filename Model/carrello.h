@@ -18,7 +18,7 @@ public:
 
     void insertIntoCart(Item*, unsigned int);
     bool removeIntoCart(Item*);
-    bool removeIntoCartAtIndex(unsigned int);
+    bool removeIntoCartAtIndex(unsigned int i);
     map<Item*, unsigned int>::iterator searchIntoCart(Item*);
     unsigned int removeQuantity(Item*, unsigned int);
     unsigned int getQuantity(Item*);
