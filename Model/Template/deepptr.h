@@ -11,7 +11,7 @@ class DeepPtr{
 private:
     T* pted;     //T puntato
 public:
-    DeepPtr(const T* const =nullptr);   //non esegue copia profonda
+    DeepPtr(T* =nullptr);   //non esegue copia profonda
     DeepPtr(const DeepPtr&);    //esegue copia profonda
     DeepPtr& operator=(const DeepPtr&);
     T* operator->() const;
@@ -25,7 +25,7 @@ public:
 };
 
 template <class T>
-DeepPtr<T>::DeepPtr(const T* const itm): pted(itm){
+DeepPtr<T>::DeepPtr(T* itm): pted(itm){
 //  if(itm)
 //      pted=itm->clone();
 //  else pted=nullptr;
@@ -36,7 +36,7 @@ DeepPtr<T>::DeepPtr(const DeepPtr& dptr){
       if(dptr== nullptr)
           pted=nullptr;
       else
-          pted=dptr.pted->clone;
+          pted=dptr.pted->clone();
 }
 
 template <class T>

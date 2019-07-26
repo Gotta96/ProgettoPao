@@ -36,26 +36,26 @@ public:
 
     //funzioni di inserimento, rimozione e ricerca
 
-    void pushInOrder(T&);
+    void pushInOrder(const T&);
     bool removeOneItem(const T&);
-    bool removeOneAtIndex(const unsigned int i);
+    bool removeOneAtIndex(const unsigned int);
     bool searchIntoList(const T&) const;
-    T* searchAtIndex(unsigned int i) const;                   //aggiungere const_ness
+    T* searchAtIndex(unsigned int) const;
 
 
     //operatori container
 
     Container<T> operator=(const Container<T>&);
-    bool operator==(const Container&) const;
-    bool operator!=(const Container&) const;
+    bool operator==(const Container<T>&) const;
+    bool operator!=(const Container<T>&) const;
 
     //funzioni di supporto
 
-    void replaceAtIndex(const T&, unsigned int);        //constollare se giusta
+    void replaceAtIndex(const T&, unsigned int);        //controllare se giusta
     nodo* getFirst() const;
     bool is_empty() const;
-    int size() const;                                     //creare il const_iterator e aggiungere la const nei metodiche la richiedono, modificare i corpi delle funzioni sistemando con iteratore adeguato
-    int itemsCounter(const T&) const;                     //aggiunere const_ness
+    int size() const;
+    int itemsCounter(const T&) const;                   //forse da rimuovere
 
     //Iteratore
 
@@ -67,7 +67,7 @@ public:
         Iterator(nodo*, bool =false);
     public:
         Iterator();
-        //Iterator(const Container<T>&);                //temporaneamente rimossa per vedere se inutile
+        //Iterator(const Container<T>&);                //temporaneamente rimossa perTipo t=t; vedere se inutile
         Iterator &operator++();
         T& operator*() const;
         T* operator->() const;
@@ -169,8 +169,8 @@ template <class T>
 Container<T>::Container(const Container& l1): first(copy(l1.first)){}    //costruttore di copia
 
 template <class T>
-Container<T> Container<T>::operator=(const Container& cl){
-    if(first != (cl.getFirst())){
+Container<T> Container<T>::operator=(const Container<T>& cl){
+    if(this==&cl){
         delete first;
         first = copy(cl.getFirst());
     }
@@ -281,7 +281,7 @@ int Container<T>::itemsCounter(const T& i) const{
 }
 
 template <class T>
-void Container<T>::pushInOrder(T& itm){
+void Container<T>::pushInOrder(const T& itm){
     if(first!=nullptr){
         nodo* tmp=first;
         while(tmp->next && (tmp->next->info < itm)){
@@ -308,12 +308,12 @@ Container<T>::~Container<T>(){
 }
 
 template <class T>
-bool Container<T>::operator==(const Container& c) const{
+bool Container<T>::operator==(const Container<T>& c) const{
     return equal(first, c.first);
 }
 
 template <class T>
-bool Container<T>::operator!=(const Container& c) const{
+bool Container<T>::operator!=(const Container<T>& c) const{
     return !(equal(first, c.first));
 }
 

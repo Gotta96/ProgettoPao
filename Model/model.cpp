@@ -32,7 +32,7 @@ void Model::addIntoCatalog(const QStringList e){
     if(e.first().toStdString() == "consumable"){
         elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1);
     }
-    catalogo.addInOrder(elemento);
+    catalogo.pushInOrder(elemento);
 }
 
 void Model::addIntoRent(unsigned int i,unsigned int q){
@@ -55,7 +55,7 @@ void Model::editItem(const QStringList e, unsigned int i){      //modificare gua
         elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1);
     }
 
-    catalogo.replace(elemento,i);
+    catalogo.replaceAtIndex(elemento,i);
 }
 
 QString Model::getCatalogElementDetails(unsigned int ind){
