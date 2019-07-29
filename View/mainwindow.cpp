@@ -191,7 +191,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
     connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
     connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
-    connect(exit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(exit, SIGNAL(triggered()), this, SLOT(closeAll()));
     connect(modifyCatalog, SIGNAL(triggered()),this, SLOT(openModify()));
     connect(addToCatalog, SIGNAL(triggered()),this, SLOT(openAdd()));
     connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
@@ -202,6 +202,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(elements, SIGNAL(itemSelectionChange()), this, SLOT(catalogSelected()));
     connect(rent, SIGNAL(clicked()), this, SLOT(rentSelected()));
     connect(buyed, SIGNAL(clicked()), this, SLOT(buyedSelected()));
+//    connect(insWindow, SIGNAL(re_active(bool)), this, SLOT(reactiveMain()));
 
 
 }
@@ -268,6 +269,18 @@ void MainWindow::openModify()
 
 void MainWindow::openAdd()
 {
-    insWindow = new InsertionWindow();
+    insWindow = new InsertionWindow(this);
     insWindow->show();
+    //this->setEnabled(false);
+}
+
+//void MainWindow::reactiveMain()
+//{
+//    if(!insWindow)
+//        this->setEnabled(true);
+//}
+
+void MainWindow::closeAll()
+{
+    this->close();
 }

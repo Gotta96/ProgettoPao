@@ -21,7 +21,7 @@ public:
     bool operator!=(const DeepPtr&) const;
     bool operator>(const DeepPtr&) const;
     bool operator<(const DeepPtr&) const;
-    std::string printDptr() const;
+//    std::string printDptr() const;
 };
 
 template <class T>
@@ -87,10 +87,10 @@ bool DeepPtr<T>::operator>(const DeepPtr& dptr) const{
     return *pted>*(dptr.pted);
 }
 
-template <class T>
-std::string DeepPtr<T>::printDptr() const{
-    return pted->print();
-}
+//template <class T>
+//std::string DeepPtr<T>::printDptr() const{
+//    return pted->print();
+//}
 
 //template <class T>
 //std::ostream& operator<<(std::ostream& os, const DeepPtr<T>& dptr){

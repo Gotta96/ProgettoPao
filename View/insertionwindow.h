@@ -42,6 +42,7 @@ public slots:
     void showNormal();
     void showMultifunction();
     void confirm();
+    void dimiss();      //implementare la riattivazione della finestra padre
 
 signals:
     void activePrinter();
@@ -49,6 +50,7 @@ signals:
     void activeNormalDetails();
     void activeMultifunctionDetails();
     void sendItemsDetails(const QStringList&);
+//    void re_active(bool);
 
 };
 

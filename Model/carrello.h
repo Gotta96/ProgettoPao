@@ -2,6 +2,7 @@
 #define CARRELLO_H
 
 #include "Gerarchia/item.h"
+#include "Model/Template/deepptr.h"
 #include <map>
 
 using std::map;
@@ -10,18 +11,18 @@ using std::map;
 
 class Carrello{
 private:
-    map<Item*, unsigned int> cart;
+    map<DeepPtr<Item>, unsigned int> cart;
 public:
     Carrello();
     Carrello(const Carrello&);
     ~Carrello();
 
-    void insertIntoCart(Item*, unsigned int);
-    bool removeIntoCart(Item*);
+    void insertIntoCart(DeepPtr<Item>, unsigned int);
+    bool removeIntoCart(DeepPtr<Item>);
     bool removeIntoCartAtIndex(unsigned int i);
-    map<Item*, unsigned int>::iterator searchIntoCart(Item*);
-    unsigned int removeQuantity(Item*, unsigned int);
-    unsigned int getQuantity(Item*);
+    map<DeepPtr<Item>, unsigned int>::iterator searchIntoCart(DeepPtr<Item>);
+    unsigned int removeQuantity(DeepPtr<Item>, unsigned int);
+    unsigned int getQuantity(DeepPtr<Item>);
     unsigned int getTotItems();
 };
 

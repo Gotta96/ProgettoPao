@@ -23,87 +23,99 @@ bool Model::removeIntoBuy(unsigned int i){
     return buyed.removeIntoCartAtIndex(i);
 }
 
-void Model::addIntoCatalog(const QStringList e){
-    DeepPtr<Item> elemento;
-    if(e.first().toStdString() == "normal")
-        elemento = new Normal(e.at(1).toStdString(), e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toDouble(),e.at(5)=="true"? 0:1, e.at(6)=="true"? 0:1,e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1);
-    if(e.first().toStdString() == "multifunction")
-        elemento = new Multifunction(e.at(1).toStdString(), e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toDouble(),e.at(5)=="true"? 0:1, e.at(6)=="true"? 0:1,e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1);
-    if(e.first().toStdString() == "consumable"){
-        elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1);
+bool Model::addIntoCatalog(const QStringList e){
+    if(e.at(0)!="null"){
+        DeepPtr<Item> elemento;
+        if(e.at(0) == "c"){
+            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1, e.at(7).toStdString());
+        }
+        if(e.at(0) == "p"){
+            if(e.at(1) == "n")
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(11)=="true"? 0:1);
+            if(e.at(1) == "m")
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1,e.at(12)=="true"? 0:1);
+        }
+        catalogo.pushInOrder(elemento);
+        return true;
     }
-    catalogo.pushInOrder(elemento);
+    return false;
 }
 
 void Model::addIntoRent(unsigned int i,unsigned int q){
-    Item* insert = &(**(catalogo.searchAtIndex(i))) ;
+    DeepPtr<Item> insert = catalogo.searchAtIndex(i);
     rent.insertIntoCart(insert,q);
 }
 
 void Model::addIntoBuy(unsigned int i, unsigned int q){
-    Item* insert = &(**(catalogo.searchAtIndex(i)));
+    DeepPtr<Item> insert = catalogo.searchAtIndex(i);
     buyed.insertIntoCart(insert,q);
 }
 
-void Model::editItem(const QStringList e, unsigned int i){      //modificare guardano la QSTringList nell'insertion window
-    DeepPtr<Item> elemento;
-    if(e.first().toStdString() == "normal")
-        elemento = new Normal(e.at(1).toStdString(), e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toDouble(),e.at(5)=="true"? 0:1, e.at(6)=="true"? 0:1,e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1);
-    if(e.first().toStdString() == "multifunction")
-        elemento = new Multifunction(e.at(1).toStdString(), e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toDouble(),e.at(5)=="true"? 0:1, e.at(6)=="true"? 0:1,e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1);
-    if(e.first().toStdString() == "consumable"){
-        elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1);
+bool Model::editItem(const QStringList e, unsigned int i){
+    if(e.at(0)!="null"){
+        DeepPtr<Item> elemento;
+        if(e.at(0) == "c"){
+            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1, e.at(7).toStdString());
+        }
+        if(e.at(0) == "p"){
+            if(e.at(1) == "n")
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(11)=="true"? 0:1);
+            if(e.at(1) == "m")
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1,e.at(12)=="true"? 0:1);
+        }
+        catalogo.replaceAtIndex(elemento,i);
+        return true;
     }
+    return false;
 
-    catalogo.replaceAtIndex(elemento,i);
 }
 
 QString Model::getCatalogElementDetails(unsigned int ind){
-    return QString::fromStdString((catalogo.searchAtIndex(ind))->printDptr());
+    return QString::fromStdString((catalogo.searchAtIndex(ind))->print());
 }
 
 QString Model::getRentElementDetails(unsigned int ind){
-    return QString::fromStdString(rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->print());
+    return QString::fromStdString(rent.searchIntoCart(catalogo.searchAtIndex(ind))->first->print());
 }
 
 QString Model::getBuyElementDetails(unsigned int ind){
-    return QString::fromStdString(buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->print());
+    return QString::fromStdString(buyed.searchIntoCart(catalogo.searchAtIndex(ind))->first->print());
 }
 
 QStringList Model::getCatalogElement(unsigned int ind){         //da rivedere assieme al return index
     QStringList ret;
-    ret.push_back(QString::fromStdString((catalogo.searchAtIndex(ind))->printDptr()));
+    ret.push_back(QString::fromStdString(catalogo.searchAtIndex(ind)->print()));
     return ret;
 }
 
 QStringList Model::getRentElement(unsigned int ind){
     QStringList ret;
-    ret.push_back(QString::fromStdString(rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getVendor()));
-    ret.push_back(QString::fromStdString(rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getModel()));
+    ret.push_back(QString::fromStdString(rent.searchIntoCart(catalogo.searchAtIndex(ind))->first->getVendor()));
+    ret.push_back(QString::fromStdString(rent.searchIntoCart(catalogo.searchAtIndex(ind))->first->getModel()));
     return ret;
 }
 
 QStringList Model::getBuyElement(unsigned int ind){
     QStringList ret;
-    ret.push_back(QString::fromStdString(buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getVendor()));
-    ret.push_back(QString::fromStdString(buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->first->getModel()));
+    ret.push_back(QString::fromStdString(buyed.searchIntoCart(catalogo.searchAtIndex(ind))->first->getVendor()));
+    ret.push_back(QString::fromStdString(buyed.searchIntoCart(catalogo.searchAtIndex(ind))->first->getModel()));
     return ret;
 }
 
 unsigned int Model::getQuantityRent(unsigned int i){
-    return rent.searchIntoCart((&(**(catalogo.searchAtIndex(i)))))->second;
+    return rent.searchIntoCart(catalogo.searchAtIndex(i))->second;
 }
 
 unsigned int Model::getQuantityBuy(unsigned int i){
-    return buyed.searchIntoCart((&(**(catalogo.searchAtIndex(i)))))->second;
+    return buyed.searchIntoCart(catalogo.searchAtIndex(i))->second;
 }
 
 void Model::setQuantityRent(unsigned int ind, unsigned int q){
-    rent.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->second=q;
+    rent.searchIntoCart(catalogo.searchAtIndex(ind))->second=q;
 }
 
 void Model::setQuantityBuy(unsigned int ind, unsigned int q){
-    buyed.searchIntoCart((&(**(catalogo.searchAtIndex(ind)))))->second=q;
+    buyed.searchIntoCart(catalogo.searchAtIndex(ind))->second=q;
 }
 
 void Model::setIva(QString i){

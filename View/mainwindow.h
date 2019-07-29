@@ -45,6 +45,9 @@ public slots:
 
     void openModify();
     void openAdd();
+//    void reactiveMain();
+
+    void closeAll();        //implementare la chiusura di tutte le finestre assieme a quella padre
 
 signals:
 //    void openModifyCatalogWindow();

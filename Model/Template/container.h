@@ -40,7 +40,7 @@ public:
     bool removeOneItem(const T&);
     bool removeOneAtIndex(const unsigned int);
     bool searchIntoList(const T&) const;
-    T* searchAtIndex(unsigned int) const;
+    T searchAtIndex(unsigned int) const;
 
 
     //operatori container
@@ -54,7 +54,7 @@ public:
     void replaceAtIndex(const T&, unsigned int);        //controllare se giusta
     nodo* getFirst() const;
     bool is_empty() const;
-    int size() const;
+    unsigned int size() const;
     int itemsCounter(const T&) const;                   //forse da rimuovere
 
     //Iteratore
@@ -66,15 +66,15 @@ public:
         bool pte;
         Iterator(nodo*, bool =false);
     public:
-        Iterator();
-        //Iterator(const Container<T>&);                //temporaneamente rimossa perTipo t=t; vedere se inutile
+        //Iterator();   //pericoloso
+        Iterator(const Container<T>::Iterator&);
         Iterator &operator++();
         T& operator*() const;
         T* operator->() const;
         bool operator ==(const Iterator&) const;
         bool operator !=(const Iterator&) const;
         bool hasNext() const;
-        T& next() const;
+        //T& next() const; //no beo
     };
 
     //Iteratore constante
@@ -86,15 +86,15 @@ public:
         bool pte;
         Const_Iterator(nodo*, bool =false);
     public:
-        Const_Iterator();
-        //Iterator(const Container<T>&);                //temporaneamente rimossa per vedere se inutile
+        //Const_Iterator();     //pericoloso
+        Const_Iterator(const Container<T>::Const_Iterator&);
         Const_Iterator &operator++();
         const T& operator*() const;
         const T* operator->() const;
         bool operator ==(const Const_Iterator&) const;
         bool operator !=(const Const_Iterator&) const;
         bool constHasNext() const;
-        const T& constNext() const;
+        //const T& constNext() const;  //no beo
     };
 
     //Metodi Iteratore
@@ -159,48 +159,61 @@ bool Container<T>::isEqual(const nodo* nodol, const nodo* nodolfor){
 
 // CONTAINER
 
+//funzioni base
+
 template <class T>
 Container<T>::Container(): first(nullptr){}
 
 template <class T>
-Container<T>::Container(const T& itm): first(new nodo(&itm)){} //costruttore ad un parametro
+Container<T>::Container(const T& itm): first(new nodo(itm)){} //costruttore ad un parametro
 
 template <class T>
 Container<T>::Container(const Container& l1): first(copy(l1.first)){}    //costruttore di copia
 
 template <class T>
-Container<T> Container<T>::operator=(const Container<T>& cl){
-    if(this==&cl){
-        delete first;
-        first = copy(cl.getFirst());
+Container<T>::~Container<T>(){
+    if(first)
+        destroy(first);
+}
+
+//funzioni di modifica del contenitore
+
+template <class T>
+void Container<T>::pushInOrder(const T& itm){
+    if(first!=nullptr){
+        nodo* tmp=first;
+        while(tmp->info<itm && tmp->next){
+            tmp=tmp->next;
+        }
+        tmp->next=new nodo(itm,tmp->next);
+//        if(tmp->next){
+//           tmp->next=new nodo(itm,tmp->next);
+//            if(tmp->info > itm)
+//                first= new nodo(itm,tmp);
+//            else
+//                tmp->next=new nodo(itm);
+//        }
+//        else {
+//            tmp->next=new nodo(itm,tmp->next);
+//        }
     }
-    return *this;
-}
-
-
-template <class T>
-typename Container<T>::nodo* Container<T>::getFirst() const{
-    return first;
-}
-
-template <class T>
-bool Container<T>::is_empty() const{
-    return !first;
+    else
+        first= new nodo(itm);
 }
 
 template <class T>
 bool Container<T>::removeOneItem(const T& itm){
     if(is_empty())
         return false;
-
-    if(!first->next){
+//non vuota
+    if(!first->next){//un elemento
         if(first->info==itm){
             delete first;
             first=nullptr;
             return true;
         }
     }
-    else{
+    else{//piu di un el.
         nodo* prev=first;
         nodo* att=first->next;
 
@@ -232,18 +245,18 @@ bool Container<T>::removeOneAtIndex(const unsigned int i){
     if(is_empty())
         return false;
 
-    if(!first->next){
-        if(i==0){
+    if(!first->next){//coda
+        if(i==0){//testa
             delete first;
             first=nullptr;
             return true;
         }
     }
-    else{
+    else{//piu di un el
         nodo* prev=first;
         nodo* att=first->next;
 
-        if(i==0){
+        if(i==0){//testa
             first=first->next;
             prev->next=nullptr;
             delete prev;
@@ -272,39 +285,24 @@ bool Container<T>::searchIntoList(const T& itm)const{
 }
 
 template <class T>
-int Container<T>::itemsCounter(const T& i) const{
-    int counter=0;
-    for(Container<T>::Const_Iterator cit=constBegin(); cit != constEnd(); cit++)
-        if((**cit)==i)
-            counter++;
-    return counter;
+T Container<T>::searchAtIndex(unsigned int i) const{
+    if(i>= size())
+        return nullptr;
+    nodo* att = first;
+    for(unsigned int k=0; k<i; k++)
+        att=att->next;
+    return att->info;
 }
 
+//operatori container
+
 template <class T>
-void Container<T>::pushInOrder(const T& itm){
-    if(first!=nullptr){
-        nodo* tmp=first;
-        while(tmp->next && (tmp->next->info < itm)){
-            tmp=tmp->next;
-        }
-        if(!tmp->next){
-            if(tmp->info > itm)
-                first= new nodo(itm,tmp);
-            else
-                tmp->next=new nodo(itm);
-        }
-        else {
-            tmp->next=new nodo(itm,tmp->next);
-        }
+Container<T> Container<T>::operator=(const Container<T>& cl){
+    if(this!=&cl){
+        delete first;
+        first = copy(cl.getFirst());
     }
-    else
-        first= new nodo(itm);
-}
-
-template <class T>
-Container<T>::~Container<T>(){
-    if(first)
-        destroy(first);
+    return *this;
 }
 
 template <class T>
@@ -317,19 +315,29 @@ bool Container<T>::operator!=(const Container<T>& c) const{
     return !(equal(first, c.first));
 }
 
+//funzioni di utilità
+
+template<class T>
+void Container<T>::replaceAtIndex(const T& itm, unsigned int i){
+//    T att = searchAtIndex(i);
+//    att=itm;
+    removeOneAtIndex(i);
+    pushInOrder(itm);
+}           //da controllare
+
 template <class T>
-T* Container<T>::searchAtIndex(unsigned int i) const{
-    if(i>= size())
-        return nullptr;
-    nodo* att = first;
-    for(unsigned int k=0; k<i; k++)
-        att=att->next;
-    return &(att->info);
+typename Container<T>::nodo* Container<T>::getFirst() const{
+    return first;
+}
+
+template <class T>
+bool Container<T>::is_empty() const{
+    return !first;
 }
 
 template<class T>
-int Container<T>::size() const{
-    int counter=0;
+unsigned int Container<T>::size() const{
+    unsigned int counter=0;
     Container<T>::Const_Iterator cit=constBegin();
     while(cit!=constEnd()){
         counter ++;
@@ -338,29 +346,34 @@ int Container<T>::size() const{
     return counter;
 }
 
-template<class T>
-void Container<T>::replaceAtIndex(const T& itm, unsigned int i){
-    T* att = searchAtIndex(i);
-    *att=itm;
-}           //da controllare
+template <class T>
+int Container<T>::itemsCounter(const T& i) const{
+    int counter=0;
+    for(Container<T>::Const_Iterator cit=constBegin(); cit != constEnd(); cit++)
+        if((*cit)==i)
+            counter++;
+    return counter;
+}
+
+//Funzioni Iteratore
 
 template<class T>
 Container<T>::Iterator::Iterator(Container::nodo *n, bool passed): pointed(n), pte(passed){}
 
-template<class T>
-Container<T>::Iterator::Iterator(): pointed(nullptr), pte(false){}
+//template<class T>
+//Container<T>::Iterator::Iterator(): pointed(nullptr), pte(false){}
 
-/*template <class T>
-Container<T>::Iterator::Iterator(const Container<T>& list): pointed(copy(list.getFirst())){
+template <class T>
+Container<T>::Iterator::Iterator(const Container<T>::Iterator& it): pointed(it.pointed){
     if(!pointed && !pointed->next)
         pte=true;
     else
         pte=false;
-}*/        //prestare attenzione al pst the end
+}        //prestare attenzione al pst the end
 
 template<class T>
 typename Container<T>::Iterator Container<T>::begin() const{
-    return Iterator(first) ;
+    return Iterator(first);
 }
 
 template<class T>
@@ -375,7 +388,7 @@ template<class T>
 typename Container<T>::Iterator &Container<T>::Iterator::operator++(){
     if(!pte && pointed){
         if(pointed->next==nullptr){
-            pointed=pointed+1;
+            pointed=pointed->next;
             pte=true;
         }
         else pointed=pointed->next;
@@ -411,25 +424,27 @@ bool Container<T>::Iterator::hasNext() const{
         return false;
 }
 
-template <class T>
-T& Container<T>::Iterator::next() const{
-    if(pointed->next)
-        return (pointed->next->info);
-}
+//template <class T>
+//T& Container<T>::Iterator::next() const{
+//    if(pointed->next)
+//        return (pointed->next->info);
+//}
+
+//Funzioni Iteratore Costante
 
 template<class T>
 Container<T>::Const_Iterator::Const_Iterator(Container::nodo *n, bool passed): pointed(n), pte(passed){}
 
-template<class T>
-Container<T>::Const_Iterator::Const_Iterator(): pointed(nullptr), pte(false){}
+//template<class T>
+//Container<T>::Const_Iterator::Const_Iterator(): pointed(nullptr), pte(false){}
 
-/*template <class T>
-Container<T>::Iterator::Iterator(const Container<T>& list): pointed(copy(list.getFirst())){
+template <class T>
+Container<T>::Const_Iterator::Const_Iterator(const Container<T>::Const_Iterator& cit): pointed(cit.pointed){
     if(!pointed && !pointed->next)
         pte=true;
     else
         pte=false;
-}*/        //prestare attenzione al pst the end
+}        //prestare attenzione al pst the end
 
 template<class T>
 typename Container<T>::Const_Iterator Container<T>::constBegin() const{
@@ -448,7 +463,7 @@ template<class T>
 typename Container<T>::Const_Iterator &Container<T>::Const_Iterator::operator++(){
     if(!pte && pointed){
         if(pointed->next==nullptr){
-            pointed=pointed+1;
+            pointed=pointed->next;
             pte=true;
         }
         else pointed=pointed->next;
@@ -484,10 +499,10 @@ bool Container<T>::Const_Iterator::constHasNext() const{
         return false;
 }
 
-template <class T>
-const T& Container<T>::Const_Iterator::constNext() const{
-    if(pointed->next)
-        return (pointed->next->info);
-}
+//template <class T>
+//const T& Container<T>::Const_Iterator::constNext() const{
+//    if(pointed->next)
+//        return (pointed->next->info);
+//}
 
 #endif // CONTAINER_H

@@ -28,10 +28,10 @@ public slots:
     bool removeIntoCatalog(unsigned int);
     bool removeIntoRent(unsigned int);
     bool removeIntoBuy(unsigned int);
-    void addIntoCatalog(const QStringList);
+    bool addIntoCatalog(const QStringList);
     void addIntoRent(unsigned int, unsigned int);
     void addIntoBuy(unsigned int, unsigned int);
-    void editItem(const QStringList, unsigned int);
+    bool editItem(const QStringList, unsigned int);
     QString getCatalogElementDetails(unsigned int);
     QString getRentElementDetails(unsigned int);
     QString getBuyElementDetails(unsigned int);

@@ -1,6 +1,6 @@
 #include "consumable.h"
 
-Consumable::Consumable(string v, string m , double cos, unsigned int s, bool rest, bool origin): Item(v,m,cos), size(s), restore(rest), original(origin){}
+Consumable::Consumable(string v, string m , double cos, unsigned int s, bool rest, bool origin, string col): Item(v,m,cos), size(s), restore(rest), original(origin), color(col){}
 
 Consumable::Consumable(const Consumable& c): Item(c), size(c.getSize()), restore(c.isRestored()), original(c.isOriginal()){}
 
@@ -28,4 +28,8 @@ bool Consumable::isRestored() const{
 
 bool Consumable::isOriginal() const{
     return original;
+}
+
+std::string Consumable::getColorName() const{
+    return color;
 }

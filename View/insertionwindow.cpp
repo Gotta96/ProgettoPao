@@ -144,7 +144,7 @@ InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
     connect(normale,SIGNAL(clicked()), this, SLOT(showNormal()));
     connect(multifunction,SIGNAL(clicked()), this, SLOT(showMultifunction()));
     connect(ok, SIGNAL(clicked()), this, SLOT(confirm()));
-    connect(no, SIGNAL(clicked()), this, SLOT(close()));
+    connect(no, SIGNAL(clicked()), this, SLOT(dimiss()));
 }
 
 void InsertionWindow::showPrinter()
@@ -233,6 +233,13 @@ void InsertionWindow::showNormal()
     scanner->setChecked(false);
     fax->setChecked(false);
 
+    doubleside->setText("Fronte-retro (no in normale)");
+    photo->setText("Fotografie (no in normale)");
+    doubleside->setChecked(false);
+    photo->setChecked(false);
+    doubleside->setEnabled(false);
+    photo->setEnabled(false);
+
 }
 
 void InsertionWindow::showMultifunction()
@@ -252,6 +259,13 @@ void InsertionWindow::showMultifunction()
     typeSelectionBox->setVisible(true);
 
     plotter->setChecked(false);
+
+    doubleside->setText("Fronte-retro");
+    photo->setText("Fotografie");
+    doubleside->setChecked(false);
+    photo->setChecked(false);
+    doubleside->setEnabled(true);
+    photo->setEnabled(true);
 
 }
 
@@ -279,9 +293,9 @@ void InsertionWindow::confirm()
     tmp->push_back(cost->text());
     if(consumable->isChecked()){
         tmp->push_back(size->text());
-        tmp->push_back(colorName->text());
         tmp->push_back(restore->isChecked()? "1":"0");
         tmp->push_back(original->isChecked()? "1":"0");
+        tmp->push_back(colorName->text());
     }
     else {
         tmp->push_back(daycost->text());
@@ -300,6 +314,12 @@ void InsertionWindow::confirm()
         }
     }
     emit sendItemsDetails(*tmp);
+}
+
+void InsertionWindow::dimiss()
+{
+//    SLOT(reactiveMain());
+    this->close();
 }
 
 

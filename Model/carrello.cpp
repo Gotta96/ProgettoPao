@@ -5,10 +5,9 @@ Carrello::Carrello():cart(){}
 Carrello::Carrello(const Carrello& c): cart(c.cart){}
 
 Carrello::~Carrello(){
-
 }
 
-void Carrello::insertIntoCart(Item * i, unsigned int q){
+void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){
     auto it=searchIntoCart(i);
     if(cart.end()!=it){
         it->second+=q;
@@ -16,7 +15,7 @@ void Carrello::insertIntoCart(Item * i, unsigned int q){
     cart[i]=q;
 }
 
-bool Carrello::removeIntoCart(Item* i){
+bool Carrello::removeIntoCart(DeepPtr<Item> i){
     auto it=searchIntoCart(i);
     if(cart.end()!=it){
         cart.erase(it);
@@ -36,11 +35,11 @@ bool Carrello::removeIntoCartAtIndex(unsigned int i){
      return false;
 }
 
-map<Item*,unsigned int>::iterator Carrello::searchIntoCart(Item * i){
+map<DeepPtr<Item>,unsigned int>::iterator Carrello::searchIntoCart(DeepPtr<Item> i){
     return cart.find(i);
 }
 
-unsigned int Carrello::removeQuantity(Item * i, unsigned int q){
+unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){
     auto it=searchIntoCart(i);
     if(cart.end()!=it){
         if(it->second > q){
@@ -51,7 +50,7 @@ unsigned int Carrello::removeQuantity(Item * i, unsigned int q){
     return 0;
 }
 
-unsigned int Carrello::getQuantity(Item * i){
+unsigned int Carrello::getQuantity(DeepPtr<Item> i){
     auto it=searchIntoCart(i);
     if(it!=cart.end())
         return it->second;
