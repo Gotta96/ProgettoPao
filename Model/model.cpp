@@ -51,7 +51,7 @@ void Model::addIntoBuy(unsigned int i, unsigned int q){
     buyed.insertIntoCart(insert,q);
 }
 
-bool Model::editItem(const QStringList e, unsigned int i){
+bool Model::editItem(unsigned int i,const QStringList e){
     if(e.at(0)!="null"){
         DeepPtr<Item> elemento;
         if(e.at(0) == "c"){
@@ -84,22 +84,155 @@ QString Model::getBuyElementDetails(unsigned int ind){
 
 QStringList Model::getCatalogElement(unsigned int ind){         //da rivedere assieme al return index
     QStringList ret;
-    ret.push_back(QString::fromStdString(catalogo.searchAtIndex(ind)->print()));
+    if(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))){
+            ret.push_back("c");
+            ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getVendor()));
+            ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getModel()));
+            ret.push_back(QString::number(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getCost()));
+            ret.push_back(QString::number(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getSize()));
+            ret.push_back((dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->isRestored())? "1" : "0");
+            ret.push_back((dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->isOriginal())? "1" : "0");
+            ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getColorName()));
+    }
+    else {
+        if(dynamic_cast<const Stampante*>(&(*(catalogo.searchAtIndex(ind))))){
+            ret.push_back("p");
+            if(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))){
+                    ret.push_back("n");
+                    ret.push_back(QString::fromStdString(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->getVendor()));
+                    ret.push_back(QString::fromStdString(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->getModel()));
+                    ret.push_back(QString::number(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->getCost()));
+                    ret.push_back(QString::number(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->getDaycost()));
+                    ret.push_back((dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->isWiFi())? "1" : "0");
+                    ret.push_back((dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->isDoubleSide())? "1" : "0");
+                    ret.push_back((dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->isColor())? "1" : "0");
+                    ret.push_back((dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->isUsed())? "1" : "0");
+                    ret.push_back((dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->isPhoto())? "1" : "0");
+                    ret.push_back((dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->isPlotter())? "1" : "0");
+            }
+            if(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))){
+                ret.push_back("m");
+                ret.push_back(QString::fromStdString(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getVendor()));
+                ret.push_back(QString::fromStdString(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getModel()));
+                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getCost()));
+                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getDaycost()));
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->isWiFi())? "1" : "0");
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->isDoubleSide())? "1" : "0");
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->isColor())? "1" : "0");
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->isUsed())? "1" : "0");
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->isPhoto())? "1" : "0");
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->haveFax())? "1" : "0");
+                ret.push_back((dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->haveScanner())? "1" : "0");
+            }
+        }
+        else
+            ret.push_back("null");
+    }
+
     return ret;
+
 }
 
 QStringList Model::getRentElement(unsigned int ind){
     QStringList ret;
-    ret.push_back(QString::fromStdString(rent.searchIntoCart(catalogo.searchAtIndex(ind))->first->getVendor()));
-    ret.push_back(QString::fromStdString(rent.searchIntoCart(catalogo.searchAtIndex(ind))->first->getModel()));
+    if(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+        ret.push_back("c");
+        ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getVendor()));
+        ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getModel()));
+        ret.push_back(QString::number(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getCost()));
+        ret.push_back(QString::number(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getSize()));
+        ret.push_back(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isRestored()? "1" : "0");
+        ret.push_back(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isOriginal()? "1" : "0");
+    }
+    else {
+        if(dynamic_cast<const Stampante*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+            ret.push_back("p");
+            if(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+                ret.push_back("n");
+                ret.push_back(QString::fromStdString((dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getVendor())));
+                ret.push_back(QString::fromStdString((dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getModel())));
+                ret.push_back(QString::number(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getCost()));
+                ret.push_back(QString::number(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getDaycost()));
+                ret.push_back(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isWiFi()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isDoubleSide()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isColor()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isUsed()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isPhoto()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isPlotter()? "1" : "0");
+
+            }
+            if(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+                ret.push_back("m");
+                ret.push_back(QString::fromStdString((dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getVendor())));
+                ret.push_back(QString::fromStdString((dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getModel())));
+                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getCost()));
+                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getDaycost()));
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isWiFi()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isDoubleSide()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isColor()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isUsed()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isPhoto()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->haveFax()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->haveScanner()? "1" : "0");
+            }
+        }
+        else
+            ret.push_back("null");
+    }
+
     return ret;
+
 }
 
 QStringList Model::getBuyElement(unsigned int ind){
     QStringList ret;
-    ret.push_back(QString::fromStdString(buyed.searchIntoCart(catalogo.searchAtIndex(ind))->first->getVendor()));
-    ret.push_back(QString::fromStdString(buyed.searchIntoCart(catalogo.searchAtIndex(ind))->first->getModel()));
+    if(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+        ret.push_back("c");
+        ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getVendor()));
+        ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getModel()));
+        ret.push_back(QString::number(dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getCost()));
+        ret.push_back(QString::number(dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getSize()));
+        ret.push_back(dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isRestored()? "1" : "0");
+        ret.push_back(dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isOriginal()? "1" : "0");
+    }
+    else {
+        if(dynamic_cast<const Stampante*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+            ret.push_back("p");
+            if(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+                ret.push_back("n");
+                ret.push_back(QString::fromStdString((dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getVendor())));
+                ret.push_back(QString::fromStdString((dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getModel())));
+                ret.push_back(QString::number(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getCost()));
+                ret.push_back(QString::number(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getDaycost()));
+                ret.push_back(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isWiFi()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isDoubleSide()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isColor()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isUsed()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isPhoto()? "1" : "0");
+                ret.push_back(dynamic_cast<const Normal*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isPlotter()? "1" : "0");
+
+            }
+            if(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))){
+                ret.push_back("m");
+                ret.push_back(QString::fromStdString((dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getVendor())));
+                ret.push_back(QString::fromStdString((dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getModel())));
+                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getCost()));
+                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->getDaycost()));
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isWiFi()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isDoubleSide()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isColor()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isUsed()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->isPhoto()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->haveFax()? "1" : "0");
+                ret.push_back(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind)))->first))->haveScanner()? "1" : "0");
+            }
+        }
+        else
+            ret.push_back("null");
+    }
+
     return ret;
+
 }
 
 unsigned int Model::getQuantityRent(unsigned int i){
@@ -140,6 +273,20 @@ void Model::setDate(QDate d){
 
 QDate Model::getDate(){
     return preventiveDate;
+}
+
+void Model::getAllCatalog()
+{
+    QStringList ret;
+    string insert;
+    Container<DeepPtr<Item>>::Iterator it=catalogo.begin();
+    while(it!=catalogo.end()){
+        string insert((*(*it)).getVendor() + " " + (*(*it)).getModel());
+        ret.push_back(QString::fromStdString(insert));
+        ++it;
+    }
+
+    emit showCatalog(ret);
 }
 
 //void Model::setFilename(const QString flname)

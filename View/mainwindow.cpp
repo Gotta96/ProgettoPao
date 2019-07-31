@@ -191,20 +191,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
     connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
     connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
-    connect(exit, SIGNAL(triggered()), this, SLOT(closeAll()));
-    connect(modifyCatalog, SIGNAL(triggered()),this, SLOT(openModify()));
+    connect(exit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(modifyCatalog, SIGNAL(triggered()),this, SLOT(openModify(QStringList, unsigned int)));
     connect(addToCatalog, SIGNAL(triggered()),this, SLOT(openAdd()));
     connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
     connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
     connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT(destroyRent()));
     connect(buttonRemoveBuyed, SIGNAL(clicked()), this, SLOT(destroyBuyed()));
-    connect(elements, SIGNAL(itemSelectionChange()), this, SLOT(catalogSelected()));
-    connect(rent, SIGNAL(clicked()), this, SLOT(rentSelected()));
-    connect(buyed, SIGNAL(clicked()), this, SLOT(buyedSelected()));
+    connect(elements, SIGNAL(clicked(const QModelIndex&)), this, SLOT(catalogSelected(const QModelIndex&)));
+    connect(rent, SIGNAL(clicked(const QModelIndex&)), this, SLOT(rentSelected(const QModelIndex&)));
+    connect(buyed, SIGNAL(clicked(const QModelIndex&)), this, SLOT(buyedSelected(const QModelIndex&)));
 //    connect(insWindow, SIGNAL(re_active(bool)), this, SLOT(reactiveMain()));
 
 
+}
+
+void MainWindow::displayCatalog(const QStringList cat)
+{
+    int counter =0;
+    auto it = cat.begin();
+    while(it!=cat.end()){
+        elements->addItem(cat.at(counter));
+        counter ++;
+    }
+    //elements->show();
 }
 
 void MainWindow::updateDetails(QString info, QString ){
@@ -218,11 +229,11 @@ void MainWindow::updateTotals(QStringList prezzi){
     tot->setText(prezzi[0]+prezzi[1]);
 }
 
-void MainWindow::addToCatalog(QStringList e){
-//    QString prova;
-//    prova=e.first();
-//    elements->;
-}
+//void MainWindow::addToCatalog(QStringList){     //da fare
+////    QString prova;
+////    prova=e.first();
+////    elements->;
+//}
 
 void MainWindow::generateRent()
 {
@@ -244,43 +255,52 @@ void MainWindow::destroyBuyed()
     emit clickedRemoveBuyed(buyed->getIndex());
 }
 
-void MainWindow::catalogSelected()
+void MainWindow::catalogSelected(const QModelIndex &index)
 {
     rent->unSelectIndex();
     buyed->unSelectIndex();
+    emit requestDetails(index.row());
 }
 
-void MainWindow::rentSelected()
+void MainWindow::rentSelected(const QModelIndex &index)
 {
     elements->unSelectIndex();
     buyed->unSelectIndex();
+    emit requestDetails(index.row());
 }
 
-void MainWindow::buySelected()
+void MainWindow::buyedSelected(const QModelIndex &index)
 {
     elements->unSelectIndex();
     rent->unSelectIndex();
+    emit requestDetails(index.row());
 }
 
-void MainWindow::openModify()
+void MainWindow::openModify(QStringList dati, unsigned int index)
 {
-
+//    QStringList dati;
+//    dati.push_back("p");
+//    dati.push_back("m");
+//    dati.push_back("HP");
+//    dati.push_back("K8gt56");
+//    dati.push_back("135,45");
+//    dati.push_back("35");
+//    dati.push_back("1");
+//    dati.push_back("1");
+//    dati.push_back("0");
+//    dati.push_back("0");
+//    dati.push_back("1");
+//    dati.push_back("0");
+//    dati.push_back("1");
+//    unsigned int index=1;
+    modWindow = new ModifyWindow(dati,index,this);
+    modWindow->setModal(true);
+    modWindow->show();
 }
 
 void MainWindow::openAdd()
 {
     insWindow = new InsertionWindow(this);
+    insWindow->setModal(true);
     insWindow->show();
-    //this->setEnabled(false);
-}
-
-//void MainWindow::reactiveMain()
-//{
-//    if(!insWindow)
-//        this->setEnabled(true);
-//}
-
-void MainWindow::closeAll()
-{
-    this->close();
 }

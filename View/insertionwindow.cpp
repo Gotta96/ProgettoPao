@@ -314,11 +314,11 @@ void InsertionWindow::confirm()
         }
     }
     emit sendItemsDetails(*tmp);
+    this->close();
 }
 
 void InsertionWindow::dimiss()
 {
-//    SLOT(reactiveMain());
     this->close();
 }
 

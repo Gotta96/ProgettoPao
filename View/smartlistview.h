@@ -2,9 +2,9 @@
 #define SMARTLISTVIEW_H
 
 #include <QWidget>
-#include <QListView>
+#include <QListWidget>
 
-class SmartListView : public QListView
+class SmartListView : public QListWidget
 {
     Q_OBJECT
 public:

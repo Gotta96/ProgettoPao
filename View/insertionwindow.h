@@ -6,20 +6,17 @@
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QBoxLayout>
-#include <QComboBox>
 #include <QGroupBox>
 #include <QWidget>
-#include <QButtonGroup>
 #include <QLabel>
 #include <QPushButton>
 #include <QStringList>
-//#include <QString>
 
 class InsertionWindow : public QDialog
 {
     Q_OBJECT
 
-private:
+protected:
     QLineEdit *marca, *modello, *cost, *daycost, *size, *colorName;
     QCheckBox *restore, *original, *scanner, *fax, *wifi, *doubleside, *color, *used, *photo, *plotter;
     QRadioButton *consumable, *printer, *normale, *multifunction;
@@ -32,7 +29,6 @@ private:
     QGroupBox *normalDetails ;
     QGroupBox *multifunctionDetails;
 
-
 public:
     explicit InsertionWindow(QWidget *parent = nullptr);
 
@@ -41,16 +37,15 @@ public slots:
     void showConsumable();
     void showNormal();
     void showMultifunction();
-    void confirm();
-    void dimiss();      //implementare la riattivazione della finestra padre
+    virtual void confirm();
+    void dimiss();
 
 signals:
     void activePrinter();
     void activeConsumable();
     void activeNormalDetails();
     void activeMultifunctionDetails();
-    void sendItemsDetails(const QStringList&);
-//    void re_active(bool);
+    void sendItemsDetails(const QStringList);
 
 };
 

@@ -1,6 +1,6 @@
 #include "smartlistview.h"
 
-SmartListView::SmartListView(QWidget *parent):QListView (parent){}
+SmartListView::SmartListView(QWidget *parent):QListWidget (parent){}
 
 unsigned int SmartListView::getIndex() const
 {

@@ -24,14 +24,13 @@ private:
 public:
     explicit Model(QObject *parent = nullptr);
 
-public slots:
     bool removeIntoCatalog(unsigned int);
     bool removeIntoRent(unsigned int);
     bool removeIntoBuy(unsigned int);
     bool addIntoCatalog(const QStringList);
     void addIntoRent(unsigned int, unsigned int);
     void addIntoBuy(unsigned int, unsigned int);
-    bool editItem(const QStringList, unsigned int);
+    bool editItem(unsigned int, const QStringList);
     QString getCatalogElementDetails(unsigned int);
     QString getRentElementDetails(unsigned int);
     QString getBuyElementDetails(unsigned int);
@@ -51,12 +50,18 @@ public slots:
     void setDate(QDate);
     QDate getDate();
 
+    void getAllCatalog();
+
+public slots:
+
+
 //    void setFilename(const QString flname);
 //    void loadData();
 //    void serializeData();
 
 
 signals:
+    void showCatalog(const QStringList);
     void rentQuantityChanged();
     void buyQuantityChanged();
     void catalogElementRemoved();

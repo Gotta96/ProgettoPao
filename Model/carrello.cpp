@@ -12,7 +12,7 @@ void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){
     if(cart.end()!=it){
         it->second+=q;
     }
-    cart[i]=q;
+    cart[i]+=q;
 }
 
 bool Carrello::removeIntoCart(DeepPtr<Item> i){
