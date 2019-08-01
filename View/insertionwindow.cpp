@@ -1,11 +1,11 @@
 #include "insertionwindow.h"
 
 InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
-                                                    marca(new QLineEdit("",this)),
-                                                    modello(new QLineEdit("",this)),
-                                                    cost(new QLineEdit("",this)),
-                                                    daycost(new QLineEdit("",this)),
-                                                    size(new QLineEdit("",this)),
+                                                    marca(new QLineEdit("Empty",this)),
+                                                    modello(new QLineEdit("Empty",this)),
+                                                    cost(new QLineEdit("0",this)),
+                                                    daycost(new QLineEdit("0",this)),
+                                                    size(new QLineEdit("0",this)),
                                                     colorName(new QLineEdit("",this)),
                                                     restore(new QCheckBox("Rigenerata",this)),
                                                     original(new QCheckBox("Originale",this)),
@@ -286,6 +286,8 @@ void InsertionWindow::confirm()
                     tmp->push_back("null");
             }
         }
+        else
+            tmp->push_back("null");
     }
 
     tmp->push_back(marca->text());

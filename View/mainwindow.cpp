@@ -214,6 +214,13 @@ void MainWindow::displayCatalog(const QStringList cat)
     //elements->show();
 }
 
+void MainWindow::displayInputError()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Input Incompleto");
+    messageBox.setFixedSize(500,200);
+}
+
 void MainWindow::displayDetails(const QString d)
 {
     details->setText(d);

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QLineEdit>
 #include <QLabel>
 #include <QDateEdit>
@@ -30,6 +31,7 @@ public:
     //~MainWindow() override;
 
     void displayCatalog(const QStringList);
+    void displayInputError();
 
     void displayDetails(const QString);
 

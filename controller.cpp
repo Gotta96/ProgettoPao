@@ -52,8 +52,16 @@ void Controller::removeB(unsigned int index)
 
 void Controller::addToCatalogContainer(const QStringList details)
 {
-    modello->addIntoCatalog(details);
-    std::cout << modello->getAllCatalog().first().toStdString();
+    if(details.first()=="null")
+        mainW->displayInputError();
+    else {
+        if(details[1]=="null")
+            mainW->displayInputError();
+        else{
+            modello->addIntoCatalog(details);
+            std::cout << modello->getAllCatalog().first().toStdString();
+        }
+    }
 }
 
 void Controller::addToRentCart(unsigned int index, unsigned int quantity)
