@@ -22,6 +22,8 @@ public:
     bool isRestored() const;
     bool isOriginal() const;
     string getColorName() const;
+
+    string print() const override;
 };
 
 #endif // CONSUMABLE_H

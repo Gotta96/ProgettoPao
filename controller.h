@@ -1,14 +1,12 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <QObject>
 #include "Model/model.h"
 #include "View/mainwindow.h"
-#include "View/insertionwindow.h"
 #include "View/modifywindow.h"
 #include <QStringList>
 
-class Controller : public QObject
+class Controller : public QWidget
 {
     Q_OBJECT
 private:
@@ -17,27 +15,33 @@ private:
     InsertionWindow *insertionW;
 
 public:
-    explicit Controller(QObject *parent = nullptr);
+    explicit Controller(QWidget *parent = nullptr);
 
     void replaceIntoCatalog(unsigned int, QStringList);
 
-    QStringList getDetails(unsigned int);
+signals:
 
-    bool removeC(unsigned int);
-    bool removeR(unsigned int);
-    bool removeB(unsigned int);
+//    void sendToMainTheCatalog(const QStringList);
 
-    void addToCatalogContainer(const QStringList&);
+public slots:
+    void addToCatalogContainer(const QStringList);
+
     void addToRentCart(unsigned int, unsigned int);
     void addToBuyCart(unsigned int, unsigned int);
 
+    void removeC(unsigned int);
+    void removeR(unsigned int);
+    void removeB(unsigned int);
 
-signals:
+    void getDetails(unsigned int);
 
-    void sendToMainTheCatalog(const QStringList);
+    void sendForReplace(unsigned int, QStringList);
 
-public slots:
+    void getDetailsForEdit();
 
+    void refreshCatalog();
+
+    void openAdd();
 
 };
 

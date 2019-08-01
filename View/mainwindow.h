@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QLineEdit>
-#include <QListView>
 #include <QLabel>
 #include <QDateEdit>
 #include <QMenuBar>
@@ -12,9 +11,7 @@
 #include <QBoxLayout>
 #include <QString>
 #include "View/smartlistview.h"
-#include "View/insertionwindow.h"
-#include "View/modifywindow.h"
-#include <QStringListModel>
+
 
 class MainWindow : public QMainWindow
 {
@@ -26,15 +23,19 @@ private:
     SmartListView *elements, *rent, *buyed;
     QLabel *details, *image, *totrent, *totbuyed, *tot;
 
-    InsertionWindow *insWindow;
-
-    ModifyWindow *modWindow;
+    //ModifyWindow *modWindow;
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     //~MainWindow() override;
 
     void displayCatalog(const QStringList);
+
+    void displayDetails(const QString);
+
+    unsigned int getCatalogSelected() const;
+
+    void openModify(QStringList,unsigned int);
 
 public slots:
     void updateDetails(QString info, QString imgpath);
@@ -49,12 +50,9 @@ public slots:
     void rentSelected(const QModelIndex&);
     void buyedSelected(const QModelIndex&);
 
-    void openModify(QStringList,unsigned int);
-    void openAdd();
-
 signals:
 //    void openModifyCatalogWindow();
-//    void openAddToCatalogWndow();
+    void openAddToCatalogWindow();
     void openLoadWindow();
     void openSaveWindow();
     void openSavePDFWindow();
@@ -64,6 +62,12 @@ signals:
     void clickedRemoveRent(unsigned int i);
     void clickedRemoveBuyed(unsigned int i);
     void requestDetails(unsigned int);
+
+    void requestDetailsForEdit();
+
+    void requestForReplace(unsigned int, QStringList);
+
+//    void detailsForNewItem(const QStringList);
 };
 
 #endif // MAINWINDOW_H

@@ -1,5 +1,7 @@
 #include "modifywindow.h"
 
+ModifyWindow::ModifyWindow(QWidget *parent):InsertionWindow(parent){}
+
 ModifyWindow::ModifyWindow(QStringList e, unsigned int index, QWidget *parent) : InsertionWindow(parent),ind(index){
 
     //setto i valori passati dalla QStringList
@@ -116,4 +118,5 @@ void ModifyWindow::confirm()
         }
     }
     emit replaceItem(ind,*tmp);
+    this->close();
 }

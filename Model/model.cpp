@@ -23,7 +23,7 @@ bool Model::removeIntoBuy(unsigned int i){
     return buyed.removeIntoCartAtIndex(i);
 }
 
-bool Model::addIntoCatalog(const QStringList e){
+void Model::addIntoCatalog(const QStringList e){
     if(e.at(0)!="null"){
         DeepPtr<Item> elemento;
         if(e.at(0) == "c"){
@@ -35,10 +35,12 @@ bool Model::addIntoCatalog(const QStringList e){
             if(e.at(1) == "m")
                 elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1,e.at(12)=="true"? 0:1);
         }
+//        std::cout << std::endl << elemento->print() << std::endl;
         catalogo.pushInOrder(elemento);
-        return true;
+//        std::cout << std::endl << (*catalogo.getFirst()->info).print() << std::endl;
     }
-    return false;
+
+    emit elementAdded();
 }
 
 void Model::addIntoRent(unsigned int i,unsigned int q){
@@ -275,18 +277,19 @@ QDate Model::getDate(){
     return preventiveDate;
 }
 
-void Model::getAllCatalog()
+QStringList Model::getAllCatalog()
 {
     QStringList ret;
-    string insert;
-    Container<DeepPtr<Item>>::Iterator it=catalogo.begin();
+//    std::cout << std::endl <<"ciao" << std::endl;
+//    std::cout << std::endl << (*catalogo.getFirst()->info).print() << std::endl;
+    auto it=catalogo.begin();
     while(it!=catalogo.end()){
-        string insert((*(*it)).getVendor() + " " + (*(*it)).getModel());
-        ret.push_back(QString::fromStdString(insert));
+        ret.push_back(QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()));
         ++it;
     }
 
-    emit showCatalog(ret);
+//    std::cout << std::endl << ret.isEmpty() << std::endl;
+    return ret;
 }
 
 //void Model::setFilename(const QString flname)

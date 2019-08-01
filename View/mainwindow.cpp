@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           image(new QLabel("---IMG---",this)),
                                           totrent(new QLabel("0",this)),
                                           totbuyed(new QLabel("0",this)),
-                                          tot(new QLabel("0",this)){
+                                          tot(new QLabel("0",this))/*,
+                                          modWindow(new ModifyWindow(this))*/{
 
     //Imposto che in ogni SamrtListView posso selezionare un solo elemento
     elements->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -33,9 +34,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QAction *save = new QAction("Salva file", this);
     QAction *pdf = new QAction("PDF Export", this);
     QAction *exit = new QAction("Esci", this);
-//    QAction *addElementToList = new QAction("Aggiungi elemento", this);
-//    QAction *removeElementToList = new QAction("Rimuovi elemento", this);
-//    QAction *modifyElement = new QAction("Modifica elemento", this);
     QLabel *labname = new QLabel("Nome: ");
     QLabel *labiva = new QLabel("P.IVA: ");
     QLabel *labdate = new QLabel("Data: ");
@@ -184,16 +182,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
 
-//    mainWidget->setFixedWidth(800);
-//    mainWidget->setFixedHeight(600);
-
-//    connect(modifyCatalog, SIGNAL(triggered()), SIGNAL(openModifyCatalogWindow()));
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
     connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
     connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
     connect(exit, SIGNAL(triggered()), this, SLOT(close()));
-    connect(modifyCatalog, SIGNAL(triggered()),this, SLOT(openModify(QStringList, unsigned int)));
-    connect(addToCatalog, SIGNAL(triggered()),this, SLOT(openAdd()));
+    connect(addToCatalog, SIGNAL(triggered()),this, SIGNAL(openAddToCatalogWindow()));
+//    connect(insWindow, SIGNAL(sendItemsDetails(const QStringList)),this, SIGNAL(detailsForNewItem(const QStringList)));
+    connect(modifyCatalog, SIGNAL(triggered()),this, SIGNAL(requestDetailsForEdit()));
+    //connect(modWindow, SIGNAL(replaceItem(unsigned int, QStringList)),this, SIGNAL(requestForReplace(unsigned int, QStringList)));
     connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
     connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
@@ -202,20 +198,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(elements, SIGNAL(clicked(const QModelIndex&)), this, SLOT(catalogSelected(const QModelIndex&)));
     connect(rent, SIGNAL(clicked(const QModelIndex&)), this, SLOT(rentSelected(const QModelIndex&)));
     connect(buyed, SIGNAL(clicked(const QModelIndex&)), this, SLOT(buyedSelected(const QModelIndex&)));
-//    connect(insWindow, SIGNAL(re_active(bool)), this, SLOT(reactiveMain()));
 
 
 }
 
 void MainWindow::displayCatalog(const QStringList cat)
 {
-    int counter =0;
+    elements->reset();
+    elements->clear();
     auto it = cat.begin();
     while(it!=cat.end()){
-        elements->addItem(cat.at(counter));
-        counter ++;
+        elements->addItem(*it);
+        ++it;
     }
     //elements->show();
+}
+
+void MainWindow::displayDetails(const QString d)
+{
+    details->setText(d);
+}
+
+unsigned int MainWindow::getCatalogSelected() const
+{
+    return elements->getIndex();
 }
 
 void MainWindow::updateDetails(QString info, QString ){
@@ -228,12 +234,6 @@ void MainWindow::updateTotals(QStringList prezzi){
     totbuyed->setText(prezzi[1]);
     tot->setText(prezzi[0]+prezzi[1]);
 }
-
-//void MainWindow::addToCatalog(QStringList){     //da fare
-////    QString prova;
-////    prova=e.first();
-////    elements->;
-//}
 
 void MainWindow::generateRent()
 {
@@ -276,7 +276,7 @@ void MainWindow::buyedSelected(const QModelIndex &index)
     emit requestDetails(index.row());
 }
 
-void MainWindow::openModify(QStringList dati, unsigned int index)
+void MainWindow::openModify(QStringList, unsigned int)
 {
 //    QStringList dati;
 //    dati.push_back("p");
@@ -293,14 +293,16 @@ void MainWindow::openModify(QStringList dati, unsigned int index)
 //    dati.push_back("0");
 //    dati.push_back("1");
 //    unsigned int index=1;
-    modWindow = new ModifyWindow(dati,index,this);
-    modWindow->setModal(true);
-    modWindow->show();
+
+    //Da spostare!!!
+//    modWindow = new ModifyWindow(dati,index,this);
+//    modWindow->setModal(true);
+//    modWindow->show();
 }
 
-void MainWindow::openAdd()
-{
-    insWindow = new InsertionWindow(this);
-    insWindow->setModal(true);
-    insWindow->show();
-}
+//void MainWindow::openAdd()
+//{
+//    insWindow = new InsertionWindow(this);
+//    insWindow->setModal(true);
+//    insWindow->show();
+//}

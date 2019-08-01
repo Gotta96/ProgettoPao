@@ -7,7 +7,6 @@
 #include <QLineEdit>
 #include <QBoxLayout>
 #include <QGroupBox>
-#include <QWidget>
 #include <QLabel>
 #include <QPushButton>
 #include <QStringList>
@@ -37,7 +36,7 @@ public slots:
     void showConsumable();
     void showNormal();
     void showMultifunction();
-    virtual void confirm();
+    void confirm();
     void dimiss();
 
 signals:

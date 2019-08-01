@@ -27,7 +27,6 @@ public:
     bool removeIntoCatalog(unsigned int);
     bool removeIntoRent(unsigned int);
     bool removeIntoBuy(unsigned int);
-    bool addIntoCatalog(const QStringList);
     void addIntoRent(unsigned int, unsigned int);
     void addIntoBuy(unsigned int, unsigned int);
     bool editItem(unsigned int, const QStringList);
@@ -50,10 +49,11 @@ public:
     void setDate(QDate);
     QDate getDate();
 
-    void getAllCatalog();
+    QStringList getAllCatalog();
 
 public slots:
 
+    void addIntoCatalog(const QStringList);
 
 //    void setFilename(const QString flname);
 //    void loadData();
@@ -76,6 +76,8 @@ signals:
 //    void catalogAddRequest();
 //    void rentAddRequest();
 //    void buyAddRequest();
+
+    void elementAdded();
 
 };
 

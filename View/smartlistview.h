@@ -1,7 +1,6 @@
 #ifndef SMARTLISTVIEW_H
 #define SMARTLISTVIEW_H
 
-#include <QWidget>
 #include <QListWidget>
 
 class SmartListView : public QListWidget

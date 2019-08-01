@@ -386,12 +386,33 @@ typename Container<T>::Iterator Container<T>::end() const{
 
 template<class T>
 typename Container<T>::Iterator &Container<T>::Iterator::operator++(){
+//    Container<T>::Iterator temp= (*this);
+//    if(!pte && pointed){
+//        if(pointed->next==nullptr){
+//            pointed=pointed->next;
+//            pte=true;
+//        }
+//        else
+//            pointed=pointed->next;
+//    }
+//    return temp;
+//    if(!temp.pte && i.pointed){
+//        if(i.pointed ==  nullptr){
+//            tmp=tmp->next;
+//            pte=true;
+//        }
+//        else
+//            tmp=tmp->next;
+//    }
+
+//    return tmp;
     if(!pte && pointed){
         if(pointed->next==nullptr){
-            pointed=pointed->next;
+            pointed=pointed+1;
             pte=true;
         }
-        else pointed=pointed->next;
+        else
+            pointed=pointed->next;
     }
     return *this;
 }

@@ -1,13 +1,11 @@
 #ifndef MODIFYWINDOW_H
 #define MODIFYWINDOW_H
 
-#include <QDialog>
 #include <QRadioButton>
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QBoxLayout>
 #include <QGroupBox>
-#include <QWidget>
 #include <QLabel>
 #include <QPushButton>
 #include <QStringList>
@@ -19,9 +17,10 @@ class ModifyWindow : public InsertionWindow
 private:
     unsigned int ind;
 public:
+    explicit ModifyWindow(QWidget *parent = nullptr);
     explicit ModifyWindow(QStringList,unsigned int, QWidget *parent = nullptr);
 public slots:
-    void confirm() override;
+    void confirm();
 signals:
     void replaceItem(unsigned int, QStringList);
 };
