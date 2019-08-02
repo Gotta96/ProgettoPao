@@ -39,5 +39,5 @@ double Stampante::getDaycost() const{
 }
 
 std::string Stampante::print() const{
-    return Item::print() + "\n" + "WiFi: " + (wifi ? "Si" : "No") + + " Double Side: " + (doubleside ? "Si" : "No") + "\n" + "Color: " + (color ? "Si" : "No") + " Used: " + (used ? "Si" : "No") + "\n" + "Photo: " + (photo ? "Si" : "No") + " Costo al giorno: " + std::to_string(daycost) + "€";
+    return Item::print() + "\n" + "WiFi: " + (wifi ? "Si" : "No") + + " Double Side: " + (doubleside ? "Si" : "No") + "\n" + "Color: " + (color ? "Si" : "No") + " Photo: " + (photo ? "Si" : "No") + "\n" + "Used: " + (used ? "Si" : "No") + " Costo al giorno: " + std::to_string(daycost) + "€";
 }

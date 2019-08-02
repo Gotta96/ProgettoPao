@@ -33,7 +33,7 @@ void Model::addIntoCatalog(const QStringList e){
             if(e.at(1) == "n")
                 elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(11)=="1"? 1:0);
             if(e.at(1) == "m")
-                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(7)=="1"? 1:0,e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(10)=="1"? 1:0,e.at(11)=="1"? 1:0,e.at(12)=="1"? 1:0);
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0 ,e.at(7)=="1"? 1:0, e.at(8)=="1"? 1:0, e.at(9)=="1"? 1:0, e.at(10)=="1"? 1:0, e.at(11)=="1"? 1:0, e.at(12)=="1"? 1:0);
         }
 //        std::cout << std::endl << elemento->print() << std::endl;
         catalogo.pushInOrder(elemento);
@@ -73,7 +73,6 @@ bool Model::editItem(unsigned int i,const QStringList e){
 }
 
 QString Model::getCatalogElementDetails(unsigned int ind){
-//    std::cout << catalogo.size() << std::endl;
     return QString::fromStdString((catalogo.searchAtIndex(ind))->print());
 }
 
@@ -281,15 +280,12 @@ QDate Model::getDate(){
 QStringList Model::getAllCatalog()
 {
     QStringList ret;
-//    std::cout << std::endl <<"ciao" << std::endl;
-//    std::cout << std::endl << (*catalogo.getFirst()->info).print() << std::endl;
     auto it=catalogo.begin();
     while(it!=catalogo.end()){
         ret.push_back(QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()));
         ++it;
     }
 
-//    std::cout << std::endl << ret.isEmpty() << std::endl;
     return ret;
 }
 
