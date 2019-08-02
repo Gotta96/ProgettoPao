@@ -53,6 +53,6 @@ double Item::getCost() const{
 }
 
 std::string Item::print() const{
-    return "Marca: " + vendor + " Modello: " + model + " Costo: " + std::to_string(cost) + "€";
+    return "Marca: " + vendor + "   Modello: " + model + "\n" + "Costo: " + std::to_string(cost) + "€" + "\n";
 }
 

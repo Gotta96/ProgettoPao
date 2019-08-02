@@ -27,13 +27,13 @@ void Model::addIntoCatalog(const QStringList e){
     if(e.at(0)!="null"){
         DeepPtr<Item> elemento;
         if(e.at(0) == "c"){
-            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1, e.at(7).toStdString());
+            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="1"? 1:0,e.at(6)=="1"? 1:0, e.at(7).toStdString());
         }
         if(e.at(0) == "p"){
             if(e.at(1) == "n")
-                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(11)=="true"? 0:1);
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(11)=="1"? 1:0);
             if(e.at(1) == "m")
-                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1,e.at(12)=="true"? 0:1);
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(7)=="1"? 1:0,e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(10)=="1"? 1:0,e.at(11)=="1"? 1:0,e.at(12)=="1"? 1:0);
         }
 //        std::cout << std::endl << elemento->print() << std::endl;
         catalogo.pushInOrder(elemento);
@@ -57,13 +57,13 @@ bool Model::editItem(unsigned int i,const QStringList e){
     if(e.at(0)!="null"){
         DeepPtr<Item> elemento;
         if(e.at(0) == "c"){
-            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? 0:1,e.at(6)=="true"? 0:1, e.at(7).toStdString());
+            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="1"? 1:0,e.at(6)=="1"? 1:0, e.at(7).toStdString());
         }
         if(e.at(0) == "p"){
             if(e.at(1) == "n")
-                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(11)=="true"? 0:1);
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(11)=="1"? 1:0);
             if(e.at(1) == "m")
-                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? 0:1, e.at(7)=="true"? 0:1,e.at(8)=="true"? 0:1,e.at(9)=="true"? 0:1,e.at(10)=="true"? 0:1,e.at(11)=="true"? 0:1,e.at(12)=="true"? 0:1);
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(7)=="1"? 1:0,e.at(8)==""? 1:0,e.at(9)=="1"? 1:0,e.at(10)=="1"? 1:0,e.at(11)=="1"? 1:0,e.at(12)=="1"? 1:0);
         }
         catalogo.replaceAtIndex(elemento,i);
         return true;
@@ -73,6 +73,7 @@ bool Model::editItem(unsigned int i,const QStringList e){
 }
 
 QString Model::getCatalogElementDetails(unsigned int ind){
+//    std::cout << catalogo.size() << std::endl;
     return QString::fromStdString((catalogo.searchAtIndex(ind))->print());
 }
 

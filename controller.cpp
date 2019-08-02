@@ -3,11 +3,12 @@
 Controller::Controller(QWidget *parent) : QWidget(parent),
                                           modello(new Model(this)),
                                           mainW(new MainWindow(this)),
-                                          insertionW(new InsertionWindow(mainW))
-{
+                                          insertionW(new InsertionWindow(mainW)),
+                                          modifyW(new ModifyWindow(mainW)){
     mainW->show();
 
     connect(insertionW, SIGNAL(sendItemsDetails(const QStringList)), this, SLOT(addToCatalogContainer(const QStringList)));
+    connect(modifyW, SIGNAL(replaceItem(unsigned int, QStringList)), this, SLOT(sendForReplace(unsigned int, QStringList)));
 
     //connessioni segnali della main window
     connect(mainW, SIGNAL(clickedNoleggia(unsigned int, unsigned int)), this, SLOT(addToRentCart(unsigned int, unsigned int)));
@@ -17,8 +18,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(mainW, SIGNAL(requestDetails(unsigned int)), this, SLOT(getDetails(unsigned int)));
     connect(mainW, SIGNAL(openAddToCatalogWindow()), this, SLOT(openAdd()));
     //segnali arrivanti dalle inserion e modify window interne alla main window
-    connect(mainW, SIGNAL(requestDetailsForEdit()), this, SLOT(getDetailsForEdit()));
-    connect(mainW, SIGNAL(requestForReplace(unsigned int, QStringList)), this, SLOT(sendForReplace(unsigned int, QStringList)));
+    connect(mainW, SIGNAL(requestToOpenModify()), this, SLOT(openModify()));
     //connessioni segnali arrivanti dal modello
 //    connect(modello, SIGNAL(showCatalog(const QStringList)), SIGNAL(sendToMainTheCatalog(const QStringList)));
     connect(modello, SIGNAL(elementAdded()), this, SLOT(refreshCatalog()));
@@ -31,12 +31,26 @@ void Controller::replaceIntoCatalog(unsigned int index, QStringList details)
 
 void Controller::openAdd()
 {
+    insertionW->resetForNewInsertion();
     insertionW->setModal(true);
     insertionW->show();
 }
 
+void Controller::openModify()
+{
+    if(mainW->isSelected()){
+        modifyW->loadDataForEdit(modello->getCatalogElement(mainW->getCatalogSelected()), mainW->getCatalogSelected());
+        modifyW->setModal(true);
+        modifyW->show();
+    }
+    else
+        mainW->displayNotSelection();
+}
+
 void Controller::getDetails(unsigned int index)
 {
+//    std::cout << index;
+//    std::cout << std::endl << modello->getCatalogElementDetails(index).toStdString();
     mainW->displayDetails(modello->getCatalogElementDetails(index));
 }
 
@@ -59,7 +73,6 @@ void Controller::addToCatalogContainer(const QStringList details)
             mainW->displayInputError();
         else{
             modello->addIntoCatalog(details);
-            std::cout << modello->getAllCatalog().first().toStdString();
         }
     }
 }
@@ -78,11 +91,6 @@ void Controller::sendForReplace(unsigned int index, QStringList elem)
 {
     modello->editItem(index, elem);
     refreshCatalog();
-}
-
-void Controller::getDetailsForEdit()
-{
-    mainW->openModify(modello->getCatalogElement(mainW->getCatalogSelected()), mainW->getCatalogSelected());
 }
 
 void Controller::refreshCatalog()

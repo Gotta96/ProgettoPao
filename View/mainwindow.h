@@ -24,8 +24,6 @@ private:
     SmartListView *elements, *rent, *buyed;
     QLabel *details, *image, *totrent, *totbuyed, *tot;
 
-    //ModifyWindow *modWindow;
-
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     //~MainWindow() override;
@@ -33,11 +31,14 @@ public:
     void displayCatalog(const QStringList);
     void displayInputError();
 
+    void displayNotSelection();
+
     void displayDetails(const QString);
 
+    bool isSelected() const;
     unsigned int getCatalogSelected() const;
 
-    void openModify(QStringList,unsigned int);
+//    void openModify(QStringList,unsigned int);
 
 public slots:
     void updateDetails(QString info, QString imgpath);
@@ -48,13 +49,13 @@ public slots:
     void destroyRent();
     void destroyBuyed();
 
-    void catalogSelected(const QModelIndex& index);
+    void catalogSelected(int);
     void rentSelected(const QModelIndex&);
     void buyedSelected(const QModelIndex&);
 
 signals:
-//    void openModifyCatalogWindow();
     void openAddToCatalogWindow();
+    void requestToOpenModify();
     void openLoadWindow();
     void openSaveWindow();
     void openSavePDFWindow();
@@ -65,11 +66,6 @@ signals:
     void clickedRemoveBuyed(unsigned int i);
     void requestDetails(unsigned int);
 
-    void requestDetailsForEdit();
-
-    void requestForReplace(unsigned int, QStringList);
-
-//    void detailsForNewItem(const QStringList);
 };
 
 #endif // MAINWINDOW_H

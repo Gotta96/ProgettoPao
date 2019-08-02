@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include <iostream>
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           name(new QLineEdit("Nome cliente",this)),
                                           iva(new QLineEdit("P.IVA",this)),
@@ -13,8 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           image(new QLabel("---IMG---",this)),
                                           totrent(new QLabel("0",this)),
                                           totbuyed(new QLabel("0",this)),
-                                          tot(new QLabel("0",this))/*,
-                                          modWindow(new ModifyWindow(this))*/{
+                                          tot(new QLabel("0",this)){
 
     //Imposto che in ogni SamrtListView posso selezionare un solo elemento
     elements->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -98,7 +99,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     boxparziali->addLayout(boxparzialilabel);
     boxparziali->addLayout(boxparzialivalues);
-
+    rent->unSelectIndex();
+    buyed->unSelectIndex();
     boxparzialilabel->addWidget(labtotrent);
     boxparzialilabel->addWidget(labtotbuyed);
 
@@ -187,18 +189,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
     connect(exit, SIGNAL(triggered()), this, SLOT(close()));
     connect(addToCatalog, SIGNAL(triggered()),this, SIGNAL(openAddToCatalogWindow()));
-//    connect(insWindow, SIGNAL(sendItemsDetails(const QStringList)),this, SIGNAL(detailsForNewItem(const QStringList)));
-    connect(modifyCatalog, SIGNAL(triggered()),this, SIGNAL(requestDetailsForEdit()));
-    //connect(modWindow, SIGNAL(replaceItem(unsigned int, QStringList)),this, SIGNAL(requestForReplace(unsigned int, QStringList)));
+    connect(modifyCatalog, SIGNAL(triggered()),this, SIGNAL(requestToOpenModify()));
     connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
     connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
     connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT(destroyRent()));
     connect(buttonRemoveBuyed, SIGNAL(clicked()), this, SLOT(destroyBuyed()));
-    connect(elements, SIGNAL(clicked(const QModelIndex&)), this, SLOT(catalogSelected(const QModelIndex&)));
+    connect(elements, SIGNAL(currentRowChanged(int)), this, SLOT(catalogSelected(int)));
     connect(rent, SIGNAL(clicked(const QModelIndex&)), this, SLOT(rentSelected(const QModelIndex&)));
     connect(buyed, SIGNAL(clicked(const QModelIndex&)), this, SLOT(buyedSelected(const QModelIndex&)));
-
 
 }
 
@@ -211,7 +210,6 @@ void MainWindow::displayCatalog(const QStringList cat)
         elements->addItem(*it);
         ++it;
     }
-    //elements->show();
 }
 
 void MainWindow::displayInputError()
@@ -221,9 +219,22 @@ void MainWindow::displayInputError()
     messageBox.setFixedSize(500,200);
 }
 
+void MainWindow::displayNotSelection()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Oggetto non selezionato");
+    messageBox.setFixedSize(500,200);
+}
+
 void MainWindow::displayDetails(const QString d)
 {
+    details->clear();
     details->setText(d);
+}
+
+bool MainWindow::isSelected() const
+{
+    return elements->isSomeoneSeleceted();
 }
 
 unsigned int MainWindow::getCatalogSelected() const
@@ -262,54 +273,25 @@ void MainWindow::destroyBuyed()
     emit clickedRemoveBuyed(buyed->getIndex());
 }
 
-void MainWindow::catalogSelected(const QModelIndex &index)
+void MainWindow::catalogSelected(int index)
 {
-    rent->unSelectIndex();
-    buyed->unSelectIndex();
-    emit requestDetails(index.row());
+//    std::cout << index.row();
+//    rent->unSelectIndex();
+//    buyed->unSelectIndex();
+//    std::cout << std::endl <<  index << std::endl;
+    emit requestDetails(index);
 }
 
 void MainWindow::rentSelected(const QModelIndex &index)
 {
-    elements->unSelectIndex();
-    buyed->unSelectIndex();
+//    elements->unSelectIndex();
+//    buyed->unSelectIndex();
     emit requestDetails(index.row());
 }
 
 void MainWindow::buyedSelected(const QModelIndex &index)
 {
-    elements->unSelectIndex();
-    rent->unSelectIndex();
+//    elements->unSelectIndex();
+//    rent->unSelectIndex();
     emit requestDetails(index.row());
 }
-
-void MainWindow::openModify(QStringList, unsigned int)
-{
-//    QStringList dati;
-//    dati.push_back("p");
-//    dati.push_back("m");
-//    dati.push_back("HP");
-//    dati.push_back("K8gt56");
-//    dati.push_back("135,45");
-//    dati.push_back("35");
-//    dati.push_back("1");
-//    dati.push_back("1");
-//    dati.push_back("0");
-//    dati.push_back("0");
-//    dati.push_back("1");
-//    dati.push_back("0");
-//    dati.push_back("1");
-//    unsigned int index=1;
-
-    //Da spostare!!!
-//    modWindow = new ModifyWindow(dati,index,this);
-//    modWindow->setModal(true);
-//    modWindow->show();
-}
-
-//void MainWindow::openAdd()
-//{
-//    insWindow = new InsertionWindow(this);
-//    insWindow->setModal(true);
-//    insWindow->show();
-//}

@@ -2,8 +2,8 @@
 
 ModifyWindow::ModifyWindow(QWidget *parent):InsertionWindow(parent){}
 
-ModifyWindow::ModifyWindow(QStringList e, unsigned int index, QWidget *parent) : InsertionWindow(parent),ind(index){
-
+void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
+    ind=i;
     //setto i valori passati dalla QStringList
 
     if(e.at(0)=="c"){
@@ -44,8 +44,8 @@ ModifyWindow::ModifyWindow(QStringList e, unsigned int index, QWidget *parent) :
             photo->setChecked(e.at(10)=="1"? true : false);
             if(e.at(1)=="n"){
                 //setto le group box che si devono visualizzare
-                normalDetails->setVisible(true);
                 multifunctionDetails->setVisible(false);
+                normalDetails->setVisible(true);
 
                 //setto i valori degli elementi
                 normale->setChecked(true);
@@ -61,14 +61,14 @@ ModifyWindow::ModifyWindow(QStringList e, unsigned int index, QWidget *parent) :
                 scanner->setChecked(e.at(11)=="1"? true : false);
                 fax->setChecked(e.at(12)=="1"? true : false);
             }
-            else {
-                //setto tutto come se non fosse stato inserito niente
-                consumableDetails->setVisible(false);
-                typeSelectionBox->setVisible(false);
-                printerDetails->setVisible(false);
-                normalDetails->setVisible(false);
-                multifunctionDetails->setVisible(false);
-            }
+        }
+        else {
+            //setto tutto come se non fosse stato inserito niente
+            consumableDetails->setVisible(false);
+            typeSelectionBox->setVisible(false);
+            printerDetails->setVisible(false);
+            normalDetails->setVisible(false);
+            multifunctionDetails->setVisible(false);
         }
     }
 }

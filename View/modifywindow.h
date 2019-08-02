@@ -18,9 +18,10 @@ private:
     unsigned int ind;
 public:
     explicit ModifyWindow(QWidget *parent = nullptr);
-    explicit ModifyWindow(QStringList,unsigned int, QWidget *parent = nullptr);
+
+    void loadDataForEdit(QStringList, unsigned int);
 public slots:
-    void confirm();
+    void confirm() override;
 signals:
     void replaceItem(unsigned int, QStringList);
 };

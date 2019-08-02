@@ -36,5 +36,5 @@ std::string Consumable::getColorName() const{
 
 std::string Consumable::print() const
 {
-    return Item::print() + "\n" + "Dimensione: " + std::to_string(size) + " Colore: " + getColorName() + " Originale: " + (original? "si":"no") + " Rigenerata: " + (restore? "si":"no");
+    return Item::print() + "\n" + "Dimensione: " + std::to_string(size) + " Colore: " + getColorName() + "\n" + "Rigenerata: " + (restore? "si":"no") + " Originale: " + (original? "si":"no");
 }

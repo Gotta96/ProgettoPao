@@ -31,12 +31,14 @@ protected:
 public:
     explicit InsertionWindow(QWidget *parent = nullptr);
 
+    void resetForNewInsertion();
+
 public slots:
     void showPrinter();
     void showConsumable();
     void showNormal();
     void showMultifunction();
-    void confirm();
+    virtual void confirm();
     void dimiss();
 
 signals:

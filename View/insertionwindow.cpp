@@ -1,12 +1,12 @@
 #include "insertionwindow.h"
 
 InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
-                                                    marca(new QLineEdit("Empty",this)),
-                                                    modello(new QLineEdit("Empty",this)),
+                                                    marca(new QLineEdit("--Empty--",this)),
+                                                    modello(new QLineEdit("--Empty--",this)),
                                                     cost(new QLineEdit("0",this)),
                                                     daycost(new QLineEdit("0",this)),
                                                     size(new QLineEdit("0",this)),
-                                                    colorName(new QLineEdit("",this)),
+                                                    colorName(new QLineEdit("--Empty--",this)),
                                                     restore(new QCheckBox("Rigenerata",this)),
                                                     original(new QCheckBox("Originale",this)),
                                                     scanner(new QCheckBox("Scanner",this)),
@@ -147,6 +147,49 @@ InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
     connect(no, SIGNAL(clicked()), this, SLOT(dimiss()));
 }
 
+void InsertionWindow::resetForNewInsertion()
+{
+    itemBaseDetails->setVisible(false);
+    elementSelectionBox->setVisible(false);
+    consumableDetails->setVisible(false);
+    typeSelectionBox->setVisible(false);
+    printerDetails->setVisible(false);
+    normalDetails->setVisible(false);
+    multifunctionDetails->setVisible(false);
+
+    marca->setText("--Empty--");
+    modello->setText("--Empty--");
+    cost->setText("0");
+    daycost->setText("0");
+    size->setText("0");
+    colorName->setText("--Empty--");
+    restore->setChecked(false);
+    original->setChecked(false);
+    scanner->setChecked(false);
+    fax->setChecked(false);
+    wifi->setChecked(false);
+    doubleside->setChecked(false);
+    color->setChecked(false);
+    used->setChecked(false);
+    photo->setChecked(false);
+    plotter->setChecked(false);
+
+    consumable->setAutoExclusive(false);
+    consumable->setChecked(false);
+
+    printer->setAutoExclusive(false);
+    printer->setChecked(false);
+
+    normale->setAutoExclusive(false);
+    normale->setChecked(false);
+
+    multifunction->setAutoExclusive(false);
+    multifunction->setChecked(false);
+
+    itemBaseDetails->setVisible(true);
+    elementSelectionBox->setVisible(true);
+}
+
 void InsertionWindow::showPrinter()
 {
     itemBaseDetails->setVisible(false);
@@ -163,16 +206,19 @@ void InsertionWindow::showPrinter()
 
     if(printer->isChecked()){
         normale->setAutoExclusive(true);
+        multifunction->setAutoExclusive(true);
+
+        normale->setCheckable(true);
         multifunction->setCheckable(true);
 
         normale->setEnabled(true);
         multifunction->setEnabled(true);
     }
 
+    size->setText("0");
+    colorName->setText("--Empty--");
     restore->setChecked(false);
     original->setChecked(false);
-    size->setText("");
-    colorName->setText("");
 }
 
 void InsertionWindow::showConsumable()
@@ -191,13 +237,16 @@ void InsertionWindow::showConsumable()
 
     if(consumable->isChecked()){
         normale->setAutoExclusive(false);
+        multifunction->setAutoExclusive(false);
+
+        normale->setCheckable(false);
         multifunction->setCheckable(false);
 
         normale->setEnabled(false);
         multifunction->setEnabled(false);
 
         normale->setChecked(false);
-        normale->setChecked(false);
+        multifunction->setChecked(false);
     }
 
     scanner->setChecked(false);
@@ -209,7 +258,7 @@ void InsertionWindow::showConsumable()
     photo->setChecked(false);
     plotter->setChecked(false);
 
-    daycost->setText("");
+    daycost->setText("0");
 
     this->adjustSize();
 }
@@ -224,21 +273,20 @@ void InsertionWindow::showNormal()
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
 
-    itemBaseDetails->setVisible(true);
-    elementSelectionBox->setVisible(true);
-    normalDetails->setVisible(true);
-    printerDetails->setVisible(true);
-    typeSelectionBox->setVisible(true);
-
-    scanner->setChecked(false);
-    fax->setChecked(false);
-
     doubleside->setText("Fronte-retro (no in normale)");
     photo->setText("Fotografie (no in normale)");
     doubleside->setChecked(false);
     photo->setChecked(false);
     doubleside->setEnabled(false);
     photo->setEnabled(false);
+    scanner->setChecked(false);
+    fax->setChecked(false);
+
+    itemBaseDetails->setVisible(true);
+    elementSelectionBox->setVisible(true);
+    normalDetails->setVisible(true);
+    printerDetails->setVisible(true);
+    typeSelectionBox->setVisible(true);
 
 }
 
@@ -252,20 +300,19 @@ void InsertionWindow::showMultifunction()
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
 
+    doubleside->setText("Fronte-retro");
+    photo->setText("Fotografie");
+    doubleside->setChecked(false);
+    photo->setChecked(false);
+    plotter->setChecked(false);
+    doubleside->setEnabled(true);
+    photo->setEnabled(true);
+
     itemBaseDetails->setVisible(true);
     elementSelectionBox->setVisible(true);
     multifunctionDetails->setVisible(true);
     printerDetails->setVisible(true);
     typeSelectionBox->setVisible(true);
-
-    plotter->setChecked(false);
-
-    doubleside->setText("Fronte-retro");
-    photo->setText("Fotografie");
-    doubleside->setChecked(false);
-    photo->setChecked(false);
-    doubleside->setEnabled(true);
-    photo->setEnabled(true);
 
 }
 

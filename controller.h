@@ -13,6 +13,7 @@ private:
     Model *modello;
     MainWindow *mainW;
     InsertionWindow *insertionW;
+    ModifyWindow *modifyW;
 
 public:
     explicit Controller(QWidget *parent = nullptr);
@@ -37,11 +38,10 @@ public slots:
 
     void sendForReplace(unsigned int, QStringList);
 
-    void getDetailsForEdit();
-
     void refreshCatalog();
 
     void openAdd();
+    void openModify();
 
 };
 

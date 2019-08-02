@@ -338,10 +338,10 @@ bool Container<T>::is_empty() const{
 template<class T>
 unsigned int Container<T>::size() const{
     unsigned int counter=0;
-    Container<T>::Const_Iterator cit=constBegin();
-    while(cit!=constEnd()){
-        counter ++;
-        ++cit;
+    nodo* tmp=first;
+    while(tmp){
+        counter++;
+        tmp=tmp->next;
     }
     return counter;
 }
