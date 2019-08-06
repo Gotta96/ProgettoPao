@@ -2,7 +2,7 @@
 
 Stampante::Stampante(string v, string m, double cos, double dc, bool w, bool ds, bool col, bool use, bool ph): Item(v,m,cos),daycost(dc), wifi(w), doubleside(ds), color(col), used(use), photo(ph){}
 
-Stampante::Stampante(const Stampante& printer): Item(printer),daycost(printer.daycost), wifi(printer.wifi), doubleside(printer.doubleside), color(printer.color){}
+Stampante::Stampante(const Stampante& printer): Item(printer),daycost(printer.daycost), wifi(printer.wifi), doubleside(printer.doubleside), color(printer.color),used(printer.used){}
 
 Stampante::~Stampante(){}
 

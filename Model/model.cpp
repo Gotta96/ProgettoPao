@@ -44,13 +44,15 @@ void Model::addIntoCatalog(const QStringList e){
 }
 
 void Model::addIntoRent(unsigned int i,unsigned int q){
-    DeepPtr<Item> insert = catalogo.searchAtIndex(i);
+    DeepPtr<Item> insert(catalogo.searchAtIndex(i));
     rent.insertIntoCart(insert,q);
+    emit rentAdded();
 }
 
 void Model::addIntoBuy(unsigned int i, unsigned int q){
     DeepPtr<Item> insert = catalogo.searchAtIndex(i);
     buyed.insertIntoCart(insert,q);
+    emit buyedAdded();
 }
 
 bool Model::editItem(unsigned int i,const QStringList e){
@@ -253,6 +255,41 @@ void Model::setQuantityBuy(unsigned int ind, unsigned int q){
     buyed.searchIntoCart(catalogo.searchAtIndex(ind))->second=q;
 }
 
+bool Model::checkIfExistIntoCatalog(QStringList d)
+{
+    DeepPtr<Item> elemento;
+    if(d.at(0)!="null"){
+        if(d.at(0) == "c"){
+            elemento = new Consumable(d.at(1).toStdString(),d.at(2).toStdString(),d.at(3).toDouble(),d.at(4).toUInt(),d.at(5)=="1"? 1:0,d.at(6)=="1"? 1:0, d.at(7).toStdString());
+        }
+        if(d.at(0) == "p"){
+            if(d.at(1) == "n")
+                elemento = new Normal(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0, d.at(8)=="1"? 1:0,d.at(9)=="1"? 1:0,d.at(11)=="1"? 1:0);
+            if(d.at(1) == "m")
+                elemento = new Multifunction(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0 ,d.at(7)=="1"? 1:0, d.at(8)=="1"? 1:0, d.at(9)=="1"? 1:0, d.at(10)=="1"? 1:0, d.at(11)=="1"? 1:0, d.at(12)=="1"? 1:0);
+        }
+    }
+    return catalogo.searchIntoList(elemento);
+}
+
+unsigned int Model::findItemIntoCatalog(QStringList d)
+{
+    DeepPtr<Item> elemento;
+    if(d.at(0)!="null"){
+        if(d.at(0) == "c"){
+            elemento = new Consumable(d.at(1).toStdString(),d.at(2).toStdString(),d.at(3).toDouble(),d.at(4).toUInt(),d.at(5)=="1"? 1:0,d.at(6)=="1"? 1:0, d.at(7).toStdString());
+        }
+        if(d.at(0) == "p"){
+            if(d.at(1) == "n")
+                elemento = new Normal(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0, d.at(8)=="1"? 1:0,d.at(9)=="1"? 1:0,d.at(11)=="1"? 1:0);
+            if(d.at(1) == "m")
+                elemento = new Multifunction(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0 ,d.at(7)=="1"? 1:0, d.at(8)=="1"? 1:0, d.at(9)=="1"? 1:0, d.at(10)=="1"? 1:0, d.at(11)=="1"? 1:0, d.at(12)=="1"? 1:0);
+        }
+    }
+
+    return catalogo.getIndex(elemento);
+}
+
 void Model::setIva(QString i){
     clientPiva=i;
 }
@@ -280,9 +317,49 @@ QDate Model::getDate(){
 QStringList Model::getAllCatalog()
 {
     QStringList ret;
+    QString etichetta;
     auto it=catalogo.begin();
     while(it!=catalogo.end()){
-        ret.push_back(QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()));
+        etichetta = (QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()) + " ");
+        if(dynamic_cast<const Consumable*>(&(*(*it))))
+            etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(*it)))->getColorName()));
+        ret.push_back(etichetta);
+        ++it;
+    }
+
+    return ret;
+}
+
+QStringList Model::getAllRent()
+{
+    QStringList ret;
+    QString etichetta;
+    auto it= rent.getCart().begin();
+    while(it!=rent.getCart().end()){
+        etichetta = (QString::fromStdString(((it->first)->getVendor()) + " " + ((it->first)->getModel()) + " "));
+        if(dynamic_cast<const Consumable*>(&(*(it->first))))
+            etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(it->first)))->getColorName()));
+        etichetta += QString::fromStdString(" ");
+        etichetta += QString::number(it->second);
+        ret.push_back(etichetta);
+        ++it;
+    }
+
+    return ret;
+}
+
+QStringList Model::getAllBuyed()
+{
+    QStringList ret;
+    QString etichetta;
+    auto it= buyed.getCart().begin();
+    while(it!=buyed.getCart().end()){
+        etichetta = (QString::fromStdString(((it->first)->getVendor()) + " " + ((it->first)->getModel()) + " "));
+        if(dynamic_cast<const Consumable*>(&(*(it->first))))
+            etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(it->first)))->getColorName()));
+        etichetta += QString::fromStdString(" ");
+        etichetta += QString::number(it->second);
+        ret.push_back(etichetta);
         ++it;
     }
 

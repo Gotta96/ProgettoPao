@@ -40,6 +40,12 @@ public:
     unsigned int getQuantityBuy(unsigned int);
     void setQuantityRent(unsigned int, unsigned int);
     void setQuantityBuy(unsigned int, unsigned int);
+    QStringList getAllCatalog();
+    QStringList getAllRent();
+    QStringList getAllBuyed();
+
+    bool checkIfExistIntoCatalog(QStringList);
+    unsigned int findItemIntoCatalog(QStringList);
 
     void setIva(QString);
     void setName(QString);
@@ -48,8 +54,6 @@ public:
 
     void setDate(QDate);
     QDate getDate();
-
-    QStringList getAllCatalog();
 
 public slots:
 
@@ -78,6 +82,8 @@ signals:
 //    void buyAddRequest();
 
     void elementAdded();
+    void rentAdded();
+    void buyedAdded();
 
 };
 

@@ -12,7 +12,9 @@ void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){
     if(cart.end()!=it){
         it->second+=q;
     }
-    cart[i]+=q;
+    cart.insert({i,q});
+
+
 }
 
 bool Carrello::removeIntoCart(DeepPtr<Item> i){
@@ -63,4 +65,9 @@ unsigned int Carrello::getTotItems(){
         tot+=it->second;
     }
     return tot;
+}
+
+map<DeepPtr<Item>, unsigned int> Carrello::getCart() const
+{
+    return cart;
 }

@@ -41,6 +41,7 @@ public:
     bool removeOneAtIndex(const unsigned int);
     bool searchIntoList(const T&) const;
     T searchAtIndex(unsigned int) const;
+    unsigned int getIndex(const T&) const;
 
 
     //operatori container
@@ -180,25 +181,23 @@ Container<T>::~Container<T>(){
 
 template <class T>
 void Container<T>::pushInOrder(const T& itm){
-    if(first!=nullptr){
-        nodo* tmp=first;
-        while(tmp->info<itm && tmp->next){
-            tmp=tmp->next;
-        }
-        tmp->next=new nodo(itm,tmp->next);
-//        if(tmp->next){
-//           tmp->next=new nodo(itm,tmp->next);
-//            if(tmp->info > itm)
-//                first= new nodo(itm,tmp);
-//            else
-//                tmp->next=new nodo(itm);
-//        }
-//        else {
-//            tmp->next=new nodo(itm,tmp->next);
-//        }
+    nodo* current;
+    nodo* new_nodo = new nodo(itm);
+
+    if (first == nullptr || first->info > new_nodo->info){
+        new_nodo->next = first;
+        first = new_nodo;
     }
-    else
-        first= new nodo(itm);
+    else{
+        current = first;
+        while (current->next!=nullptr &&
+               current->next->info < new_nodo->info)
+        {
+            current = current->next;
+        }
+        new_nodo->next = current->next;
+        current->next = new_nodo;
+    }
 }
 
 template <class T>
@@ -292,6 +291,17 @@ T Container<T>::searchAtIndex(unsigned int i) const{
     for(unsigned int k=0; k<i; k++)
         att=att->next;
     return att->info;
+}
+
+template<class T>
+unsigned int Container<T>::getIndex(const T& itm)const{
+    nodo * curr=first;
+    unsigned int counter=0;
+    while(curr && curr->info!=itm){
+        curr=curr->next;
+        counter++;
+    }
+    return counter;
 }
 
 //operatori container

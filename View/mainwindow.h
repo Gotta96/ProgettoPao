@@ -29,21 +29,18 @@ public:
     //~MainWindow() override;
 
     void displayCatalog(const QStringList);
+    void displayRent(const QStringList);
+    void displayBuyed(const QStringList);
     void displayInputError();
-
     void displayNotSelection();
-
     void displayDetails(const QString);
 
     bool isSelected() const;
     unsigned int getCatalogSelected() const;
 
-//    void openModify(QStringList,unsigned int);
-
 public slots:
     void updateDetails(QString info, QString imgpath);
     void updateTotals(QStringList prezzi);
-//    void addToCatalog(QStringList);
     void generateRent();
     void generateBuyed();
     void destroyRent();

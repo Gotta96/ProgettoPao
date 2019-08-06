@@ -39,6 +39,8 @@ public slots:
     void sendForReplace(unsigned int, QStringList);
 
     void refreshCatalog();
+    void refreshRent();
+    void refreshBuyed();
 
     void openAdd();
     void openModify();

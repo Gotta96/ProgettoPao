@@ -24,6 +24,7 @@ public:
     unsigned int removeQuantity(DeepPtr<Item>, unsigned int);
     unsigned int getQuantity(DeepPtr<Item>);
     unsigned int getTotItems();
+    map<DeepPtr<Item>,unsigned int> getCart() const;
 };
 
 #endif // CARRELLO_H

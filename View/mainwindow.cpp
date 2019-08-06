@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <iostream>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           name(new QLineEdit("Nome cliente",this)),
@@ -201,13 +202,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
 }
 
-void MainWindow::displayCatalog(const QStringList cat)
+void MainWindow::displayCatalog(const QStringList intestazioni)
 {
     elements->reset();
     elements->clear();
-    auto it = cat.begin();
-    while(it!=cat.end()){
+    auto it = intestazioni.begin();
+    while(it!=intestazioni.end()){
         elements->addItem(*it);
+        ++it;
+    }
+}
+
+void MainWindow::displayRent(const QStringList intestazioni)
+{
+    rent->reset();
+    rent->clear();
+    auto it = intestazioni.begin();
+    while(it!=intestazioni.end()){
+        rent->addItem(*it);
+        ++it;
+    }
+}
+
+void MainWindow::displayBuyed(const QStringList intestazioni)
+{
+    buyed->reset();
+    buyed->clear();
+    auto it = intestazioni.begin();
+    while(it!=intestazioni.end()){
+        buyed->addItem(*it);
         ++it;
     }
 }
@@ -255,43 +278,53 @@ void MainWindow::updateTotals(QStringList prezzi){
 
 void MainWindow::generateRent()
 {
-    emit clickedNoleggia(elements->getIndex(),quantity->value());
+    if(elements->isSomeoneSeleceted())
+        emit clickedNoleggia(elements->getIndex(),quantity->value());
+    else
+        displayNotSelection();
 }
 
 void MainWindow::generateBuyed()
 {
-    emit clickedCompra(elements->getIndex(),quantity->value());
+    if(elements->isSomeoneSeleceted())
+        emit clickedCompra(elements->getIndex(),quantity->value());
+    else
+        displayNotSelection();
 }
 
 void MainWindow::destroyRent()
 {
-    emit clickedRemoveRent(rent->getIndex());
+    if(rent->isSomeoneSeleceted())
+        emit clickedRemoveRent(rent->getIndex());
+    else
+        displayNotSelection();
 }
 
 void MainWindow::destroyBuyed()
 {
-    emit clickedRemoveBuyed(buyed->getIndex());
+    if(buyed->isSomeoneSeleceted())
+        emit clickedRemoveBuyed(buyed->getIndex());
+    else
+        displayNotSelection();
 }
 
 void MainWindow::catalogSelected(int index)
 {
-//    std::cout << index.row();
-//    rent->unSelectIndex();
-//    buyed->unSelectIndex();
-//    std::cout << std::endl <<  index << std::endl;
+    rent->unSelectIndex();
+    buyed->unSelectIndex();
     emit requestDetails(index);
 }
 
 void MainWindow::rentSelected(const QModelIndex &index)
 {
-//    elements->unSelectIndex();
-//    buyed->unSelectIndex();
+    elements->unSelectIndex();
+    buyed->unSelectIndex();
     emit requestDetails(index.row());
 }
 
 void MainWindow::buyedSelected(const QModelIndex &index)
 {
-//    elements->unSelectIndex();
-//    rent->unSelectIndex();
+    elements->unSelectIndex();
+    rent->unSelectIndex();
     emit requestDetails(index.row());
 }
