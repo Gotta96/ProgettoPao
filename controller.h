@@ -34,7 +34,9 @@ public slots:
     void removeR(unsigned int);
     void removeB(unsigned int);
 
-    void getDetails(unsigned int);
+    void getDetailsCatalogo(unsigned int);
+    void getDetailsRent(unsigned int);
+    void getDetailsBuyed(unsigned int);
 
     void sendForReplace(unsigned int, QStringList);
 

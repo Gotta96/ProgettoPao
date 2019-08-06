@@ -7,13 +7,12 @@ Carrello::Carrello(const Carrello& c): cart(c.cart){}
 Carrello::~Carrello(){
 }
 
-void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){
+void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){    
     auto it=searchIntoCart(i);
-    if(cart.end()!=it){
-        it->second+=q;
-    }
-    cart.insert({i,q});
-
+        if(!(*it))
+            cart.insert(i,q);
+        else
+            cart[i]+=q;
 
 }
 
@@ -26,27 +25,33 @@ bool Carrello::removeIntoCart(DeepPtr<Item> i){
     return false;
 }
 
-bool Carrello::removeIntoCartAtIndex(unsigned int i){
+void Carrello::removeIntoCartAtIndex(unsigned int i){
     auto it=cart.begin();
-    if(i<cart.size()){
+    if(i<(uint)cart.size()){
         for(unsigned int k=0; k<i; k++)
             it++;
         cart.erase(it);
-        return true;
     }
-     return false;
 }
 
-map<DeepPtr<Item>,unsigned int>::iterator Carrello::searchIntoCart(DeepPtr<Item> i){
+QMap<DeepPtr<Item>,unsigned int>::iterator Carrello::searchIntoCart(DeepPtr<Item> i){
     return cart.find(i);
 }
 
-unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){
+DeepPtr<Item> Carrello::searchAtIndex(unsigned int index) const
+{
+    auto it = cart.begin();
+    for(unsigned int k=0; k<index; k++)
+        it++;
+    return it.key();
+}
+
+unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){         //da sistemare, logicamente errata
     auto it=searchIntoCart(i);
     if(cart.end()!=it){
-        if(it->second > q){
-            it->second-=q;
-            return it->second;
+        if(it.value() > q){
+            it.value()-=q;
+            return it.value();
         }
     }
     return 0;
@@ -54,20 +59,33 @@ unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){
 
 unsigned int Carrello::getQuantity(DeepPtr<Item> i){
     auto it=searchIntoCart(i);
-    if(it!=cart.end())
-        return it->second;
+    if(*it)
+        return it.value();
     return 0;
 }
 
 unsigned int Carrello::getTotItems(){
     unsigned int tot=0;
     for(auto it=cart.begin(); it !=cart.end(); it++){
-        tot+=it->second;
+        tot+=it.value();
     }
     return tot;
 }
 
-map<DeepPtr<Item>, unsigned int> Carrello::getCart() const
+QStringList Carrello::printAllCart() const
 {
-    return cart;
+    QStringList ret;
+    QString etichetta;
+    auto it = cart.begin();
+    while(it!=cart.end()){
+        etichetta = (QString::fromStdString(((it.key())->getVendor()) + " " + ((it.key())->getModel()) + " "));
+        if(dynamic_cast<const Consumable*>(&(*(it.key()))))
+            etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(it.key())))->getColorName()));
+        etichetta += QString::fromStdString("       ");
+        etichetta += QString::number(it.value());
+        ret.push_back(etichetta);
+        ++it;
+    }
+
+    return ret;
 }

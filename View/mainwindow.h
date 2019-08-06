@@ -47,8 +47,8 @@ public slots:
     void destroyBuyed();
 
     void catalogSelected(int);
-    void rentSelected(const QModelIndex&);
-    void buyedSelected(const QModelIndex&);
+    void rentSelected(int);
+    void buyedSelected(int);
 
 signals:
     void openAddToCatalogWindow();
@@ -61,7 +61,9 @@ signals:
     void clickedCompra(unsigned int i, unsigned int q);
     void clickedRemoveRent(unsigned int i);
     void clickedRemoveBuyed(unsigned int i);
-    void requestDetails(unsigned int);
+    void requestDetailsCatalog(unsigned int);
+    void requestDetailsRent(unsigned int);
+    void requestDetailsBuyed(unsigned int);
 
 };
 

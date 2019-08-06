@@ -25,8 +25,8 @@ public:
     explicit Model(QObject *parent = nullptr);
 
     bool removeIntoCatalog(unsigned int);
-    bool removeIntoRent(unsigned int);
-    bool removeIntoBuy(unsigned int);
+    void removeIntoRent(unsigned int);
+    void removeIntoBuy(unsigned int);
     void addIntoRent(unsigned int, unsigned int);
     void addIntoBuy(unsigned int, unsigned int);
     bool editItem(unsigned int, const QStringList);
@@ -84,6 +84,9 @@ signals:
     void elementAdded();
     void rentAdded();
     void buyedAdded();
+
+    void rentRemoved();
+    void buyRemoved();
 
 };
 

@@ -12,7 +12,9 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(mainW, SIGNAL(clickedCompra(unsigned int, unsigned int)), this, SLOT(addToBuyCart(unsigned int, unsigned int)));
     connect(mainW, SIGNAL(clickedRemoveRent(unsigned int)), this, SLOT(removeR(unsigned int)));
     connect(mainW, SIGNAL(clickedRemoveBuyed(unsigned int)), this, SLOT(removeB(unsigned int)));
-    connect(mainW, SIGNAL(requestDetails(unsigned int)), this, SLOT(getDetails(unsigned int)));
+    connect(mainW, SIGNAL(requestDetailsCatalog(unsigned int)), this, SLOT(getDetailsCatalogo(unsigned int)));
+    connect(mainW, SIGNAL(requestDetailsRent(unsigned int)), this, SLOT(getDetailsRent(unsigned int)));
+    connect(mainW, SIGNAL(requestDetailsBuyed(unsigned int)), this, SLOT(getDetailsBuyed(unsigned int)));
     connect(mainW, SIGNAL(openAddToCatalogWindow()), this, SLOT(openAdd()));
     connect(mainW, SIGNAL(requestToOpenModify()), this, SLOT(openModify()));
 
@@ -24,6 +26,8 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(modello, SIGNAL(elementAdded()), this, SLOT(refreshCatalog()));
     connect(modello, SIGNAL(rentAdded()), this, SLOT(refreshRent()));
     connect(modello, SIGNAL(buyedAdded()), this, SLOT(refreshBuyed()));
+    connect(modello, SIGNAL(rentRemoved()), this, SLOT(refreshRent()));
+    connect(modello, SIGNAL(buyRemoved()), this, SLOT(refreshBuyed()));
 }
 
 void Controller::replaceIntoCatalog(unsigned int index, QStringList details)
@@ -49,11 +53,19 @@ void Controller::openModify()
         mainW->displayNotSelection();
 }
 
-void Controller::getDetails(unsigned int index)
+void Controller::getDetailsCatalogo(unsigned int index)
 {
-//    std::cout << index;
-//    std::cout << std::endl << modello->getCatalogElementDetails(index).toStdString();
     mainW->displayDetails(modello->getCatalogElementDetails(index));
+}
+
+void Controller::getDetailsRent(unsigned int index)
+{
+    mainW->displayDetails(modello->getRentElementDetails(index));
+}
+
+void Controller::getDetailsBuyed(unsigned int index)
+{
+    mainW->displayDetails(modello->getBuyElementDetails(index));
 }
 
 void Controller::removeC(unsigned int index)
@@ -61,9 +73,14 @@ void Controller::removeC(unsigned int index)
     modello->removeIntoCatalog(index);
 }
 
-void Controller::removeB(unsigned int index)
+void Controller::removeR(unsigned int index)
 {
     modello->removeIntoRent(index);
+}
+
+void Controller::removeB(unsigned int index)
+{
+    modello->removeIntoBuy(index);
 }
 
 void Controller::addToCatalogContainer(const QStringList details)
@@ -115,10 +132,4 @@ void Controller::refreshBuyed()
 {
     mainW->displayBuyed(modello->getAllBuyed());
 }
-
-void Controller::removeR(unsigned int index)
-{
-    modello->removeIntoBuy(index);
-}
-
 

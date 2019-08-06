@@ -3,7 +3,9 @@
 
 #include "Gerarchia/item.h"
 #include "Model/Template/deepptr.h"
-#include <map>
+#include "Model/Gerarchia/item.h"
+#include "Model/Gerarchia/consumable.h"
+#include <QMap>
 
 using std::map;
 //using std::pair;
@@ -11,7 +13,7 @@ using std::map;
 
 class Carrello{
 private:
-    map<DeepPtr<Item>, unsigned int> cart;
+    QMap<DeepPtr<Item>, unsigned int> cart;
 public:
     Carrello();
     Carrello(const Carrello&);
@@ -19,12 +21,16 @@ public:
 
     void insertIntoCart(DeepPtr<Item>, unsigned int);
     bool removeIntoCart(DeepPtr<Item>);
-    bool removeIntoCartAtIndex(unsigned int i);
-    map<DeepPtr<Item>, unsigned int>::iterator searchIntoCart(DeepPtr<Item>);
+    void removeIntoCartAtIndex(unsigned int i);
+    QMap<DeepPtr<Item>, unsigned int>::iterator searchIntoCart(DeepPtr<Item>);
+    DeepPtr<Item> searchAtIndex(unsigned int) const;
     unsigned int removeQuantity(DeepPtr<Item>, unsigned int);
     unsigned int getQuantity(DeepPtr<Item>);
     unsigned int getTotItems();
-    map<DeepPtr<Item>,unsigned int> getCart() const;
+//    QMap<DeepPtr<Item>,unsigned int> getCart() const;
+//    DeepPtr<Item> getOnlyItem(QMap<DeepPtr<Item>, unsigned int>::const_iterator);
+
+    QStringList printAllCart() const;
 };
 
 #endif // CARRELLO_H

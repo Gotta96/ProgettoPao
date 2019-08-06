@@ -197,8 +197,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT(destroyRent()));
     connect(buttonRemoveBuyed, SIGNAL(clicked()), this, SLOT(destroyBuyed()));
     connect(elements, SIGNAL(currentRowChanged(int)), this, SLOT(catalogSelected(int)));
-    connect(rent, SIGNAL(clicked(const QModelIndex&)), this, SLOT(rentSelected(const QModelIndex&)));
-    connect(buyed, SIGNAL(clicked(const QModelIndex&)), this, SLOT(buyedSelected(const QModelIndex&)));
+    connect(rent, SIGNAL(currentRowChanged(int)), this, SLOT(rentSelected(int)));
+    connect(buyed, SIGNAL(currentRowChanged(int)), this, SLOT(buyedSelected(int)));
 
 }
 
@@ -278,16 +278,20 @@ void MainWindow::updateTotals(QStringList prezzi){
 
 void MainWindow::generateRent()
 {
-    if(elements->isSomeoneSeleceted())
+    if(elements->isSomeoneSeleceted()){
         emit clickedNoleggia(elements->getIndex(),quantity->value());
+        quantity->setValue(0);
+    }
     else
         displayNotSelection();
 }
 
 void MainWindow::generateBuyed()
 {
-    if(elements->isSomeoneSeleceted())
+    if(elements->isSomeoneSeleceted()){
         emit clickedCompra(elements->getIndex(),quantity->value());
+        quantity->setValue(0);
+    }
     else
         displayNotSelection();
 }
@@ -310,21 +314,21 @@ void MainWindow::destroyBuyed()
 
 void MainWindow::catalogSelected(int index)
 {
-    rent->unSelectIndex();
-    buyed->unSelectIndex();
-    emit requestDetails(index);
+    rent->reset();
+    buyed->reset();
+    emit requestDetailsCatalog(index);
 }
 
-void MainWindow::rentSelected(const QModelIndex &index)
+void MainWindow::rentSelected(int index)
 {
-    elements->unSelectIndex();
-    buyed->unSelectIndex();
-    emit requestDetails(index.row());
+    elements->reset();
+    buyed->reset();
+    emit requestDetailsRent(index);
 }
 
-void MainWindow::buyedSelected(const QModelIndex &index)
+void MainWindow::buyedSelected(int index)
 {
-    elements->unSelectIndex();
-    rent->unSelectIndex();
-    emit requestDetails(index.row());
+    elements->reset();
+    rent->reset();
+    emit requestDetailsBuyed(index);
 }
