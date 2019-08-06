@@ -17,6 +17,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(mainW, SIGNAL(requestDetailsBuyed(unsigned int)), this, SLOT(getDetailsBuyed(unsigned int)));
     connect(mainW, SIGNAL(openAddToCatalogWindow()), this, SLOT(openAdd()));
     connect(mainW, SIGNAL(requestToOpenModify()), this, SLOT(openModify()));
+    connect(mainW, SIGNAL(requestRemoveIntoCatalog(unsigned int)), this, SLOT(removeC(unsigned int)));
 
     //connessioni segnali della insertion e della modify window
     connect(insertionW, SIGNAL(sendItemsDetails(const QStringList)), this, SLOT(addToCatalogContainer(const QStringList)));
@@ -26,6 +27,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(modello, SIGNAL(elementAdded()), this, SLOT(refreshCatalog()));
     connect(modello, SIGNAL(rentAdded()), this, SLOT(refreshRent()));
     connect(modello, SIGNAL(buyedAdded()), this, SLOT(refreshBuyed()));
+    connect(modello, SIGNAL(catalogRemoved()), this, SLOT(refreshCatalog()));
     connect(modello, SIGNAL(rentRemoved()), this, SLOT(refreshRent()));
     connect(modello, SIGNAL(buyRemoved()), this, SLOT(refreshBuyed()));
 }

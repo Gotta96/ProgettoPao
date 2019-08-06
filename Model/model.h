@@ -24,7 +24,7 @@ private:
 public:
     explicit Model(QObject *parent = nullptr);
 
-    bool removeIntoCatalog(unsigned int);
+    void removeIntoCatalog(unsigned int);
     void removeIntoRent(unsigned int);
     void removeIntoBuy(unsigned int);
     void addIntoRent(unsigned int, unsigned int);
@@ -85,6 +85,7 @@ signals:
     void rentAdded();
     void buyedAdded();
 
+    void catalogRemoved();
     void rentRemoved();
     void buyRemoved();
 

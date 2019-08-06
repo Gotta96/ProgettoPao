@@ -50,9 +50,12 @@ public slots:
     void rentSelected(int);
     void buyedSelected(int);
 
+    void removeRequest();
+
 signals:
     void openAddToCatalogWindow();
     void requestToOpenModify();
+    void requestRemoveIntoCatalog(unsigned int);
     void openLoadWindow();
     void openSaveWindow();
     void openSavePDFWindow();

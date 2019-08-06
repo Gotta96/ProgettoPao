@@ -30,8 +30,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QMenuBar *menu= new QMenuBar(this);
     QMenu *file = new QMenu("File",this);
     QMenu *modify = new QMenu("Modifica",this);
-    QAction *modifyCatalog = new QAction("Modifica elemento catalogo",this);
     QAction *addToCatalog = new QAction("Aggiungi elemento catalogo",this);
+    QAction *modifyCatalog = new QAction("Modifica elemento catalogo",this);
+    QAction *removeIntoCatalog = new QAction("Rimuovi elemento catalogo",this);
     QAction *load = new QAction("Carica", this);
     QAction *save = new QAction("Salva file", this);
     QAction *pdf = new QAction("PDF Export", this);
@@ -89,8 +90,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     file->addAction(pdf);
     file->addAction(exit);
     menu->addMenu(file);
-    modify->addAction(modifyCatalog);
     modify->addAction(addToCatalog);
+    modify->addAction(modifyCatalog);
+    modify->addAction(removeIntoCatalog);
     menu->addMenu(modify);
 
     //Layout di resume dei vari totali
@@ -191,6 +193,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(exit, SIGNAL(triggered()), this, SLOT(close()));
     connect(addToCatalog, SIGNAL(triggered()),this, SIGNAL(openAddToCatalogWindow()));
     connect(modifyCatalog, SIGNAL(triggered()),this, SIGNAL(requestToOpenModify()));
+    connect(removeIntoCatalog, SIGNAL(triggered()),this, SLOT(removeRequest()));
     connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
     connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
@@ -331,4 +334,12 @@ void MainWindow::buyedSelected(int index)
     elements->reset();
     rent->reset();
     emit requestDetailsBuyed(index);
+}
+
+void MainWindow::removeRequest()
+{
+    if(elements->isSomeoneSeleceted())
+        emit requestRemoveIntoCatalog(elements->getIndex());
+    else
+        displayNotSelection();
 }

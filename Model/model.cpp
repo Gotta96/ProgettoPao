@@ -11,8 +11,9 @@ Model::Model(QObject *parent) : QObject(parent),
 
 }
 
-bool Model::removeIntoCatalog(unsigned int i){
-    return catalogo.removeOneAtIndex(i);
+void Model::removeIntoCatalog(unsigned int i){
+    catalogo.removeOneAtIndex(i);
+    emit catalogRemoved();
 }
 
 void Model::removeIntoRent(unsigned int i){
