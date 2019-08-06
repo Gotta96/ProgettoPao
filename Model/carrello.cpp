@@ -64,10 +64,25 @@ unsigned int Carrello::getQuantity(DeepPtr<Item> i){
     return 0;
 }
 
-unsigned int Carrello::getTotItems(){
-    unsigned int tot=0;
+double Carrello::getTotPriceItems(){
+    double tot=0;
+    double costo_tmp=0;
     for(auto it=cart.begin(); it !=cart.end(); it++){
-        tot+=it.value();
+        costo_tmp=(*(it.key())).getCost();
+        tot+=it.value() * costo_tmp;
+    }
+    return tot;
+}
+
+double Carrello::getTotRentItems()
+{
+    double tot=0;
+    double noleggio_tmp=0;
+    for(auto it=cart.begin(); it !=cart.end(); it++){
+        if(dynamic_cast<const Stampante*>(&(*(it.key())))){
+            noleggio_tmp=(dynamic_cast<const Stampante*>(&(*(it.key()))))->getDaycost();
+            tot+=it.value() * noleggio_tmp;
+        }
     }
     return tot;
 }

@@ -30,6 +30,8 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(modello, SIGNAL(catalogRemoved()), this, SLOT(refreshCatalog()));
     connect(modello, SIGNAL(rentRemoved()), this, SLOT(refreshRent()));
     connect(modello, SIGNAL(buyRemoved()), this, SLOT(refreshBuyed()));
+    connect(modello, SIGNAL(consumableNotRentable()), this, SLOT(noConsumableInRent()));
+
 }
 
 void Controller::replaceIntoCatalog(unsigned int index, QStringList details)
@@ -53,6 +55,11 @@ void Controller::openModify()
     }
     else
         mainW->displayNotSelection();
+}
+
+void Controller::noConsumableInRent()
+{
+    mainW->displayErrorForConsumableRent();
 }
 
 void Controller::getDetailsCatalogo(unsigned int index)
@@ -128,10 +135,12 @@ void Controller::refreshCatalog()
 void Controller::refreshRent()
 {
     mainW->displayRent(modello->getAllRent());
+    mainW->displayTotals(modello->getAllPriceIntoRent(), modello->getAllPriceIntoBuy());
 }
 
 void Controller::refreshBuyed()
 {
     mainW->displayBuyed(modello->getAllBuyed());
+    mainW->displayTotals(modello->getAllPriceIntoRent(), modello->getAllPriceIntoBuy());
 }
 

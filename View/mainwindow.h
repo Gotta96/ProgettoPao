@@ -22,7 +22,7 @@ private:
     QSpinBox *quantity;
     QDateEdit *date;
     SmartListView *elements, *rent, *buyed;
-    QLabel *details, *image, *totrent, *totbuyed, *tot;
+    QLabel *details, *image, *totrent, *totbuyed;/*, *tot;*/
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -34,13 +34,15 @@ public:
     void displayInputError();
     void displayNotSelection();
     void displayDetails(const QString);
+    void displayTotals(double, double);
+    void displayErrorForConsumableRent();
 
     bool isSelected() const;
     unsigned int getCatalogSelected() const;
 
 public slots:
     void updateDetails(QString info, QString imgpath);
-    void updateTotals(QStringList prezzi);
+//    void updateTotals(QStringList prezzi);
     void generateRent();
     void generateBuyed();
     void destroyRent();

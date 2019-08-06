@@ -20,9 +20,9 @@ public:
 
     void replaceIntoCatalog(unsigned int, QStringList);
 
+
 signals:
 
-//    void sendToMainTheCatalog(const QStringList);
 
 public slots:
     void addToCatalogContainer(const QStringList);
@@ -46,6 +46,8 @@ public slots:
 
     void openAdd();
     void openModify();
+
+    void noConsumableInRent();
 
 };
 

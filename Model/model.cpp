@@ -48,8 +48,12 @@ void Model::addIntoCatalog(const QStringList e){
 
 void Model::addIntoRent(unsigned int i,unsigned int q){
     DeepPtr<Item> insert(catalogo.searchAtIndex(i));
-    rent.insertIntoCart(insert,q);
-    emit rentAdded();
+    if(dynamic_cast<const Consumable*>(&(*insert)))
+        emit consumableNotRentable();
+    else{
+        rent.insertIntoCart(insert,q);
+        emit rentAdded();
+    }
 }
 
 void Model::addIntoBuy(unsigned int i, unsigned int q){
@@ -331,12 +335,14 @@ QStringList Model::getAllCatalog()
     QStringList ret;
     QString etichetta;
     auto it=catalogo.begin();
-    while(it!=catalogo.end()){
-        etichetta = (QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()) + " ");
-        if(dynamic_cast<const Consumable*>(&(*(*it))))
-            etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(*it)))->getColorName()));
-        ret.push_back(etichetta);
-        ++it;
+    if(!catalogo.is_empty()){
+        while(it!=catalogo.end()){
+            etichetta = (QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()) + " ");
+            if(dynamic_cast<const Consumable*>(&(*(*it))))
+                etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(*it)))->getColorName()));
+            ret.push_back(etichetta);
+            ++it;
+        }
     }
 
     return ret;
@@ -350,6 +356,16 @@ QStringList Model::getAllRent()
 QStringList Model::getAllBuyed()
 {
     return buyed.printAllCart();
+}
+
+double Model::getAllPriceIntoRent()
+{
+    return rent.getTotRentItems();
+}
+
+double Model::getAllPriceIntoBuy()
+{
+    return buyed.getTotPriceItems();
 }
 
 //void Model::setFilename(const QString flname)

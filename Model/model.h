@@ -44,6 +44,9 @@ public:
     QStringList getAllRent();
     QStringList getAllBuyed();
 
+    double getAllPriceIntoRent();
+    double getAllPriceIntoBuy();
+
     bool checkIfExistIntoCatalog(QStringList);
     unsigned int findItemIntoCatalog(QStringList);
 
@@ -88,6 +91,8 @@ signals:
     void catalogRemoved();
     void rentRemoved();
     void buyRemoved();
+
+    void consumableNotRentable();
 
 };
 

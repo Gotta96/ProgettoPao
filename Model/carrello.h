@@ -5,6 +5,7 @@
 #include "Model/Template/deepptr.h"
 #include "Model/Gerarchia/item.h"
 #include "Model/Gerarchia/consumable.h"
+#include "Model/Gerarchia/stampante.h"
 #include <QMap>
 
 using std::map;
@@ -26,7 +27,8 @@ public:
     DeepPtr<Item> searchAtIndex(unsigned int) const;
     unsigned int removeQuantity(DeepPtr<Item>, unsigned int);
     unsigned int getQuantity(DeepPtr<Item>);
-    unsigned int getTotItems();
+    double getTotPriceItems();
+    double getTotRentItems();
 //    QMap<DeepPtr<Item>,unsigned int> getCart() const;
 //    DeepPtr<Item> getOnlyItem(QMap<DeepPtr<Item>, unsigned int>::const_iterator);
 

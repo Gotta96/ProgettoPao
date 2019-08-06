@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           details(new QLabel("----Dettagli----",this)),
                                           image(new QLabel("---IMG---",this)),
                                           totrent(new QLabel("0",this)),
-                                          totbuyed(new QLabel("0",this)),
-                                          tot(new QLabel("0",this)){
+                                          totbuyed(new QLabel("0",this))
+                                          /*tot(new QLabel("0",this))*/{
 
     //Imposto che in ogni SamrtListView posso selezionare un solo elemento
     elements->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QLabel *labquantity = new QLabel("Quantita': ");
     QLabel *labtotrent = new QLabel("Totale noleggiato: ");
     QLabel *labtotbuyed = new QLabel("Totale comprato: ");
-    QLabel *labtot = new QLabel("Totale: ");
+//    QLabel *labtot = new QLabel("Totale: ");
     QPushButton *buttonrent = new QPushButton("Noleggia");
     QPushButton *buttonbuy = new QPushButton("Compra");
     QPushButton *buttonRemoveRent = new QPushButton("Rimuovi noleggio");
@@ -110,8 +110,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     boxparzialivalues->addWidget(totrent);
     boxparzialivalues->addWidget(totbuyed);
 
-    boxtotale->addWidget(labtot);
-    boxtotale->addWidget(tot);
+//    boxtotale->addWidget(labtot);
+//    boxtotale->addWidget(tot);
 
     //Layout con i due bottoni decisionali per noleggiare o comprare e di inserimento di quantità
 
@@ -187,6 +187,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
 
+    details->setMinimumHeight(300);
+
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
     connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
     connect(pdf, SIGNAL(triggered()), SIGNAL(openSavePDFWindow()));
@@ -258,6 +260,21 @@ void MainWindow::displayDetails(const QString d)
     details->setText(d);
 }
 
+void MainWindow::displayTotals(double noleggiato, double comprato)
+{
+    totrent->clear();
+    totbuyed->clear();
+    totrent->setText(QString::number(noleggiato));
+    totbuyed->setText(QString::number(comprato));
+}
+
+void MainWindow::displayErrorForConsumableRent()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Inpossibile noleggiare un consumabile");
+    messageBox.setFixedSize(500,200);
+}
+
 bool MainWindow::isSelected() const
 {
     return elements->isSomeoneSeleceted();
@@ -273,11 +290,11 @@ void MainWindow::updateDetails(QString info, QString ){
     //finire di impostare l'immagine
 }
 
-void MainWindow::updateTotals(QStringList prezzi){
-    totrent->setText(prezzi[0]);
-    totbuyed->setText(prezzi[1]);
-    tot->setText(prezzi[0]+prezzi[1]);
-}
+//void MainWindow::updateTotals(QStringList prezzi){
+//    totrent->setText(prezzi[0]);
+//    totbuyed->setText(prezzi[1]);
+//    tot->setText(prezzi[0]+prezzi[1]);
+//}
 
 void MainWindow::generateRent()
 {
