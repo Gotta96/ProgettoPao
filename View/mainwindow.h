@@ -40,6 +40,8 @@ public:
     bool isSelected() const;
     unsigned int getCatalogSelected() const;
 
+    const QString getResearchWord();
+
 public slots:
     void updateDetails(QString info, QString imgpath);
 //    void updateTotals(QStringList prezzi);
@@ -61,7 +63,7 @@ signals:
     void openLoadWindow();
     void openSaveWindow();
     void openSavePDFWindow();
-    void updateSearch(const QString &text);
+    void updateSearch();
     void clickedNoleggia(unsigned int i, unsigned int q);
     void clickedCompra(unsigned int i, unsigned int q);
     void clickedRemoveRent(unsigned int i);

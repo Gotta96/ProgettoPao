@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDate>
+#include <QMap>
 #include "Gerarchia/item.h"
 #include "Gerarchia/normal.h"
 #include "Gerarchia/multifunction.h"
@@ -41,6 +42,7 @@ public:
     void setQuantityRent(unsigned int, unsigned int);
     void setQuantityBuy(unsigned int, unsigned int);
     QStringList getAllCatalog();
+    QStringList getFilteredCatalog(QString,QMap<unsigned int,unsigned int> &);
     QStringList getAllRent();
     QStringList getAllBuyed();
 

@@ -19,6 +19,8 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(mainW, SIGNAL(requestToOpenModify()), this, SLOT(openModify()));
     connect(mainW, SIGNAL(requestRemoveIntoCatalog(unsigned int)), this, SLOT(removeC(unsigned int)));
 
+    connect(mainW, SIGNAL(updateSearch()), this, SLOT(refreshCatalog()));
+
     //connessioni segnali della insertion e della modify window
     connect(insertionW, SIGNAL(sendItemsDetails(const QStringList)), this, SLOT(addToCatalogContainer(const QStringList)));
     connect(modifyW, SIGNAL(replaceItem(unsigned int, QStringList)), this, SLOT(sendForReplace(unsigned int, QStringList)));
@@ -36,7 +38,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
 
 void Controller::replaceIntoCatalog(unsigned int index, QStringList details)
 {
-    modello->editItem(index,details);
+    modello->editItem(indexTranslate[index],details);
 }
 
 void Controller::openAdd()
@@ -64,7 +66,7 @@ void Controller::noConsumableInRent()
 
 void Controller::getDetailsCatalogo(unsigned int index)
 {
-    mainW->displayDetails(modello->getCatalogElementDetails(index));
+    mainW->displayDetails(modello->getCatalogElementDetails(indexTranslate[index]));
 }
 
 void Controller::getDetailsRent(unsigned int index)
@@ -79,7 +81,7 @@ void Controller::getDetailsBuyed(unsigned int index)
 
 void Controller::removeC(unsigned int index)
 {
-    modello->removeIntoCatalog(index);
+    modello->removeIntoCatalog(indexTranslate[index]);
 }
 
 void Controller::removeR(unsigned int index)
@@ -112,24 +114,25 @@ void Controller::addToCatalogContainer(const QStringList details)
 void Controller::addToRentCart(unsigned int index, unsigned int quantity)
 {
     if(quantity!=0)
-        modello->addIntoRent(index,quantity);
+        modello->addIntoRent(indexTranslate[index],quantity);
 }
 
 void Controller::addToBuyCart(unsigned int index, unsigned int quantity)
 {
     if(quantity!=0)
-        modello->addIntoBuy(index, quantity);
+        modello->addIntoBuy(indexTranslate[index], quantity);
 }
 
 void Controller::sendForReplace(unsigned int index, QStringList elem)
 {
-    modello->editItem(index, elem);
+    modello->editItem(indexTranslate[index], elem);
     refreshCatalog();
 }
 
 void Controller::refreshCatalog()
 {
-    mainW->displayCatalog(modello->getAllCatalog());
+    QString filter=mainW->getResearchWord();
+    mainW->displayCatalog(modello->getFilteredCatalog(filter,indexTranslate));
 }
 
 void Controller::refreshRent()

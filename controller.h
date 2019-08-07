@@ -5,6 +5,7 @@
 #include "View/mainwindow.h"
 #include "View/modifywindow.h"
 #include <QStringList>
+#include <QMap>
 
 class Controller : public QWidget
 {
@@ -14,7 +15,7 @@ private:
     MainWindow *mainW;
     InsertionWindow *insertionW;
     ModifyWindow *modifyW;
-
+    QMap<unsigned int,unsigned int> indexTranslate;
 public:
     explicit Controller(QWidget *parent = nullptr);
 

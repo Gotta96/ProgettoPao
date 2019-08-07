@@ -348,6 +348,30 @@ QStringList Model::getAllCatalog()
     return ret;
 }
 
+QStringList Model::getFilteredCatalog(QString filter, QMap<unsigned int, unsigned int> &indexMapper)
+{
+    QStringList ret;
+    QString etichetta;
+    QRegExp regex(filter,Qt::CaseInsensitive, QRegExp::Wildcard);
+    auto it=catalogo.begin();
+    unsigned int count=0;
+    if(!catalogo.is_empty()){
+        while(it!=catalogo.end()){
+            etichetta = (QString::fromStdString((*(*it)).getVendor() + " " + (*(*it)).getModel()) + " ");
+            if(etichetta.contains(regex)){
+                indexMapper.insert((uint)ret.count(),count);
+                if(dynamic_cast<const Consumable*>(&(*(*it))))
+                    etichetta += (QString::fromStdString(dynamic_cast<const Consumable*>(&(*(*it)))->getColorName()));
+                ret.push_back(etichetta);
+            }
+            count++;
+            ++it;
+        }
+    }
+
+    return ret;
+}
+
 QStringList Model::getAllRent()
 {
     return rent.printAllCart();

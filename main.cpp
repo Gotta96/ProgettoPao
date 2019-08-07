@@ -37,4 +37,13 @@ int main(int argc,char *argv[])
 //    prova.pushInOrder(e);
 //    auto it=prova.constBegin();
 //    cout << endl <<(*it)->print() << endl;
+
+//    QRegExp regex("5", Qt::CaseInsensitive, QRegExp::Wildcard);
+
+//    QString prova = "ci5o";
+
+//    if(prova.contains(regex))
+//        std::cout << std::endl << "true" << std:: endl;
+//    else
+//        std::cout << std::endl << "false" << std:: endl;
 }

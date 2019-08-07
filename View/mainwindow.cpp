@@ -15,8 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           details(new QLabel("----Dettagli----",this)),
                                           image(new QLabel("---IMG---",this)),
                                           totrent(new QLabel("0",this)),
-                                          totbuyed(new QLabel("0",this))
-                                          /*tot(new QLabel("0",this))*/{
+                                          totbuyed(new QLabel("0",this)){
 
     //Imposto che in ogni SamrtListView posso selezionare un solo elemento
     elements->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -47,7 +46,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QLabel *labquantity = new QLabel("Quantita': ");
     QLabel *labtotrent = new QLabel("Totale noleggiato: ");
     QLabel *labtotbuyed = new QLabel("Totale comprato: ");
-//    QLabel *labtot = new QLabel("Totale: ");
     QPushButton *buttonrent = new QPushButton("Noleggia");
     QPushButton *buttonbuy = new QPushButton("Compra");
     QPushButton *buttonRemoveRent = new QPushButton("Rimuovi noleggio");
@@ -109,9 +107,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     boxparzialivalues->addWidget(totrent);
     boxparzialivalues->addWidget(totbuyed);
-
-//    boxtotale->addWidget(labtot);
-//    boxtotale->addWidget(tot);
 
     //Layout con i due bottoni decisionali per noleggiare o comprare e di inserimento di quantità
 
@@ -196,7 +191,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(addToCatalog, SIGNAL(triggered()),this, SIGNAL(openAddToCatalogWindow()));
     connect(modifyCatalog, SIGNAL(triggered()),this, SIGNAL(requestToOpenModify()));
     connect(removeIntoCatalog, SIGNAL(triggered()),this, SLOT(removeRequest()));
-    connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch(const QString &)));
+    connect(find, SIGNAL(textChanged(const QString &)),this, SIGNAL(updateSearch()));
     connect(buttonrent, SIGNAL(clicked()), this, SLOT(generateRent()));
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
     connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT(destroyRent()));
@@ -283,6 +278,11 @@ bool MainWindow::isSelected() const
 unsigned int MainWindow::getCatalogSelected() const
 {
     return elements->getIndex();
+}
+
+const QString MainWindow::getResearchWord()
+{
+    return find->text();
 }
 
 void MainWindow::updateDetails(QString info, QString ){
