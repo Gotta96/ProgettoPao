@@ -23,7 +23,12 @@ public:
     bool isOriginal() const;
     string getColorName() const;
 
+    QString getType() const override;
+
     string print() const override;
+
+    static Consumable *unserialize(QXmlStreamReader&);
+    void dataSerialize(QXmlStreamWriter&) const override;
 };
 
 #endif // CONSUMABLE_H

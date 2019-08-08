@@ -6,6 +6,7 @@
 #include "View/modifywindow.h"
 #include <QStringList>
 #include <QMap>
+#include <QFileDialog>
 
 class Controller : public QWidget
 {
@@ -47,6 +48,8 @@ public slots:
 
     void openAdd();
     void openModify();
+    void openSave();
+    void openLoad();
 
     void noConsumableInRent();
 

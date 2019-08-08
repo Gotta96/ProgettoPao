@@ -19,7 +19,12 @@ public:
     bool haveScanner() const;
     bool haveFax() const;
 
+    QString getType() const override;
+
     std::string print() const override;
+
+    static Multifunction *unserialize(QXmlStreamReader&);
+    void dataSerialize(QXmlStreamWriter&) const override;
 };
 
 #endif // MULTIFUNCTION_H

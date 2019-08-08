@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QAction *addToCatalog = new QAction("Aggiungi elemento catalogo",this);
     QAction *modifyCatalog = new QAction("Modifica elemento catalogo",this);
     QAction *removeIntoCatalog = new QAction("Rimuovi elemento catalogo",this);
-    QAction *load = new QAction("Carica", this);
+    QAction *load = new QAction("Carica file", this);
     QAction *save = new QAction("Salva file", this);
     QAction *pdf = new QAction("PDF Export", this);
     QAction *exit = new QAction("Esci", this);
@@ -267,6 +267,13 @@ void MainWindow::displayErrorForConsumableRent()
 {
     QMessageBox messageBox;
     messageBox.critical(this,"Error","Inpossibile noleggiare un consumabile");
+    messageBox.setFixedSize(500,200);
+}
+
+void MainWindow::displayOpenError()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Inpossibile aprire il file specificato");
     messageBox.setFixedSize(500,200);
 }
 

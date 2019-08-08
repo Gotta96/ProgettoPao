@@ -19,7 +19,13 @@ public:
 
     bool isPlotter() const;
 
+    QString getType() const override;
+
     std::string print() const override;
+
+    static Normal *unserialize(QXmlStreamReader&);
+
+    void dataSerialize(QXmlStreamWriter&) const override;
 };
 
 #endif // NORMAL_H

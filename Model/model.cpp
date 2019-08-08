@@ -6,7 +6,8 @@ Model::Model(QObject *parent) : QObject(parent),
                                 clientPiva(""),
                                 catalogo(),
                                 rent(),
-                                buyed()
+                                buyed(),
+                                filename()
 {
 
 }
@@ -392,17 +393,18 @@ double Model::getAllPriceIntoBuy()
     return buyed.getTotPriceItems();
 }
 
-//void Model::setFilename(const QString flname)
-//{
+void Model::setFilename(const QString flname)
+{
+    filename=flname;
+}
 
-//}
+void Model::loadData()
+{
+    catalogo=XmlIO::readItems(filename);
+}
 
-////void Model::loadData()
-//{
-
-//}
-
-//void Model::serializeData()
-//{
-
-//}
+void Model::serializeData()
+{
+    if(!XmlIO::writeItems(catalogo, filename))
+        throw QString("Impossibile scrivere su file");
+}

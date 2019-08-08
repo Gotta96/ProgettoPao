@@ -18,6 +18,8 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(mainW, SIGNAL(openAddToCatalogWindow()), this, SLOT(openAdd()));
     connect(mainW, SIGNAL(requestToOpenModify()), this, SLOT(openModify()));
     connect(mainW, SIGNAL(requestRemoveIntoCatalog(unsigned int)), this, SLOT(removeC(unsigned int)));
+    connect(mainW, SIGNAL(openSaveWindow()), this, SLOT(openSave()));
+    connect(mainW, SIGNAL(openLoadWindow()), this, SLOT(openLoad()));
 
     connect(mainW, SIGNAL(updateSearch()), this, SLOT(refreshCatalog()));
 
@@ -57,6 +59,30 @@ void Controller::openModify()
     }
     else
         mainW->displayNotSelection();
+}
+
+void Controller::openSave()
+{
+    QString nomeFile = QFileDialog::getSaveFileName(mainW);
+
+    if(nomeFile =="")
+        modello->setFilename("catalog");
+    else {
+        modello->setFilename(nomeFile);
+        modello->serializeData();
+    }
+}
+
+void Controller::openLoad()
+{
+    QString nomeFile = QFileDialog::getOpenFileName(mainW);
+
+    if(nomeFile == "")
+        mainW->displayOpenError();
+    else {
+        modello->setFilename(nomeFile);
+        modello->loadData();
+    }
 }
 
 void Controller::noConsumableInRent()

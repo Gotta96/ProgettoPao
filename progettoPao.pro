@@ -10,6 +10,7 @@ SOURCES += \
         Model/Gerarchia/item.cpp \
         Model/carrello.cpp \
         Model/model.cpp \
+        Model/xmlio.cpp \
         View/mainwindow.cpp \
         View/modifywindow.cpp \
         View/smartlistview.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     Model/Gerarchia/stampante.h \
     Model/carrello.h \
     Model/model.h \
+    Model/xmlio.h \
     View/insertionwindow.h \
     View/mainwindow.h \
     View/modifywindow.h \

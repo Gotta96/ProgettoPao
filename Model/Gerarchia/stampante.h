@@ -26,7 +26,11 @@ public:
     bool isPhoto() const;
     double getDaycost() const;
 
+    QString getType() const override =0;
+
     std::string print() const override;
+
+    virtual void dataSerialize(QXmlStreamWriter&) const override =0;
 };
 
 #endif // STAMPANTE_H

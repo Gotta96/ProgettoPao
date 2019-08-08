@@ -12,6 +12,7 @@
 #include "Model/Template/container.h"
 #include "Model/Template/deepptr.h"
 #include "Model/carrello.h"
+#include "xmlio.h"
 
 class Model : public QObject
 {
@@ -21,6 +22,8 @@ private:
     QString clientName, clientPiva;
     Container<DeepPtr<Item>> catalogo;
     Carrello rent, buyed;
+
+    QString filename;
 
 public:
     explicit Model(QObject *parent = nullptr);
@@ -64,9 +67,9 @@ public slots:
 
     void addIntoCatalog(const QStringList);
 
-//    void setFilename(const QString flname);
-//    void loadData();
-//    void serializeData();
+    void setFilename(const QString flname);
+    void loadData();
+    void serializeData();
 
 
 signals:

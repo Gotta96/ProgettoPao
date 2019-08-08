@@ -1,6 +1,8 @@
 #ifndef ITEM_H
 #define ITEM_H
 #include <string>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 using std::string;
 
@@ -25,7 +27,11 @@ class Item{
         string getModel() const;
         double getCost() const;
 
+        virtual QString getType() const =0;
+
         virtual std::string print() const;
+
+        virtual void dataSerialize(QXmlStreamWriter&) const =0;
 };
 
 #endif // ITEM_H

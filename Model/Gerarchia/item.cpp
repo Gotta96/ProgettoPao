@@ -36,10 +36,6 @@ bool Item::operator>(const Item& i) const{
     return false;
 }
 
-//bool Item::compareBaseDetails(const Item& i) const{
-//    return vendor==i.getVendor() && model==i.getModel();
-//}
-
 string Item::getVendor() const{
     return vendor;
 }

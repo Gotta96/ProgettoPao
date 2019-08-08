@@ -36,6 +36,7 @@ public:
     void displayDetails(const QString);
     void displayTotals(double, double);
     void displayErrorForConsumableRent();
+    void displayOpenError();
 
     bool isSelected() const;
     unsigned int getCatalogSelected() const;
