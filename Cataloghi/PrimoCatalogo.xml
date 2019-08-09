@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Catalogo oggetti-->
+<catalog>
+    <item type="n">
+        <vendor>Epson</vendor>
+        <model>DLQ-3500</model>
+        <cost>2202</cost>
+        <day_cost>22</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>0</wifi>
+        <color>0</color>
+        <used>0</used>
+        <photo>0</photo>
+        <plotter>1</plotter>
+    </item>
+    <item type="m">
+        <vendor>Epson</vendor>
+        <model>Expression Home XP 257</model>
+        <cost>49.99</cost>
+        <day_cost>5</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>1</photo>
+        <scanner>1</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="m">
+        <vendor>HP</vendor>
+        <model>Color LaserJet CP5225DN</model>
+        <cost>1930.99</cost>
+        <day_cost>19.3</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>0</photo>
+        <scanner>1</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="n">
+        <vendor>HP</vendor>
+        <model>DesignJet T1530</model>
+        <cost>4044</cost>
+        <day_cost>40</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>1</wifi>
+        <color>0</color>
+        <used>0</used>
+        <photo>0</photo>
+        <plotter>1</plotter>
+    </item>
+    <item type="n">
+        <vendor>HP</vendor>
+        <model>DesignJet T2530</model>
+        <cost>6911</cost>
+        <day_cost>60</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>1</wifi>
+        <color>0</color>
+        <used>0</used>
+        <photo>0</photo>
+        <plotter>1</plotter>
+    </item>
+    <item type="n">
+        <vendor>HP</vendor>
+        <model>DesignJet T830 MPF</model>
+        <cost>5284</cost>
+        <day_cost>52</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>0</wifi>
+        <color>0</color>
+        <used>0</used>
+        <photo>0</photo>
+        <plotter>1</plotter>
+    </item>
+    <item type="m">
+        <vendor>HP</vendor>
+        <model>LaserJet M855D</model>
+        <cost>3577</cost>
+        <day_cost>35</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>1</photo>
+        <scanner>1</scanner>
+        <fax>1</fax>
+    </item>
+</catalog>

@@ -3,8 +3,8 @@
 InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
                                                     marca(new QLineEdit("--Empty--",this)),
                                                     modello(new QLineEdit("--Empty--",this)),
-                                                    cost(new QLineEdit("0",this)),
-                                                    daycost(new QLineEdit("0",this)),
+                                                    cost(new QLineEdit("0.0",this)),
+                                                    daycost(new QLineEdit("0.0",this)),
                                                     size(new QLineEdit("0",this)),
                                                     colorName(new QLineEdit("--Empty--",this)),
                                                     restore(new QCheckBox("Rigenerata",this)),
@@ -159,8 +159,8 @@ void InsertionWindow::resetForNewInsertion()
 
     marca->setText("--Empty--");
     modello->setText("--Empty--");
-    cost->setText("0");
-    daycost->setText("0");
+    cost->setText("0.0");
+    daycost->setText("0.0");
     size->setText("0");
     colorName->setText("--Empty--");
     restore->setChecked(false);
@@ -188,6 +188,13 @@ void InsertionWindow::resetForNewInsertion()
 
     itemBaseDetails->setVisible(true);
     elementSelectionBox->setVisible(true);
+}
+
+void InsertionWindow::displayInputError()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Input Errato");
+    messageBox.setFixedSize(500,200);
 }
 
 void InsertionWindow::showPrinter()
@@ -258,7 +265,7 @@ void InsertionWindow::showConsumable()
     photo->setChecked(false);
     plotter->setChecked(false);
 
-    daycost->setText("0");
+    daycost->setText("0.0");
 
     this->adjustSize();
 }
@@ -318,6 +325,8 @@ void InsertionWindow::showMultifunction()
 
 void InsertionWindow::confirm()
 {
+    QRegExp regexNumber("^(?:0|[1-9][0-9]*)\\.[0-9]+$");
+    QRegExp regexInt("^\\d+$");
     QStringList *tmp = new QStringList();
     if(consumable->isChecked())
         tmp->push_back("c");
@@ -342,28 +351,42 @@ void InsertionWindow::confirm()
     tmp->push_back(cost->text());
     if(consumable->isChecked()){
         tmp->push_back(size->text());
-        tmp->push_back(restore->isChecked()? "1":"0");
-        tmp->push_back(original->isChecked()? "1":"0");
+        tmp->push_back(restore->isChecked()? "true":"false");
+        tmp->push_back(original->isChecked()? "true":"false");
         tmp->push_back(colorName->text());
     }
     else {
         tmp->push_back(daycost->text());
-        tmp->push_back(wifi->isChecked()? "1":"0");
-        tmp->push_back(doubleside->isChecked()? "1":"0");
-        tmp->push_back(color->isChecked()? "1":"0");
-        tmp->push_back(used->isChecked()? "1":"0");
-        tmp->push_back(photo->isChecked()? "1":"0");
+        tmp->push_back(wifi->isChecked()? "true":"false");
+        tmp->push_back(doubleside->isChecked()? "true":"false");
+        tmp->push_back(color->isChecked()? "true":"false");
+        tmp->push_back(used->isChecked()? "true":"false");
+        tmp->push_back(photo->isChecked()? "true":"false");
         if(normale->isChecked()){
-            tmp->push_back(plotter->isChecked()? "1":"0");
+            tmp->push_back(plotter->isChecked()? "true":"false");
         }
         else {
             if(multifunction->isChecked())
-            tmp->push_back(scanner->isChecked()? "1":"0");
-            tmp->push_back(fax->isChecked()? "1":"0");
+            tmp->push_back(scanner->isChecked()? "true":"false");
+            tmp->push_back(fax->isChecked()? "true":"false");
         }
     }
-    emit sendItemsDetails(*tmp);
-    this->close();
+    if(cost->text().contains(regexNumber)){
+        if(consumable->isChecked() && size->text().contains(regexInt)){
+            emit sendItemsDetails(*tmp);
+            this->close();
+        }
+        else {
+            if(printer->isChecked() && daycost->text().contains(regexNumber)){
+                emit sendItemsDetails(*tmp);
+                this->close();
+            }
+            else
+                emit inputError();
+        }
+    }
+    else
+        emit inputError();
 }
 
 void InsertionWindow::dimiss()

@@ -25,7 +25,9 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
 
     //connessioni segnali della insertion e della modify window
     connect(insertionW, SIGNAL(sendItemsDetails(const QStringList)), this, SLOT(addToCatalogContainer(const QStringList)));
+    connect(insertionW, SIGNAL(inputError()), this, SLOT(inputErrorRecived()));
     connect(modifyW, SIGNAL(replaceItem(unsigned int, QStringList)), this, SLOT(sendForReplace(unsigned int, QStringList)));
+    connect(modifyW, SIGNAL(inputError()), this, SLOT(inputErrorRecived()));
 
     //connessioni segnali arrivanti dal modello
     connect(modello, SIGNAL(elementAdded()), this, SLOT(refreshCatalog()));
@@ -63,31 +65,36 @@ void Controller::openModify()
 
 void Controller::openSave()
 {
-    QString nomeFile = QFileDialog::getSaveFileName(mainW);
-
+    QString nomeFile = QFileDialog::getSaveFileName(mainW,"salva","../ProgettoPao/Cataloghi","File di catalogo (*.xml)");
     if(nomeFile =="")
-        modello->setFilename("catalog");
+        modello->setFilename("catalog.xml");
     else {
+        if(!nomeFile.endsWith(".xml"))
+            nomeFile=nomeFile+".xml";
         modello->setFilename(nomeFile);
-        modello->serializeData();
+        mainW->displaySave(modello->serializeData());
     }
 }
-
 void Controller::openLoad()
 {
-    QString nomeFile = QFileDialog::getOpenFileName(mainW);
-
+    QString nomeFile = QFileDialog::getOpenFileName(mainW,"carica","../ProgettoPao/Cataloghi","File di catalogo (*.xml)");
     if(nomeFile == "")
         mainW->displayOpenError();
     else {
         modello->setFilename(nomeFile);
-        modello->loadData();
+        mainW->displayLoad(modello->loadData());
+        refreshCatalog();
     }
 }
 
 void Controller::noConsumableInRent()
 {
     mainW->displayErrorForConsumableRent();
+}
+
+void Controller::inputErrorRecived()
+{
+    insertionW->displayInputError();
 }
 
 void Controller::getDetailsCatalogo(unsigned int index)
@@ -107,7 +114,8 @@ void Controller::getDetailsBuyed(unsigned int index)
 
 void Controller::removeC(unsigned int index)
 {
-    modello->removeIntoCatalog(indexTranslate[index]);
+    modello->removeIntoCatalog(indexTranslate[index-1]);
+    refreshCatalog();
 }
 
 void Controller::removeR(unsigned int index)

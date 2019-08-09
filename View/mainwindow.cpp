@@ -13,9 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           rent(new SmartListView(this)),
                                           buyed(new SmartListView(this)),
                                           details(new QLabel("----Dettagli----",this)),
-                                          image(new QLabel("---IMG---",this)),
-                                          totrent(new QLabel("0",this)),
-                                          totbuyed(new QLabel("0",this)){
+                                          totrent(new QLabel("0€",this)),
+                                          totbuyed(new QLabel("0€",this)){
 
     //Imposto che in ogni SamrtListView posso selezionare un solo elemento
     elements->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -46,11 +45,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QLabel *labquantity = new QLabel("Quantita': ");
     QLabel *labtotrent = new QLabel("Totale noleggiato: ");
     QLabel *labtotbuyed = new QLabel("Totale comprato: ");
+    QLabel *labLogo = new QLabel();
     QPushButton *buttonrent = new QPushButton("Noleggia");
     QPushButton *buttonbuy = new QPushButton("Compra");
     QPushButton *buttonRemoveRent = new QPushButton("Rimuovi noleggio");
     QPushButton *buttonRemoveBuyed = new QPushButton("Rimuovi compera");
-    //QPushButton *buttonfind = new QPushButton("Cerca");       //forse inutile causa aggiornamento dato da autocompletamento
 
     //creazione dei layout per gli elementi
 
@@ -82,6 +81,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QHBoxLayout *clientdetails = new QHBoxLayout();
 
     QVBoxLayout *layoutfinal = new QVBoxLayout();
+
+    QPixmap imgLogo(QString(":/images/newLogo.png"));
+    labLogo->setPixmap(imgLogo);
 
     file->addAction(load);
     file->addAction(save);
@@ -133,7 +135,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     //Layout di resume dei vari dettagli dell'elemento selezionato
 
     resumedetails->addWidget(details);
-    resumedetails->addWidget(image);
+    resumedetails->addWidget(labLogo);
 
     //Layout della sezione di ricerca
 
@@ -183,6 +185,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     setCentralWidget(mainWidget);
 
     details->setMinimumHeight(300);
+    details->setMinimumWidth(300);
+    labLogo->setMinimumHeight(300);
 
     connect(load, SIGNAL(triggered()), SIGNAL(openLoadWindow()));
     connect(save, SIGNAL(triggered()), SIGNAL(openSaveWindow()));
@@ -259,8 +263,8 @@ void MainWindow::displayTotals(double noleggiato, double comprato)
 {
     totrent->clear();
     totbuyed->clear();
-    totrent->setText(QString::number(noleggiato));
-    totbuyed->setText(QString::number(comprato));
+    totrent->setText(QString::number(noleggiato)+"€");
+    totbuyed->setText(QString::number(comprato)+"€");
 }
 
 void MainWindow::displayErrorForConsumableRent()
@@ -274,6 +278,20 @@ void MainWindow::displayOpenError()
 {
     QMessageBox messageBox;
     messageBox.critical(this,"Error","Inpossibile aprire il file specificato");
+    messageBox.setFixedSize(500,200);
+}
+
+void MainWindow::displayLoad(QString err)
+{
+    QMessageBox messageBox;
+    messageBox.warning(this,"Conferma",err);
+    messageBox.setFixedSize(500,200);
+}
+
+void MainWindow::displaySave(QString err)
+{
+    QMessageBox messageBox;
+    messageBox.warning(this,"Conferma",err);
     messageBox.setFixedSize(500,200);
 }
 
@@ -292,16 +310,9 @@ const QString MainWindow::getResearchWord()
     return find->text();
 }
 
-void MainWindow::updateDetails(QString info, QString ){
+void MainWindow::updateDetails(QString info){
     details->setText(info);
-    //finire di impostare l'immagine
 }
-
-//void MainWindow::updateTotals(QStringList prezzi){
-//    totrent->setText(prezzi[0]);
-//    totbuyed->setText(prezzi[1]);
-//    tot->setText(prezzi[0]+prezzi[1]);
-//}
 
 void MainWindow::generateRent()
 {

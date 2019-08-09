@@ -4,7 +4,6 @@
 #include <QString>
 #include <QFile>
 #include <QSaveFile>
-#include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include "Model/Template/container.h"
@@ -16,7 +15,7 @@
 class XmlIO
 {
 public:
-    static Container<DeepPtr<Item>> readItems(const QString);
+    static bool readItems(const QString, Container<DeepPtr<Item>>& catalogo);
     static bool writeItems(const Container<DeepPtr<Item>>&, const QString);
 };
 

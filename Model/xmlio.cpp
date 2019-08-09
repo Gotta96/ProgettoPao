@@ -1,17 +1,11 @@
 #include "xmlio.h"
 
-Container<DeepPtr<Item> > XmlIO::readItems(const QString filename){
-
-    //Creo container vuoto
-    Container<DeepPtr<Item>> catalogo;
+bool XmlIO::readItems(const QString filename, Container<DeepPtr<Item> > &catalogo){
 
     QFile file(filename);
 
     if(!file.open(QIODevice::ReadOnly)){
-        QMessageBox box(QMessageBox::Warning, "Errore apertura file", "Impossibile leggere file", QMessageBox::Ok);
-        box.exec();
-        throw 1;
-//        return catalogo;
+        return false;
     }
 
     //Leggo file XML
@@ -28,20 +22,16 @@ Container<DeepPtr<Item> > XmlIO::readItems(const QString filename){
                 if(type=="m")
                     catalogo.pushInOrder(Multifunction::unserialize(reader));
             } catch (std::string s) {
-                QMessageBox box(QMessageBox::Warning, "Errore caricamento file", QString("Impossibile caricare il file, errore in lettura""<br><u>Causa:</u> %1").arg(QString::fromStdString(s)), QMessageBox::Ok);
-                box.exec();
-                throw 1;
+                return false;
             }
         }
     }
     else {
-        QMessageBox box(QMessageBox::Warning,"Errore di caricamento", "contenuto non riconosciuto", QMessageBox::Ok);
-        box.exec();
-        throw 1;
+        return false;
     }
 
         file.close();
-        return catalogo;
+        return true;
 }
 
 bool XmlIO::writeItems(const Container<DeepPtr<Item> > & catalogo, const QString filename)

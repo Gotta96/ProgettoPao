@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QStringList>
+#include <QMessageBox>
 
 class InsertionWindow : public QDialog
 {
@@ -33,6 +34,8 @@ public:
 
     void resetForNewInsertion();
 
+    void displayInputError();
+
 public slots:
     void showPrinter();
     void showConsumable();
@@ -47,6 +50,8 @@ signals:
     void activeNormalDetails();
     void activeMultifunctionDetails();
     void sendItemsDetails(const QStringList);
+
+    void inputError();
 
 };
 

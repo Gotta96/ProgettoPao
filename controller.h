@@ -53,6 +53,8 @@ public slots:
 
     void noConsumableInRent();
 
+    void inputErrorRecived();
+
 };
 
 #endif // CONTROLLER_H

@@ -31,17 +31,15 @@ void Model::addIntoCatalog(const QStringList e){
     if(e.at(0)!="null"){
         DeepPtr<Item> elemento;
         if(e.at(0) == "c"){
-            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="1"? 1:0,e.at(6)=="1"? 1:0, e.at(7).toStdString());
+            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? true:false,e.at(6)=="true"? true:false, e.at(7).toStdString());
         }
         if(e.at(0) == "p"){
             if(e.at(1) == "n")
-                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(11)=="1"? 1:0);
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false, e.at(8)=="1"? true:false,e.at(9)=="true"? true:false,e.at(11)=="true"? true:false);
             if(e.at(1) == "m")
-                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0 ,e.at(7)=="1"? 1:0, e.at(8)=="1"? 1:0, e.at(9)=="1"? 1:0, e.at(10)=="1"? 1:0, e.at(11)=="1"? 1:0, e.at(12)=="1"? 1:0);
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false ,e.at(7)=="true"? true:false, e.at(8)=="true"? true:false, e.at(9)=="true"? true:false, e.at(10)=="true"? true:false, e.at(11)=="true"? true:false, e.at(12)=="true"? true:false);
         }
-//        std::cout << std::endl << elemento->print() << std::endl;
         catalogo.pushInOrder(elemento);
-//        std::cout << std::endl << (*catalogo.getFirst()->info).print() << std::endl;
     }
 
     emit elementAdded();
@@ -67,13 +65,13 @@ bool Model::editItem(unsigned int i,const QStringList e){
     if(e.at(0)!="null"){
         DeepPtr<Item> elemento;
         if(e.at(0) == "c"){
-            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="1"? 1:0,e.at(6)=="1"? 1:0, e.at(7).toStdString());
+            elemento = new Consumable(e.at(1).toStdString(),e.at(2).toStdString(),e.at(3).toDouble(),e.at(4).toUInt(),e.at(5)=="true"? true:false,e.at(6)=="true"? true:false, e.at(7).toStdString());
         }
         if(e.at(0) == "p"){
             if(e.at(1) == "n")
-                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(8)=="1"? 1:0,e.at(9)=="1"? 1:0,e.at(11)=="1"? 1:0);
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false, e.at(8)=="true"? true:false,e.at(9)=="true"? true:false,e.at(11)=="true"? true:false);
             if(e.at(1) == "m")
-                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="1"? 1:0, e.at(7)=="1"? 1:0,e.at(8)==""? 1:0,e.at(9)=="1"? 1:0,e.at(10)=="1"? 1:0,e.at(11)=="1"? 1:0,e.at(12)=="1"? 1:0);
+                elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false, e.at(7)=="true"? true:false,e.at(8)=="true"? true:false,e.at(9)=="true"? true:false,e.at(10)=="true"? true:false,e.at(11)=="true"? true:false,e.at(12)=="true"? true:false);
         }
         catalogo.replaceAtIndex(elemento,i);
         return true;
@@ -103,8 +101,8 @@ QStringList Model::getCatalogElement(unsigned int ind){      //vedere se si ries
             ret.push_back(QString::fromStdString(item->getModel()));
             ret.push_back(QString::number(item->getCost()));
             ret.push_back(QString::number(item->getSize()));
-            ret.push_back((item->isRestored())? "1" : "0");
-            ret.push_back((item->isOriginal())? "1" : "0");
+            ret.push_back((item->isRestored())? "true":"false");
+            ret.push_back((item->isOriginal())? "true":"false");
             ret.push_back(QString::fromStdString(item->getColorName()));
     }
     else {
@@ -117,27 +115,27 @@ QStringList Model::getCatalogElement(unsigned int ind){      //vedere se si ries
                     ret.push_back(QString::fromStdString(item->getModel()));
                     ret.push_back(QString::number(item->getCost()));
                     ret.push_back(QString::number(item->getDaycost()));
-                    ret.push_back((item->isWiFi())? "1" : "0");
-                    ret.push_back((item->isDoubleSide())? "1" : "0");
-                    ret.push_back((item->isColor())? "1" : "0");
-                    ret.push_back((item->isUsed())? "1" : "0");
-                    ret.push_back((item->isPhoto())? "1" : "0");
-                    ret.push_back((item->isPlotter())? "1" : "0");
+                    ret.push_back((item->isWiFi())? "true":"false");
+                    ret.push_back((item->isDoubleSide())? "true":"false");
+                    ret.push_back((item->isColor())? "true":"false");
+                    ret.push_back((item->isPhoto())? "true":"false");
+                    ret.push_back((item->isUsed())? "true":"false");
+                    ret.push_back((item->isPlotter())? "true":"false");
             }
             if(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))){
-                const Multifunction* item= dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))));
+                const Multifunction* item= static_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))));
                 ret.push_back("m");
                 ret.push_back(QString::fromStdString(item->getVendor()));
                 ret.push_back(QString::fromStdString(item->getModel()));
                 ret.push_back(QString::number(item->getCost()));
-                ret.push_back(QString::number(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getDaycost()));
-                ret.push_back((item->isWiFi())? "1" : "0");
-                ret.push_back((item->isDoubleSide())? "1" : "0");
-                ret.push_back((item->isColor())? "1" : "0");
-                ret.push_back((item->isUsed())? "1" : "0");
-                ret.push_back((item->isPhoto())? "1" : "0");
-                ret.push_back((item->haveFax())? "1" : "0");
-                ret.push_back((item->haveScanner())? "1" : "0");
+                ret.push_back(QString::number(item->getDaycost()));
+                ret.push_back((item->isWiFi())? "true":"false");
+                ret.push_back((item->isDoubleSide())? "true":"false");
+                ret.push_back((item->isColor())? "true":"false");
+                ret.push_back((item->isUsed())? "true":"false");
+                ret.push_back((item->isPhoto())? "true":"false");
+                ret.push_back((item->haveFax())? "true":"false");
+                ret.push_back((item->haveScanner())? "true":"false");
             }
         }
         else
@@ -157,8 +155,8 @@ QStringList Model::getRentElement(unsigned int ind){      //vedere se si riesce 
         ret.push_back(QString::fromStdString(item->getModel()));
         ret.push_back(QString::number(item->getCost()));
         ret.push_back(QString::number(item->getSize()));
-        ret.push_back(item->isRestored()? "1" : "0");
-        ret.push_back(item->isOriginal()? "1" : "0");
+        ret.push_back(item->isRestored()? "true":"false");
+        ret.push_back(item->isOriginal()? "true":"false");
     }
     else {
         if(dynamic_cast<const Stampante*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind))).key()))){
@@ -170,12 +168,12 @@ QStringList Model::getRentElement(unsigned int ind){      //vedere se si riesce 
                 ret.push_back(QString::fromStdString(item->getModel()));
                 ret.push_back(QString::number(item->getCost()));
                 ret.push_back(QString::number(item->getDaycost()));
-                ret.push_back(item->isWiFi()? "1" : "0");
-                ret.push_back(item->isDoubleSide()? "1" : "0");
-                ret.push_back(item->isColor()? "1" : "0");
-                ret.push_back(item->isUsed()? "1" : "0");
-                ret.push_back(item->isPhoto()? "1" : "0");
-                ret.push_back(item->isPlotter()? "1" : "0");
+                ret.push_back(item->isWiFi()? "true":"false");
+                ret.push_back(item->isDoubleSide()? "true":"false");
+                ret.push_back(item->isColor()? "true":"false");
+                ret.push_back(item->isUsed()? "true":"false");
+                ret.push_back(item->isPhoto()? "true":"false");
+                ret.push_back(item->isPlotter()? "true":"false");
 
             }
             if(dynamic_cast<const Multifunction*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind))).key()))){
@@ -185,13 +183,13 @@ QStringList Model::getRentElement(unsigned int ind){      //vedere se si riesce 
                 ret.push_back(QString::fromStdString(item->getModel()));
                 ret.push_back(QString::number(item->getCost()));
                 ret.push_back(QString::number(item->getDaycost()));
-                ret.push_back(item->isWiFi()? "1" : "0");
-                ret.push_back(item->isDoubleSide()? "1" : "0");
-                ret.push_back(item->isColor()? "1" : "0");
-                ret.push_back(item->isUsed()? "1" : "0");
-                ret.push_back(item->isPhoto()? "1" : "0");
-                ret.push_back(item->haveFax()? "1" : "0");
-                ret.push_back(item->haveScanner()? "1" : "0");
+                ret.push_back(item->isWiFi()? "true":"false");
+                ret.push_back(item->isDoubleSide()? "true":"false");
+                ret.push_back(item->isColor()? "true":"false");
+                ret.push_back(item->isUsed()? "true":"false");
+                ret.push_back(item->isPhoto()? "true":"false");
+                ret.push_back(item->haveFax()? "true":"false");
+                ret.push_back(item->haveScanner()? "true":"false");
             }
         }
         else
@@ -211,8 +209,8 @@ QStringList Model::getBuyElement(unsigned int ind){      //vedere se si riesce a
         ret.push_back(QString::fromStdString(item->getModel()));
         ret.push_back(QString::number(item->getCost()));
         ret.push_back(QString::number(item->getSize()));
-        ret.push_back(item->isRestored()? "1" : "0");
-        ret.push_back(item->isOriginal()? "1" : "0");
+        ret.push_back(item->isRestored()? "true":"false");
+        ret.push_back(item->isOriginal()? "true":"false");
     }
     else {
         if(dynamic_cast<const Stampante*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind))).key()))){
@@ -224,12 +222,12 @@ QStringList Model::getBuyElement(unsigned int ind){      //vedere se si riesce a
                 ret.push_back(QString::fromStdString(item->getModel()));
                 ret.push_back(QString::number(item->getCost()));
                 ret.push_back(QString::number(item->getDaycost()));
-                ret.push_back(item->isWiFi()? "1" : "0");
-                ret.push_back(item->isDoubleSide()? "1" : "0");
-                ret.push_back(item->isColor()? "1" : "0");
-                ret.push_back(item->isUsed()? "1" : "0");
-                ret.push_back(item->isPhoto()? "1" : "0");
-                ret.push_back(item->isPlotter()? "1" : "0");
+                ret.push_back(item->isWiFi()? "true":"false");
+                ret.push_back(item->isDoubleSide()?"true":"false");
+                ret.push_back(item->isColor()? "true":"false");
+                ret.push_back(item->isUsed()? "true":"false");
+                ret.push_back(item->isPhoto()? "true":"false");
+                ret.push_back(item->isPlotter()? "true":"false");
 
             }
             if(dynamic_cast<const Multifunction*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind))).key()))){
@@ -239,13 +237,13 @@ QStringList Model::getBuyElement(unsigned int ind){      //vedere se si riesce a
                 ret.push_back(QString::fromStdString(item->getModel()));
                 ret.push_back(QString::number(item->getCost()));
                 ret.push_back(QString::number(item->getDaycost()));
-                ret.push_back(item->isWiFi()? "1" : "0");
-                ret.push_back(item->isDoubleSide()? "1" : "0");
-                ret.push_back(item->isColor()? "1" : "0");
-                ret.push_back(item->isUsed()? "1" : "0");
-                ret.push_back(item->isPhoto()? "1" : "0");
-                ret.push_back(item->haveFax()? "1" : "0");
-                ret.push_back(item->haveScanner()? "1" : "0");
+                ret.push_back(item->isWiFi()? "true":"false");
+                ret.push_back(item->isDoubleSide()? "true":"false");
+                ret.push_back(item->isColor()? "true":"false");
+                ret.push_back(item->isUsed()? "true":"false");
+                ret.push_back(item->isPhoto()? "true":"false");
+                ret.push_back(item->haveFax()? "true":"false");
+                ret.push_back(item->haveScanner()? "true":"false");
             }
         }
         else
@@ -277,13 +275,13 @@ bool Model::checkIfExistIntoCatalog(QStringList d)
     DeepPtr<Item> elemento;
     if(d.at(0)!="null"){
         if(d.at(0) == "c"){
-            elemento = new Consumable(d.at(1).toStdString(),d.at(2).toStdString(),d.at(3).toDouble(),d.at(4).toUInt(),d.at(5)=="1"? 1:0,d.at(6)=="1"? 1:0, d.at(7).toStdString());
+            elemento = new Consumable(d.at(1).toStdString(),d.at(2).toStdString(),d.at(3).toDouble(),d.at(4).toUInt(),d.at(5)=="true"? true:false,d.at(6)=="true"? true:false, d.at(7).toStdString());
         }
         if(d.at(0) == "p"){
             if(d.at(1) == "n")
-                elemento = new Normal(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0, d.at(8)=="1"? 1:0,d.at(9)=="1"? 1:0,d.at(11)=="1"? 1:0);
+                elemento = new Normal(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="true"? true:false, d.at(8)=="true"? true:false,d.at(9)=="true"? true:false,d.at(11)=="true"? true:false);
             if(d.at(1) == "m")
-                elemento = new Multifunction(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0 ,d.at(7)=="1"? 1:0, d.at(8)=="1"? 1:0, d.at(9)=="1"? 1:0, d.at(10)=="1"? 1:0, d.at(11)=="1"? 1:0, d.at(12)=="1"? 1:0);
+                elemento = new Multifunction(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="true"? true:false ,d.at(7)=="true"? true:false, d.at(8)=="true"? true:false, d.at(9)=="true"? true:false, d.at(10)=="true"? true:false, d.at(11)=="true"? true:false, d.at(12)=="true"? true:false);
         }
     }
     return catalogo.searchIntoList(elemento);
@@ -294,13 +292,13 @@ unsigned int Model::findItemIntoCatalog(QStringList d)
     DeepPtr<Item> elemento;
     if(d.at(0)!="null"){
         if(d.at(0) == "c"){
-            elemento = new Consumable(d.at(1).toStdString(),d.at(2).toStdString(),d.at(3).toDouble(),d.at(4).toUInt(),d.at(5)=="1"? 1:0,d.at(6)=="1"? 1:0, d.at(7).toStdString());
+            elemento = new Consumable(d.at(1).toStdString(),d.at(2).toStdString(),d.at(3).toDouble(),d.at(4).toUInt(),d.at(5)=="true"? true:false,d.at(6)=="true"? true:false, d.at(7).toStdString());
         }
         if(d.at(0) == "p"){
             if(d.at(1) == "n")
-                elemento = new Normal(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0, d.at(8)=="1"? 1:0,d.at(9)=="1"? 1:0,d.at(11)=="1"? 1:0);
+                elemento = new Normal(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="true"? true:false, d.at(8)=="1"? true:false,d.at(9)=="1"? true:false,d.at(11)=="1"? true:false);
             if(d.at(1) == "m")
-                elemento = new Multifunction(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="1"? 1:0 ,d.at(7)=="1"? 1:0, d.at(8)=="1"? 1:0, d.at(9)=="1"? 1:0, d.at(10)=="1"? 1:0, d.at(11)=="1"? 1:0, d.at(12)=="1"? 1:0);
+                elemento = new Multifunction(d.at(2).toStdString(), d.at(3).toStdString(),d.at(4).toDouble(),d.at(5).toDouble(),d.at(6)=="true"? true:false ,d.at(7)=="true"? true:false, d.at(8)=="true"? true:false, d.at(9)=="true"? true:false, d.at(10)=="true"? true:false, d.at(1)=="true"? true:false, d.at(12)=="true"? true:false);
         }
     }
 
@@ -398,13 +396,18 @@ void Model::setFilename(const QString flname)
     filename=flname;
 }
 
-void Model::loadData()
+QString Model::loadData()
 {
-    catalogo=XmlIO::readItems(filename);
+    if(!XmlIO::readItems(filename,catalogo))
+        return "Errore in caricamento";
+    else
+        return "Caricamento avvenuto con successo";
 }
 
-void Model::serializeData()
+QString Model::serializeData()
 {
     if(!XmlIO::writeItems(catalogo, filename))
-        throw QString("Impossibile scrivere su file");
+        return "Errore nel salvataggio dei dati";
+    else
+        return "Salvataggio avvenuto con successo";
 }

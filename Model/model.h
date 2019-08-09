@@ -68,8 +68,8 @@ public slots:
     void addIntoCatalog(const QStringList);
 
     void setFilename(const QString flname);
-    void loadData();
-    void serializeData();
+    QString loadData();
+    QString serializeData();
 
 
 signals:

@@ -37,3 +37,6 @@ HEADERS += \
     View/modifywindow.h \
     View/smartlistview.h \
     controller.h
+
+RESOURCES += \
+    risorse.qrc
