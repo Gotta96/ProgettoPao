@@ -310,6 +310,16 @@ const QString MainWindow::getResearchWord()
     return find->text();
 }
 
+QString MainWindow::getClientName() const
+{
+    return name->text();
+}
+
+QString MainWindow::getClientPiva() const
+{
+    return iva->text();
+}
+
 void MainWindow::updateDetails(QString info){
     details->setText(info);
 }

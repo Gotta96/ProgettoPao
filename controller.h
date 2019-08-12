@@ -7,6 +7,8 @@
 #include <QStringList>
 #include <QMap>
 #include <QFileDialog>
+#include <QPdfWriter>
+#include <QPainter>
 
 class Controller : public QWidget
 {
@@ -50,6 +52,7 @@ public slots:
     void openModify();
     void openSave();
     void openLoad();
+    void openSavePDF();
 
     void noConsumableInRent();
 

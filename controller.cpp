@@ -20,6 +20,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     connect(mainW, SIGNAL(requestRemoveIntoCatalog(unsigned int)), this, SLOT(removeC(unsigned int)));
     connect(mainW, SIGNAL(openSaveWindow()), this, SLOT(openSave()));
     connect(mainW, SIGNAL(openLoadWindow()), this, SLOT(openLoad()));
+    connect(mainW, SIGNAL(openSavePDFWindow()), this, SLOT(openSavePDF()));
 
     connect(mainW, SIGNAL(updateSearch()), this, SLOT(refreshCatalog()));
 
@@ -88,6 +89,54 @@ void Controller::openLoad()
         refreshCatalog();
         refreshRent();
         refreshBuyed();
+    }
+}
+
+void Controller::openSavePDF()
+{
+    QString nomeFile = QFileDialog::getSaveFileName(mainW,"salva PDF","../ProgettoPao/Preventivi");
+    if(nomeFile =="")
+        nomeFile=("preventivo_"+modello->getDate().toString("dmy")+".xml");
+    else {
+        if(!nomeFile.endsWith(".pdf"))
+            nomeFile=nomeFile+".pdf";
+        QStringList r = modello->getAllRent();
+        QStringList b = modello->getAllBuyed();
+        QPdfWriter writer(nomeFile);
+        QPainter painter(&writer);
+        painter.setPen(Qt::black);
+
+        painter.drawText(100,200, "Cliente: "+ mainW->getClientName());
+        painter.drawText(3750,200,"Partita Iva: " + mainW->getClientPiva());
+        painter.drawText(7750,200,"Data: " + modello->getDate().toString());
+        painter.drawText(1200,1000,"Lista Noleggio");
+        painter.drawText(6300,1000,"Lista Compere");
+        int l=800 ,a1=1400;
+        auto rent_it= r.begin();
+        while(rent_it!=r.end()){
+            painter.drawText(l,a1,*rent_it);
+            rent_it++;
+            a1+=300;
+        }
+        l=5800;
+        int a2=1400;
+        auto buyed_it=b.begin();
+        while(buyed_it!=b.end()){
+            painter.drawText(l,a2,*buyed_it);
+            buyed_it++;
+            a2+=300;
+        }
+        if(a1>a2){
+            painter.drawText(950,a1+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoRent()) + "€");
+            painter.drawText(5950,a1+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoBuy()) + "€");
+        }
+        else {
+            painter.drawText(950,a2+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoRent()) + "€");
+            painter.drawText(5950,a2+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoBuy()) + "€");
+        }
+
+        painter.drawText(200,13700,"Preventivo by FastPreventive, developed by Gotta's Solutions");
+        painter.end();
     }
 }
 

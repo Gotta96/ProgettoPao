@@ -2,6 +2,69 @@
 <!--Catalogo oggetti-->
 <catalog>
     <item type="n">
+        <vendor>Canon</vendor>
+        <model>Italia PIXMA TR4550</model>
+        <cost>37.8</cost>
+        <day_cost>3.7</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>0</photo>
+        <plotter>0</plotter>
+    </item>
+    <item type="n">
+        <vendor>Canon</vendor>
+        <model>Italia Pixma Ts3151</model>
+        <cost>30</cost>
+        <day_cost>3</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>0</wifi>
+        <color>0</color>
+        <used>0</used>
+        <photo>0</photo>
+        <plotter>0</plotter>
+    </item>
+    <item type="m">
+        <vendor>Canon</vendor>
+        <model>Pixma</model>
+        <cost>64.9</cost>
+        <day_cost>6.5</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>0</photo>
+        <scanner>0</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="m">
+        <vendor>Canon</vendor>
+        <model>Pixma TS5050</model>
+        <cost>49</cost>
+        <day_cost>4.9</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>0</photo>
+        <scanner>0</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="m">
+        <vendor>Canon</vendor>
+        <model>Pixma iP7250</model>
+        <cost>79.5</cost>
+        <day_cost>7.8</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>1</photo>
+        <scanner>0</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="n">
         <vendor>Epson</vendor>
         <model>DLQ-3500</model>
         <cost>2202</cost>

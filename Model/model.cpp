@@ -4,8 +4,6 @@
 
 Model::Model(QObject *parent) : QObject(parent),
                                 preventiveDate(QDate::currentDate()),
-                                clientName(""),
-                                clientPiva(""),
                                 catalogo(),
                                 rent(),
                                 buyed(),
@@ -305,22 +303,6 @@ unsigned int Model::findItemIntoCatalog(QStringList d)
     }
 
     return catalogo.getIndex(elemento);
-}
-
-void Model::setIva(QString i){
-    clientPiva=i;
-}
-
-void Model::setName(QString n){
-    clientName=n;
-}
-
-QString Model::getName(){
-    return clientName;
-}
-
-QString Model::getIva(){
-    return clientPiva;
 }
 
 bool Model::thereIsSomething() const

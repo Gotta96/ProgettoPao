@@ -45,6 +45,9 @@ public:
 
     const QString getResearchWord();
 
+    QString getClientName() const;
+    QString getClientPiva()const;
+
 public slots:
     void updateDetails(QString info);
     void generateRent();

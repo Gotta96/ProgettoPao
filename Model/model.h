@@ -19,7 +19,6 @@ class Model : public QObject
     Q_OBJECT
 private:
     QDate preventiveDate;
-    QString clientName, clientPiva;
     Container<DeepPtr<Item>> catalogo;
     Carrello rent, buyed;
 
@@ -84,13 +83,6 @@ signals:
     void buyElementRemoved();
     void nameChanged();
     void quantityChanged();
-//    void rentRemoveRequest();
-//    void buyRemoveRequest();
-//    void catalogRemoveRequest();
-//    void editElementRequest();
-//    void catalogAddRequest();
-//    void rentAddRequest();
-//    void buyAddRequest();
 
     void elementAdded();
     void rentAdded();
