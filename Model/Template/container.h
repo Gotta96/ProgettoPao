@@ -43,7 +43,6 @@ public:
     T searchAtIndex(unsigned int) const;
     unsigned int getIndex(const T&) const;
 
-
     //operatori container
 
     Container<T> operator=(const Container<T>&);

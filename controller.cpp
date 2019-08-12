@@ -81,9 +81,13 @@ void Controller::openLoad()
     if(nomeFile == "")
         mainW->displayOpenError();
     else {
+        if(modello->thereIsSomething())
+            modello->clearTheWorkspace();
         modello->setFilename(nomeFile);
         mainW->displayLoad(modello->loadData());
         refreshCatalog();
+        refreshRent();
+        refreshBuyed();
     }
 }
 
@@ -159,7 +163,7 @@ void Controller::addToBuyCart(unsigned int index, unsigned int quantity)
 
 void Controller::sendForReplace(unsigned int index, QStringList elem)
 {
-    modello->editItem(indexTranslate[index], elem);
+    modello->editItem(indexTranslate[index-1], elem);
     refreshCatalog();
 }
 

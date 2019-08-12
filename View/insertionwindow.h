@@ -21,6 +21,8 @@ protected:
     QCheckBox *restore, *original, *scanner, *fax, *wifi, *doubleside, *color, *used, *photo, *plotter;
     QRadioButton *consumable, *printer, *normale, *multifunction;
 
+    QPushButton *ok, *no;
+
     QGroupBox *itemBaseDetails;
     QGroupBox *elementSelectionBox;
     QGroupBox *consumableDetails;

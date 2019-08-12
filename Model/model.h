@@ -60,6 +60,9 @@ public:
     QString getName();
     QString getIva();
 
+    bool thereIsSomething() const;
+    void clearTheWorkspace();
+
     void setDate(QDate);
     QDate getDate();
 

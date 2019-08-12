@@ -21,15 +21,10 @@ public:
     bool operator!=(const DeepPtr&) const;
     bool operator>(const DeepPtr&) const;
     bool operator<(const DeepPtr&) const;
-//    std::string printDptr() const;
 };
 
 template <class T>
-DeepPtr<T>::DeepPtr(T* itm): pted(itm){
-//  if(itm)
-//      pted=itm->clone();
-//  else pted=nullptr;
-}
+DeepPtr<T>::DeepPtr(T* itm): pted(itm){}
 
 template <class T>
 DeepPtr<T>::DeepPtr(const DeepPtr& dptr){
@@ -86,16 +81,6 @@ template<class T>
 bool DeepPtr<T>::operator>(const DeepPtr& dptr) const{
     return *pted>*(dptr.pted);
 }
-
-//template <class T>
-//std::string DeepPtr<T>::printDptr() const{
-//    return pted->print();
-//}
-
-//template <class T>
-//std::ostream& operator<<(std::ostream& os, const DeepPtr<T>& dptr){
-//    return os << *dptr;
-//}
 
 /*in relazione riportare il polimorfismo dovuto alla gerarchia che noi creiamo
  * che si riperquote sul nostro template*/

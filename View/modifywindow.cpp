@@ -61,6 +61,14 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
                 //setto i valori degli elementi
                 normale->setChecked(true);
                 plotter->setChecked(e.at(11)=="true"? true : false);
+                doubleside->setText("Fronte-retro (no in normale)");
+                photo->setText("Fotografie (no in normale)");
+                doubleside->setChecked(false);
+                photo->setChecked(false);
+                doubleside->setEnabled(false);
+                photo->setEnabled(false);
+                scanner->setChecked(false);
+                fax->setChecked(false);
             }
             if(e.at(1)=="m"){
                 //setto le group box che si devono visualizzare
@@ -71,6 +79,10 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
                 multifunction->setChecked(true);
                 scanner->setChecked(e.at(11)=="true"? true : false);
                 fax->setChecked(e.at(12)=="true"? true : false);
+                doubleside->setText("Fronte-retro");
+                photo->setText("Fotografie");
+                doubleside->setEnabled(true);
+                photo->setEnabled(true);
             }
         }
         else {
@@ -132,12 +144,12 @@ void ModifyWindow::confirm()
     }
     if(cost->text().contains(regexNumber)){
         if(consumable->isChecked() && size->text().contains(regexInt)){
-            emit sendItemsDetails(*tmp);
+            emit replaceItem(ind,*tmp);
             this->close();
         }
         else {
             if(printer->isChecked() && daycost->text().contains(regexNumber)){
-                emit sendItemsDetails(*tmp);
+                emit replaceItem(ind,*tmp);
                 this->close();
             }
             else

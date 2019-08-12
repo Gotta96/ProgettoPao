@@ -15,6 +15,19 @@
     </item>
     <item type="m">
         <vendor>Epson</vendor>
+        <model>EcoTank ET-2650</model>
+        <cost>100</cost>
+        <day_cost>10</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>1</used>
+        <photo>0</photo>
+        <scanner>1</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="m">
+        <vendor>Epson</vendor>
         <model>Expression Home XP 257</model>
         <cost>49.99</cost>
         <day_cost>5</day_cost>
@@ -23,6 +36,45 @@
         <color>1</color>
         <used>0</used>
         <photo>1</photo>
+        <scanner>1</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="m">
+        <vendor>Epson</vendor>
+        <model>Expression Home XP 355</model>
+        <cost>44.9</cost>
+        <day_cost>4.9</day_cost>
+        <doubleside>0</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>0</photo>
+        <scanner>1</scanner>
+        <fax>0</fax>
+    </item>
+    <item type="m">
+        <vendor>Epson</vendor>
+        <model>Workforce WF-2630WF</model>
+        <cost>50</cost>
+        <day_cost>5</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>1</used>
+        <photo>0</photo>
+        <scanner>0</scanner>
+        <fax>1</fax>
+    </item>
+    <item type="m">
+        <vendor>Epson</vendor>
+        <model>Workforce WF-2750DWF</model>
+        <cost>68.68</cost>
+        <day_cost>68</day_cost>
+        <doubleside>1</doubleside>
+        <wifi>1</wifi>
+        <color>1</color>
+        <used>0</used>
+        <photo>0</photo>
         <scanner>1</scanner>
         <fax>0</fax>
     </item>

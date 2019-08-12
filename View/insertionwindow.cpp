@@ -21,6 +21,8 @@ InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
                                                     printer(new QRadioButton("Stampante",this)),
                                                     normale(new QRadioButton("Normale",this)),
                                                     multifunction(new QRadioButton("Multifunzione",this)),
+                                                    ok(new QPushButton("Conferma")),
+                                                    no(new QPushButton("Annulla")),
                                                     itemBaseDetails(new QGroupBox("Dettagli di base della stampante",this)),
                                                     elementSelectionBox(new QGroupBox("Seleziona prodotto",this)),
                                                     consumableDetails(new QGroupBox("Dettagli cartuccia",this)),
@@ -31,9 +33,6 @@ InsertionWindow::InsertionWindow(QWidget *parent) : QDialog(parent),
 {
     QVBoxLayout *mainInsertionLayout = new QVBoxLayout();
     QGridLayout *grid= new QGridLayout();
-
-    QPushButton *ok = new QPushButton("Conferma");
-    QPushButton *no = new QPushButton("Annulla");
 
     QLabel *vendorLabel = new QLabel("Marca: ");
     QLabel *modelLabel = new QLabel("Modello: ");

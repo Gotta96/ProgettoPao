@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
     QVBoxLayout *layoutfinal = new QVBoxLayout();
 
-    QPixmap imgLogo(QString(":/images/newLogo.png"));
+    QPixmap imgLogo(QString(":/images/definitivo.jpg"));
     labLogo->setPixmap(imgLogo);
 
     file->addAction(load);

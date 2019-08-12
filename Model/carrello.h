@@ -29,8 +29,8 @@ public:
     unsigned int getQuantity(DeepPtr<Item>);
     double getTotPriceItems();
     double getTotRentItems();
-//    QMap<DeepPtr<Item>,unsigned int> getCart() const;
-//    DeepPtr<Item> getOnlyItem(QMap<DeepPtr<Item>, unsigned int>::const_iterator);
+    bool is_empty() const;
+    void clear();
 
     QStringList printAllCart() const;
 };

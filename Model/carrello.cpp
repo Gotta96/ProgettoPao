@@ -87,6 +87,16 @@ double Carrello::getTotRentItems()
     return tot;
 }
 
+bool Carrello::is_empty() const
+{
+    return cart.empty();
+}
+
+void Carrello::clear()
+{
+    cart.clear();
+}
+
 QStringList Carrello::printAllCart() const
 {
     QStringList ret;

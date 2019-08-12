@@ -1,5 +1,7 @@
 #include "model.h"
 
+#include <QDebug>
+
 Model::Model(QObject *parent) : QObject(parent),
                                 preventiveDate(QDate::currentDate()),
                                 clientName(""),
@@ -35,7 +37,7 @@ void Model::addIntoCatalog(const QStringList e){
         }
         if(e.at(0) == "p"){
             if(e.at(1) == "n")
-                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false, e.at(8)=="1"? true:false,e.at(9)=="true"? true:false,e.at(11)=="true"? true:false);
+                elemento = new Normal(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false, e.at(8)=="true"? true:false,e.at(9)=="true"? true:false,e.at(11)=="true"? true:false);
             if(e.at(1) == "m")
                 elemento = new Multifunction(e.at(2).toStdString(), e.at(3).toStdString(),e.at(4).toDouble(),e.at(5).toDouble(),e.at(6)=="true"? true:false ,e.at(7)=="true"? true:false, e.at(8)=="true"? true:false, e.at(9)=="true"? true:false, e.at(10)=="true"? true:false, e.at(11)=="true"? true:false, e.at(12)=="true"? true:false);
         }
@@ -95,10 +97,10 @@ QString Model::getBuyElementDetails(unsigned int ind){ //problema dovuto al fatt
 QStringList Model::getCatalogElement(unsigned int ind){      //vedere se si riesce a trasformare i vari puntatoti consumable*, normal* ecc.. in deeptr
     QStringList ret;
     if(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))){
-            const Consumable * item = dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))));
+            const Consumable * item = static_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))));
             ret.push_back("c");
-            ret.push_back(QString::fromStdString(item->getVendor()));
-            ret.push_back(QString::fromStdString(item->getModel()));
+            ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getVendor()));
+            ret.push_back(QString::fromStdString(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))->getModel()));
             ret.push_back(QString::number(item->getCost()));
             ret.push_back(QString::number(item->getSize()));
             ret.push_back((item->isRestored())? "true":"false");
@@ -109,24 +111,24 @@ QStringList Model::getCatalogElement(unsigned int ind){      //vedere se si ries
         if(dynamic_cast<const Stampante*>(&(*(catalogo.searchAtIndex(ind))))){
             ret.push_back("p");
             if(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))){
-                    const Normal* item = dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))));
+                    const Normal* item = static_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))));
                     ret.push_back("n");
-                    ret.push_back(QString::fromStdString(item->getVendor()));
-                    ret.push_back(QString::fromStdString(item->getModel()));
+                    ret.push_back(QString::fromStdString(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->getVendor()));
+                    ret.push_back(QString::fromStdString(dynamic_cast<const Normal*>(&(*(catalogo.searchAtIndex(ind))))->getModel()));
                     ret.push_back(QString::number(item->getCost()));
                     ret.push_back(QString::number(item->getDaycost()));
                     ret.push_back((item->isWiFi())? "true":"false");
                     ret.push_back((item->isDoubleSide())? "true":"false");
                     ret.push_back((item->isColor())? "true":"false");
-                    ret.push_back((item->isPhoto())? "true":"false");
                     ret.push_back((item->isUsed())? "true":"false");
+                    ret.push_back((item->isPhoto())? "true":"false");
                     ret.push_back((item->isPlotter())? "true":"false");
             }
             if(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))){
                 const Multifunction* item= static_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))));
                 ret.push_back("m");
-                ret.push_back(QString::fromStdString(item->getVendor()));
-                ret.push_back(QString::fromStdString(item->getModel()));
+                ret.push_back(QString::fromStdString(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getVendor()));
+                ret.push_back(QString::fromStdString(dynamic_cast<const Multifunction*>(&(*(catalogo.searchAtIndex(ind))))->getModel()));
                 ret.push_back(QString::number(item->getCost()));
                 ret.push_back(QString::number(item->getDaycost()));
                 ret.push_back((item->isWiFi())? "true":"false");
@@ -319,6 +321,18 @@ QString Model::getName(){
 
 QString Model::getIva(){
     return clientPiva;
+}
+
+bool Model::thereIsSomething() const
+{
+    return !catalogo.is_empty() || !rent.is_empty() || !buyed.is_empty();
+}
+
+void Model::clearTheWorkspace()
+{
+    catalogo = Container<DeepPtr<Item>>();
+    rent = Carrello();
+    buyed = Carrello();
 }
 
 void Model::setDate(QDate d){
