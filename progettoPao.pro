@@ -1,4 +1,5 @@
 TEMPLATE = app
+TARGET = FastPreventive
 CONFIG += c++11
 QT += gui
 QT += widgets

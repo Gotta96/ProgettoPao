@@ -128,11 +128,11 @@ void Controller::openSavePDF()
         }
         if(a1>a2){
             painter.drawText(950,a1+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoRent()) + "€");
-            painter.drawText(5950,a1+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoBuy()) + "€");
+            painter.drawText(5950,a1+500,"Totale comprato: "+QString::number(modello->getAllPriceIntoBuy()) + "€");
         }
         else {
             painter.drawText(950,a2+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoRent()) + "€");
-            painter.drawText(5950,a2+500,"Totale noleggiato: "+QString::number(modello->getAllPriceIntoBuy()) + "€");
+            painter.drawText(5950,a2+500,"Totale comprato: "+QString::number(modello->getAllPriceIntoBuy()) + "€");
         }
 
         painter.drawText(200,13700,"Preventivo by FastPreventive, developed by Gotta's Solutions");
