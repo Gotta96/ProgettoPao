@@ -1,14 +1,6 @@
 #ifndef MODIFYWINDOW_H
 #define MODIFYWINDOW_H
 
-#include <QRadioButton>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QBoxLayout>
-#include <QGroupBox>
-#include <QLabel>
-#include <QPushButton>
-#include <QStringList>
 #include "View/insertionwindow.h"
 
 class ModifyWindow : public InsertionWindow

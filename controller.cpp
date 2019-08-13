@@ -46,14 +46,14 @@ void Controller::replaceIntoCatalog(unsigned int index, QStringList details)
     modello->editItem(indexTranslate[index],details);
 }
 
-void Controller::openAdd()
+void Controller::openAdd() const
 {
     insertionW->resetForNewInsertion();
     insertionW->setModal(true);
     insertionW->show();
 }
 
-void Controller::openModify()
+void Controller::openModify() const
 {
     if(mainW->isSelected()){
         modifyW->loadDataForEdit(modello->getCatalogElement(mainW->getCatalogSelected()), mainW->getCatalogSelected());
@@ -64,7 +64,7 @@ void Controller::openModify()
         mainW->displayNotSelection();
 }
 
-void Controller::openSave()
+void Controller::openSave() const
 {
     QString nomeFile = QFileDialog::getSaveFileName(mainW,"salva","../ProgettoPao/Cataloghi","File di catalogo (*.xml)");
     if(nomeFile =="")
@@ -92,7 +92,7 @@ void Controller::openLoad()
     }
 }
 
-void Controller::openSavePDF()
+void Controller::openSavePDF() const
 {
     if(mainW->getClientPiva() == "error")
         mainW->displayIvaError();
@@ -154,17 +154,17 @@ void Controller::inputErrorRecived()
     insertionW->displayInputError();
 }
 
-void Controller::getDetailsCatalogo(unsigned int index)
+void Controller::getDetailsCatalogo(unsigned int index) const
 {
     mainW->displayDetails(modello->getCatalogElementDetails(indexTranslate[index]));
 }
 
-void Controller::getDetailsRent(unsigned int index)
+void Controller::getDetailsRent(unsigned int index) const
 {
     mainW->displayDetails(modello->getRentElementDetails(index));
 }
 
-void Controller::getDetailsBuyed(unsigned int index)
+void Controller::getDetailsBuyed(unsigned int index) const
 {
     mainW->displayDetails(modello->getBuyElementDetails(index));
 }

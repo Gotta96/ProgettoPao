@@ -4,10 +4,10 @@ SmartListView::SmartListView(QWidget *parent):QListWidget (parent){}
 
 unsigned int SmartListView::getIndex() const
 {
-    return this->selectedIndexes()[0].row();
+    return (uint)this->selectedIndexes()[0].row();
 }
 
-bool SmartListView::isSomeoneSeleceted()
+bool SmartListView::isSomeoneSeleceted() const
 {
     return !this->selectedIndexes().empty();
 }

@@ -33,37 +33,32 @@ public:
     void addIntoRent(unsigned int, unsigned int);
     void addIntoBuy(unsigned int, unsigned int);
     bool editItem(unsigned int, const QStringList);
-    QString getCatalogElementDetails(unsigned int);
-    QString getRentElementDetails(unsigned int);
-    QString getBuyElementDetails(unsigned int);
-    QStringList getCatalogElement(unsigned int);
-    QStringList getRentElement(unsigned int);
-    QStringList getBuyElement(unsigned int);
-    unsigned int getQuantityRent(unsigned int);
-    unsigned int getQuantityBuy(unsigned int);
+    QString getCatalogElementDetails(unsigned int) const;
+    QString getRentElementDetails(unsigned int) const;
+    QString getBuyElementDetails(unsigned int) const;
+    QStringList getCatalogElement(unsigned int) const;
+    QStringList getRentElement(unsigned int) const;
+    QStringList getBuyElement(unsigned int) const;
+    unsigned int getQuantityRent(unsigned int) const;
+    unsigned int getQuantityBuy(unsigned int) const;
     void setQuantityRent(unsigned int, unsigned int);
     void setQuantityBuy(unsigned int, unsigned int);
-    QStringList getAllCatalog();
-    QStringList getFilteredCatalog(QString,QMap<unsigned int,unsigned int> &);
-    QStringList getAllRent();
-    QStringList getAllBuyed();
+    QStringList getAllCatalog() const;
+    QStringList getFilteredCatalog(QString,QMap<unsigned int,unsigned int> &) const;
+    QStringList getAllRent() const;
+    QStringList getAllBuyed() const;
 
-    double getAllPriceIntoRent();
-    double getAllPriceIntoBuy();
+    double getAllPriceIntoRent() const;
+    double getAllPriceIntoBuy() const;
 
-    bool checkIfExistIntoCatalog(QStringList);
-    unsigned int findItemIntoCatalog(QStringList);
-
-    void setIva(QString);
-    void setName(QString);
-    QString getName();
-    QString getIva();
+    bool checkIfExistIntoCatalog(QStringList) const;
+    unsigned int findItemIntoCatalog(QStringList) const;
 
     bool thereIsSomething() const;
     void clearTheWorkspace();
 
     void setDate(QDate);
-    QDate getDate();
+    QDate getDate() const;
 
 public slots:
 

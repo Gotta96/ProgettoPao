@@ -1,8 +1,5 @@
 #include "mainwindow.h"
 
-#include <iostream>
-#include <QDebug>
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           name(new QLineEdit("Nome cliente",this)),
                                           iva(new QLineEdit("P.IVA",this)),
@@ -312,7 +309,7 @@ unsigned int MainWindow::getCatalogSelected() const
     return elements->getIndex();
 }
 
-const QString MainWindow::getResearchWord()
+const QString MainWindow::getResearchWord() const
 {
     return find->text();
 }
@@ -338,7 +335,7 @@ void MainWindow::updateDetails(QString info){
 void MainWindow::generateRent()
 {
     if(elements->isSomeoneSeleceted()){
-        emit clickedNoleggia(elements->getIndex(),quantity->value());
+        emit clickedNoleggia(elements->getIndex(),(uint)quantity->value());
         quantity->setValue(0);
     }
     else
@@ -348,7 +345,7 @@ void MainWindow::generateRent()
 void MainWindow::generateBuyed()
 {
     if(elements->isSomeoneSeleceted()){
-        emit clickedCompra(elements->getIndex(),quantity->value());
+        emit clickedCompra(elements->getIndex(),(uint)quantity->value());
         quantity->setValue(0);
     }
     else
@@ -375,21 +372,21 @@ void MainWindow::catalogSelected(int index)
 {
     rent->reset();
     buyed->reset();
-    emit requestDetailsCatalog(index);
+    emit requestDetailsCatalog((uint)index);
 }
 
 void MainWindow::rentSelected(int index)
 {
     elements->reset();
     buyed->reset();
-    emit requestDetailsRent(index);
+    emit requestDetailsRent((uint)index);
 }
 
 void MainWindow::buyedSelected(int index)
 {
     elements->reset();
     rent->reset();
-    emit requestDetailsBuyed(index);
+    emit requestDetailsBuyed((uint)index);
 }
 
 void MainWindow::removeRequest()

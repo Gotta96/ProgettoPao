@@ -29,9 +29,9 @@ private:
 
 public:
 
-    Container();                                    //fare vedere a betta l'implementazione
-    Container(const T&);                            //fare vedere a betta l'implementazione
-    Container(const Container&);                    //fare vedere a betta l'implementazione
+    Container();
+    Container(const T&);
+    Container(const Container&);
     ~Container();
 
     //funzioni di inserimento, rimozione e ricerca
@@ -51,11 +51,11 @@ public:
 
     //funzioni di supporto
 
-    void replaceAtIndex(const T&, unsigned int);        //controllare se giusta
+    void replaceAtIndex(const T&, unsigned int);
     nodo* getFirst() const;
     bool is_empty() const;
     unsigned int size() const;
-    int itemsCounter(const T&) const;                   //forse da rimuovere
+    int itemsCounter(const T&) const;
 
     //Iteratore
 
@@ -74,7 +74,6 @@ public:
         bool operator ==(const Iterator&) const;
         bool operator !=(const Iterator&) const;
         bool hasNext() const;
-        //T& next() const; //no beo
     };
 
     //Iteratore constante
@@ -94,7 +93,6 @@ public:
         bool operator ==(const Const_Iterator&) const;
         bool operator !=(const Const_Iterator&) const;
         bool constHasNext() const;
-        //const T& constNext() const;  //no beo
     };
 
     //Metodi Iteratore
@@ -327,11 +325,9 @@ bool Container<T>::operator!=(const Container<T>& c) const{
 
 template<class T>
 void Container<T>::replaceAtIndex(const T& itm, unsigned int i){
-//    T att = searchAtIndex(i);
-//    att=itm;
     removeOneAtIndex(i);
     pushInOrder(itm);
-}           //da controllare
+}
 
 template <class T>
 typename Container<T>::nodo* Container<T>::getFirst() const{
@@ -368,9 +364,6 @@ int Container<T>::itemsCounter(const T& i) const{
 template<class T>
 Container<T>::Iterator::Iterator(Container::nodo *n, bool passed): pointed(n), pte(passed){}
 
-//template<class T>
-//Container<T>::Iterator::Iterator(): pointed(nullptr), pte(false){}
-
 template <class T>
 Container<T>::Iterator::Iterator(const Container<T>::Iterator& it): pointed(it.pointed){
     if(!pointed && !pointed->next)
@@ -394,26 +387,6 @@ typename Container<T>::Iterator Container<T>::end() const{
 
 template<class T>
 typename Container<T>::Iterator &Container<T>::Iterator::operator++(){
-//    Container<T>::Iterator temp= (*this);
-//    if(!pte && pointed){
-//        if(pointed->next==nullptr){
-//            pointed=pointed->next;
-//            pte=true;
-//        }
-//        else
-//            pointed=pointed->next;
-//    }
-//    return temp;
-//    if(!temp.pte && i.pointed){
-//        if(i.pointed ==  nullptr){
-//            tmp=tmp->next;
-//            pte=true;
-//        }
-//        else
-//            tmp=tmp->next;
-//    }
-
-//    return tmp;
     if(!pte && pointed){
         if(pointed->next==nullptr){
             pointed=pointed+1;
@@ -453,19 +426,10 @@ bool Container<T>::Iterator::hasNext() const{
         return false;
 }
 
-//template <class T>
-//T& Container<T>::Iterator::next() const{
-//    if(pointed->next)
-//        return (pointed->next->info);
-//}
-
 //Funzioni Iteratore Costante
 
 template<class T>
 Container<T>::Const_Iterator::Const_Iterator(Container::nodo *n, bool passed): pointed(n), pte(passed){}
-
-//template<class T>
-//Container<T>::Const_Iterator::Const_Iterator(): pointed(nullptr), pte(false){}
 
 template <class T>
 Container<T>::Const_Iterator::Const_Iterator(const Container<T>::Const_Iterator& cit): pointed(cit.pointed){
@@ -527,11 +491,5 @@ bool Container<T>::Const_Iterator::constHasNext() const{
     else
         return false;
 }
-
-//template <class T>
-//const T& Container<T>::Const_Iterator::constNext() const{
-//    if(pointed->next)
-//        return (pointed->next->info);
-//}
 
 #endif // CONTAINER_H

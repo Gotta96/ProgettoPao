@@ -11,7 +11,7 @@ public:
 
     unsigned int getIndex() const;
 
-    bool isSomeoneSeleceted();
+    bool isSomeoneSeleceted() const;
 
     void unSelectIndex() const;
 };

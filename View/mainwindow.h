@@ -44,7 +44,7 @@ public:
     bool isSelected() const;
     unsigned int getCatalogSelected() const;
 
-    const QString getResearchWord();
+    const QString getResearchWord() const;
 
     QString getClientName() const;
     QString getClientPiva()const;

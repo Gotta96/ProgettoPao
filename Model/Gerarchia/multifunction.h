@@ -11,8 +11,6 @@ public:
     Multifunction* clone() const override;
     ~Multifunction() override;
 
-    Multifunction& operator=(const Multifunction&) const;
-
     bool operator==(const Item&) const override;
     bool operator!=(const Item&) const override;
 

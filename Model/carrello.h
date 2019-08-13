@@ -1,7 +1,6 @@
 #ifndef CARRELLO_H
 #define CARRELLO_H
 
-#include "Gerarchia/item.h"
 #include "Model/Template/deepptr.h"
 #include "Model/Gerarchia/item.h"
 #include "Model/Gerarchia/consumable.h"
@@ -23,12 +22,13 @@ public:
     void insertIntoCart(DeepPtr<Item>, unsigned int);
     bool removeIntoCart(DeepPtr<Item>);
     void removeIntoCartAtIndex(unsigned int i);
-    QMap<DeepPtr<Item>, unsigned int>::iterator searchIntoCart(DeepPtr<Item>);
+    QMap<DeepPtr<Item>, unsigned int>::const_iterator searchIntoCart(DeepPtr<Item>) const;
     DeepPtr<Item> searchAtIndex(unsigned int) const;
     unsigned int removeQuantity(DeepPtr<Item>, unsigned int);
-    unsigned int getQuantity(DeepPtr<Item>);
-    double getTotPriceItems();
-    double getTotRentItems();
+    unsigned int getQuantity(DeepPtr<Item>) const;
+    double getTotPriceItems() const;
+    double getTotRentItems() const;
+    void setQuantity(DeepPtr<Item>, unsigned int);
     bool is_empty() const;
     void clear();
 

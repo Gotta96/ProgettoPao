@@ -14,8 +14,6 @@ public:
     Stampante* clone() const override =0;
     ~Stampante() override;
 
-    Stampante& operator=(const Stampante&) const;       //??
-
     bool operator==(const Item&) const override;
     bool operator!=(const Item&) const override;
 

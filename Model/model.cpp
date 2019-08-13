@@ -1,7 +1,5 @@
 #include "model.h"
 
-#include <QDebug>
-
 Model::Model(QObject *parent) : QObject(parent),
                                 preventiveDate(QDate::currentDate()),
                                 catalogo(),
@@ -80,19 +78,19 @@ bool Model::editItem(unsigned int i,const QStringList e){
 
 }
 
-QString Model::getCatalogElementDetails(unsigned int ind){
+QString Model::getCatalogElementDetails(unsigned int ind) const{
     return QString::fromStdString((catalogo.searchAtIndex(ind))->print());
 }
 
-QString Model::getRentElementDetails(unsigned int ind){ //problema dovuto al fatto che ora passo l'indice relativo alla tabella rent e non più al catalogo, trovare il modo per ottenere il deeptr dell'oggetto selezionato oppure creare funzione interna al carrello
+QString Model::getRentElementDetails(unsigned int ind) const{
     return QString::fromStdString((rent.searchAtIndex(ind))->print());
 }
 
-QString Model::getBuyElementDetails(unsigned int ind){ //problema dovuto al fatto che ora passo l'indice relativo alla tabella rent e non più al catalogo, trovare il modo per ottenere il deeptr dell'oggetto selezionato oppure creare funzione interna al carrello
+QString Model::getBuyElementDetails(unsigned int ind) const{
     return QString::fromStdString((buyed.searchAtIndex(ind))->print());
 }
 
-QStringList Model::getCatalogElement(unsigned int ind){      //vedere se si riesce a trasformare i vari puntatoti consumable*, normal* ecc.. in deeptr
+QStringList Model::getCatalogElement(unsigned int ind) const{
     QStringList ret;
     if(dynamic_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))))){
             const Consumable * item = static_cast<const Consumable*>(&(*(catalogo.searchAtIndex(ind))));
@@ -146,7 +144,7 @@ QStringList Model::getCatalogElement(unsigned int ind){      //vedere se si ries
 
 }
 
-QStringList Model::getRentElement(unsigned int ind){      //vedere se si riesce a trasformare i vari puntatoti consumable*, normal* ecc.. in deeptr
+QStringList Model::getRentElement(unsigned int ind)const{
     QStringList ret;
     if(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind))).key()))){
         const Consumable * item = dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind))).key()));
@@ -200,7 +198,7 @@ QStringList Model::getRentElement(unsigned int ind){      //vedere se si riesce 
 
 }
 
-QStringList Model::getBuyElement(unsigned int ind){      //vedere se si riesce a trasformare i vari puntatoti consumable*, normal* ecc.. in deeptr
+QStringList Model::getBuyElement(unsigned int ind)const{
     QStringList ret;
     if(dynamic_cast<const Consumable*>(&(*(rent.searchIntoCart(catalogo.searchAtIndex(ind))).key()))){
         const Consumable * item = dynamic_cast<const Consumable*>(&(*(buyed.searchIntoCart(catalogo.searchAtIndex(ind))).key()));
@@ -254,23 +252,25 @@ QStringList Model::getBuyElement(unsigned int ind){      //vedere se si riesce a
 
 }
 
-unsigned int Model::getQuantityRent(unsigned int i){
+unsigned int Model::getQuantityRent(unsigned int i) const{
     return rent.searchIntoCart(catalogo.searchAtIndex(i)).value();
 }
 
-unsigned int Model::getQuantityBuy(unsigned int i){
+unsigned int Model::getQuantityBuy(unsigned int i)const{
     return buyed.searchIntoCart(catalogo.searchAtIndex(i)).value();
 }
 
 void Model::setQuantityRent(unsigned int ind, unsigned int q){
-    rent.searchIntoCart(catalogo.searchAtIndex(ind)).value()=q;
+    DeepPtr<Item> tmp=catalogo.searchAtIndex(ind);
+    rent.setQuantity(tmp,q);
 }
 
 void Model::setQuantityBuy(unsigned int ind, unsigned int q){
-    buyed.searchIntoCart(catalogo.searchAtIndex(ind)).value()=q;
+    DeepPtr<Item> tmp=catalogo.searchAtIndex(ind);
+    buyed.setQuantity(tmp,q);
 }
 
-bool Model::checkIfExistIntoCatalog(QStringList d)
+bool Model::checkIfExistIntoCatalog(QStringList d) const
 {
     DeepPtr<Item> elemento;
     if(d.at(0)!="null"){
@@ -287,7 +287,7 @@ bool Model::checkIfExistIntoCatalog(QStringList d)
     return catalogo.searchIntoList(elemento);
 }
 
-unsigned int Model::findItemIntoCatalog(QStringList d)
+unsigned int Model::findItemIntoCatalog(QStringList d) const
 {
     DeepPtr<Item> elemento;
     if(d.at(0)!="null"){
@@ -321,11 +321,11 @@ void Model::setDate(QDate d){
     preventiveDate=d;
 }
 
-QDate Model::getDate(){
+QDate Model::getDate() const{
     return preventiveDate;
 }
 
-QStringList Model::getAllCatalog()
+QStringList Model::getAllCatalog() const
 {
     QStringList ret;
     QString etichetta;
@@ -343,7 +343,7 @@ QStringList Model::getAllCatalog()
     return ret;
 }
 
-QStringList Model::getFilteredCatalog(QString filter, QMap<unsigned int, unsigned int> &indexMapper)
+QStringList Model::getFilteredCatalog(QString filter, QMap<unsigned int, unsigned int> &indexMapper) const
 {
     QStringList ret;
     QString etichetta;
@@ -367,22 +367,22 @@ QStringList Model::getFilteredCatalog(QString filter, QMap<unsigned int, unsigne
     return ret;
 }
 
-QStringList Model::getAllRent()
+QStringList Model::getAllRent() const
 {
     return rent.printAllCart();
 }
 
-QStringList Model::getAllBuyed()
+QStringList Model::getAllBuyed() const
 {
     return buyed.printAllCart();
 }
 
-double Model::getAllPriceIntoRent()
+double Model::getAllPriceIntoRent() const
 {
     return rent.getTotRentItems();
 }
 
-double Model::getAllPriceIntoBuy()
+double Model::getAllPriceIntoBuy()const
 {
     return buyed.getTotPriceItems();
 }

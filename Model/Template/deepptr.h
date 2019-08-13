@@ -7,7 +7,6 @@
 
 template <class T>
 class DeepPtr{
-//    friend std::ostream& operator<< <T>(std::ostream&, const DeepPtr<T>&);
 private:
     T* pted;     //T puntato
 public:
@@ -60,8 +59,6 @@ DeepPtr<T>::~DeepPtr(){
         delete pted;      //elimina il T puntato dal mio puntatore con gestione della memoria
 }
 
-// dubbio sulle cose successive
-
 template <class T>
 bool DeepPtr<T>::operator==(const DeepPtr& dptr) const{
     return *pted==*(dptr.pted);
@@ -81,10 +78,5 @@ template<class T>
 bool DeepPtr<T>::operator>(const DeepPtr& dptr) const{
     return *pted>*(dptr.pted);
 }
-
-/*in relazione riportare il polimorfismo dovuto alla gerarchia che noi creiamo
- * che si riperquote sul nostro template*/
-
-//21/18/18 aggiunto operatore di output per Deepptr
 
 #endif // DEEPTR_H

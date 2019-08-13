@@ -68,7 +68,7 @@ Normal *Normal::unserialize(QXmlStreamReader &rd)
         pl = rd.readElementText() == "1"? true:false;
 
     rd.skipCurrentElement();
-    return new Normal(v.toStdString(),m.toStdString(),cos,dc,w,col,use,pl);
+    return new Normal(v.toStdString(),m.toStdString(),cos,dc,w,col,use,pl); //ds e ph non utilizzati perchè impostati a false di defautl in normale
 }
 
 void Normal::dataSerialize(QXmlStreamWriter & wr) const

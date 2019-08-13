@@ -52,7 +52,7 @@ bool XmlIO::writeItems(const Container<DeepPtr<Item> > & catalogo, const QString
 
     try {
         auto cit=catalogo.constBegin();
-        for(int k=0; k<catalogo.size(); k++){
+        for(int k=0; (uint)k<catalogo.size(); k++){
             (*cit)->dataSerialize(writer);
             ++cit;
         }

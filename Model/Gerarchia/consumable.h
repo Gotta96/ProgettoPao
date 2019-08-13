@@ -13,8 +13,6 @@ public:
     Consumable* clone() const override;
     ~Consumable() override;
 
-    Consumable& operator=(const Consumable&) const;
-
     bool operator==(const Item&) const override;
     bool operator!=(const Item&) const override;
 

@@ -12,8 +12,6 @@ public:
     virtual Normal* clone() const override;
     ~Normal() override;
 
-    Normal& operator=(const Normal&) const;
-
     bool operator==(const Item&) const override;
     bool operator!=(const Item&) const override;
 

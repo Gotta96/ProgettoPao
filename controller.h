@@ -3,6 +3,7 @@
 
 #include "Model/model.h"
 #include "View/mainwindow.h"
+#include "View/insertionwindow.h"
 #include "View/modifywindow.h"
 #include <QStringList>
 #include <QMap>
@@ -38,9 +39,9 @@ public slots:
     void removeR(unsigned int);
     void removeB(unsigned int);
 
-    void getDetailsCatalogo(unsigned int);
-    void getDetailsRent(unsigned int);
-    void getDetailsBuyed(unsigned int);
+    void getDetailsCatalogo(unsigned int) const;
+    void getDetailsRent(unsigned int) const;
+    void getDetailsBuyed(unsigned int) const;
 
     void sendForReplace(unsigned int, QStringList);
 
@@ -48,11 +49,11 @@ public slots:
     void refreshRent();
     void refreshBuyed();
 
-    void openAdd();
-    void openModify();
-    void openSave();
+    void openAdd() const;
+    void openModify() const;
+    void openSave() const;
     void openLoad();
-    void openSavePDF();
+    void openSavePDF() const;
 
     void noConsumableInRent();
 

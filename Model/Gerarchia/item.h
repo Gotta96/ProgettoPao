@@ -1,6 +1,5 @@
 #ifndef ITEM_H
 #define ITEM_H
-#include <string>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -21,7 +20,6 @@ class Item{
         virtual bool operator<(const Item&) const;
         virtual bool operator>(const Item&) const;
 
-        Item& operator=(const Item&) const;
         string getVendor() const;
         string getModel() const;
         double getCost() const;

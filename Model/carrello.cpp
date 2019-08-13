@@ -17,7 +17,7 @@ void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){
 }
 
 bool Carrello::removeIntoCart(DeepPtr<Item> i){
-    auto it=searchIntoCart(i);
+    auto it=cart.find(i);
     if(cart.end()!=it){
         cart.erase(it);
         return true;
@@ -34,7 +34,7 @@ void Carrello::removeIntoCartAtIndex(unsigned int i){
     }
 }
 
-QMap<DeepPtr<Item>,unsigned int>::iterator Carrello::searchIntoCart(DeepPtr<Item> i){
+QMap<DeepPtr<Item>,unsigned int>::const_iterator Carrello::searchIntoCart(DeepPtr<Item> i)const{
     return cart.find(i);
 }
 
@@ -46,8 +46,8 @@ DeepPtr<Item> Carrello::searchAtIndex(unsigned int index) const
     return it.key();
 }
 
-unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){         //da sistemare, logicamente errata
-    auto it=searchIntoCart(i);
+unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){
+    auto it= cart.find(i);
     if(cart.end()!=it){
         if(it.value() > q){
             it.value()-=q;
@@ -57,14 +57,14 @@ unsigned int Carrello::removeQuantity(DeepPtr<Item> i, unsigned int q){         
     return 0;
 }
 
-unsigned int Carrello::getQuantity(DeepPtr<Item> i){
+unsigned int Carrello::getQuantity(DeepPtr<Item> i) const{
     auto it=searchIntoCart(i);
     if(*it)
         return it.value();
     return 0;
 }
 
-double Carrello::getTotPriceItems(){
+double Carrello::getTotPriceItems() const{
     double tot=0;
     double costo_tmp=0;
     for(auto it=cart.begin(); it !=cart.end(); it++){
@@ -74,7 +74,7 @@ double Carrello::getTotPriceItems(){
     return tot;
 }
 
-double Carrello::getTotRentItems()
+double Carrello::getTotRentItems() const
 {
     double tot=0;
     double noleggio_tmp=0;
@@ -85,6 +85,12 @@ double Carrello::getTotRentItems()
         }
     }
     return tot;
+}
+
+void Carrello::setQuantity(DeepPtr<Item> i, unsigned int q)
+{
+    auto it= cart.find(i);
+    it.value()=q;
 }
 
 bool Carrello::is_empty() const
