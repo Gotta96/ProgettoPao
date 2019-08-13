@@ -16,6 +16,8 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
         normalDetails->setVisible(false);
         multifunctionDetails->setVisible(false);
 
+        this->adjustSize();
+
         //setto i valori degli elementi
         consumable->setChecked(true);
         marca->setText(e.at(1));
@@ -35,6 +37,8 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
             consumableDetails->setVisible(false);
             typeSelectionBox->setVisible(true);
             printerDetails->setVisible(true);
+
+            this->adjustSize();
 
             //setto i valori degli elementi
             printer->setChecked(true);
@@ -58,6 +62,8 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
                 multifunctionDetails->setVisible(false);
                 normalDetails->setVisible(true);
 
+                this->adjustSize();
+
                 //setto i valori degli elementi
                 normale->setChecked(true);
                 plotter->setChecked(e.at(11)=="true"? true : false);
@@ -74,6 +80,8 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
                 //setto le group box che si devono visualizzare
                 normalDetails->setVisible(false);
                 multifunctionDetails->setVisible(true);
+
+                this->adjustSize();
 
                 //setto i valori degli elementi
                 multifunction->setChecked(true);
@@ -92,6 +100,8 @@ void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
             printerDetails->setVisible(false);
             normalDetails->setVisible(false);
             multifunctionDetails->setVisible(false);
+
+            this->adjustSize();
         }
     }
 }

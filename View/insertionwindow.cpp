@@ -156,6 +156,8 @@ void InsertionWindow::resetForNewInsertion()
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
 
+    this->adjustSize();
+
     marca->setText("--Empty--");
     modello->setText("--Empty--");
     cost->setText("0.0");
@@ -187,6 +189,8 @@ void InsertionWindow::resetForNewInsertion()
 
     itemBaseDetails->setVisible(true);
     elementSelectionBox->setVisible(true);
+
+    this->adjustSize();
 }
 
 void InsertionWindow::displayInputError()
@@ -198,6 +202,7 @@ void InsertionWindow::displayInputError()
 
 void InsertionWindow::showPrinter()
 {
+    consumable->setChecked(false);
     itemBaseDetails->setVisible(false);
     elementSelectionBox->setVisible(false);
     consumableDetails->setVisible(false);
@@ -205,6 +210,8 @@ void InsertionWindow::showPrinter()
     printerDetails->setVisible(false);
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
+
+    this->adjustSize();
 
     itemBaseDetails->setVisible(true);
     elementSelectionBox->setVisible(true);
@@ -225,10 +232,13 @@ void InsertionWindow::showPrinter()
     colorName->setText("--Empty--");
     restore->setChecked(false);
     original->setChecked(false);
+
+    this->adjustSize();
 }
 
 void InsertionWindow::showConsumable()
 {
+    printer->setChecked(false);
     itemBaseDetails->setVisible(false);
     elementSelectionBox->setVisible(false);
     consumableDetails->setVisible(false);
@@ -236,6 +246,8 @@ void InsertionWindow::showConsumable()
     printerDetails->setVisible(false);
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
+
+    this->adjustSize();
 
     itemBaseDetails->setVisible(true);
     elementSelectionBox->setVisible(true);
@@ -279,6 +291,14 @@ void InsertionWindow::showNormal()
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
 
+    this->adjustSize();
+
+    itemBaseDetails->setVisible(true);
+    elementSelectionBox->setVisible(true);
+    normalDetails->setVisible(true);
+    printerDetails->setVisible(true);
+    typeSelectionBox->setVisible(true);
+
     doubleside->setText("Fronte-retro (no in normale)");
     photo->setText("Fotografie (no in normale)");
     doubleside->setChecked(false);
@@ -288,11 +308,7 @@ void InsertionWindow::showNormal()
     scanner->setChecked(false);
     fax->setChecked(false);
 
-    itemBaseDetails->setVisible(true);
-    elementSelectionBox->setVisible(true);
-    normalDetails->setVisible(true);
-    printerDetails->setVisible(true);
-    typeSelectionBox->setVisible(true);
+    this->adjustSize();
 
 }
 
@@ -306,6 +322,14 @@ void InsertionWindow::showMultifunction()
     normalDetails->setVisible(false);
     multifunctionDetails->setVisible(false);
 
+    this->adjustSize();
+
+    itemBaseDetails->setVisible(true);
+    elementSelectionBox->setVisible(true);
+    multifunctionDetails->setVisible(true);
+    printerDetails->setVisible(true);
+    typeSelectionBox->setVisible(true);
+
     doubleside->setText("Fronte-retro");
     photo->setText("Fotografie");
     doubleside->setChecked(false);
@@ -314,11 +338,7 @@ void InsertionWindow::showMultifunction()
     doubleside->setEnabled(true);
     photo->setEnabled(true);
 
-    itemBaseDetails->setVisible(true);
-    elementSelectionBox->setVisible(true);
-    multifunctionDetails->setVisible(true);
-    printerDetails->setVisible(true);
-    typeSelectionBox->setVisible(true);
+    this->adjustSize();
 
 }
 
@@ -390,6 +410,7 @@ void InsertionWindow::confirm()
 
 void InsertionWindow::dimiss()
 {
+    this->resetForNewInsertion();
     this->close();
 }
 
