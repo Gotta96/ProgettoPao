@@ -37,6 +37,7 @@ public:
     void displayTotals(double, double);
     void displayErrorForConsumableRent();
     void displayOpenError();
+    void displayIvaError();
     void displayLoad(QString);
     void displaySave(QString);
 

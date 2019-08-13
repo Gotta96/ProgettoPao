@@ -270,14 +270,21 @@ void MainWindow::displayTotals(double noleggiato, double comprato)
 void MainWindow::displayErrorForConsumableRent()
 {
     QMessageBox messageBox;
-    messageBox.critical(this,"Error","Inpossibile noleggiare un consumabile");
+    messageBox.critical(this,"Error","Impossibile noleggiare un consumabile");
     messageBox.setFixedSize(500,200);
 }
 
 void MainWindow::displayOpenError()
 {
     QMessageBox messageBox;
-    messageBox.critical(this,"Error","Inpossibile aprire il file specificato");
+    messageBox.critical(this,"Error","Impossibile aprire il file specificato");
+    messageBox.setFixedSize(500,200);
+}
+
+void MainWindow::displayIvaError()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Partita iva inserita non contiene solo numeri");
     messageBox.setFixedSize(500,200);
 }
 
@@ -317,7 +324,11 @@ QString MainWindow::getClientName() const
 
 QString MainWindow::getClientPiva() const
 {
-    return iva->text();
+    QRegExp regexInt("^\\d+$");
+    if(iva->text().contains(regexInt))
+        return iva->text();
+    else
+        return "error";
 }
 
 void MainWindow::updateDetails(QString info){
