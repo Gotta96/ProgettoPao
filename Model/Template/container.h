@@ -189,8 +189,7 @@ void Container<T>::pushInOrder(const T& itm){
     }
     else{
         current = first;
-        while (current->next!=nullptr &&
-               current->next->info < new_nodo->info)
+        while (current->next!=nullptr && current->next->info < new_nodo->info)
         {
             current = current->next;
         }
@@ -261,7 +260,7 @@ bool Container<T>::removeOneAtIndex(const unsigned int i){
             return true;
         }
 
-        for(unsigned int k=0; att->next && k<i; k++){
+        for(unsigned int k=1; att->next && k<i; k++){
             prev=prev->next;
             att=att->next;
         }

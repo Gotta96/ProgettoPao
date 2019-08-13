@@ -167,7 +167,7 @@ void Controller::getDetailsBuyed(unsigned int index)
 
 void Controller::removeC(unsigned int index)
 {
-    modello->removeIntoCatalog(indexTranslate[index-1]);
+    modello->removeIntoCatalog(indexTranslate[index]);
     refreshCatalog();
 }
 
@@ -212,7 +212,7 @@ void Controller::addToBuyCart(unsigned int index, unsigned int quantity)
 
 void Controller::sendForReplace(unsigned int index, QStringList elem)
 {
-    modello->editItem(indexTranslate[index-1], elem);
+    modello->editItem(indexTranslate[index], elem);
     refreshCatalog();
 }
 
