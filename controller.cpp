@@ -196,7 +196,7 @@ void Controller::addToCatalogContainer(const QStringList details)
             if(!modello->checkIfExistIntoCatalog(details))
                 modello->addIntoCatalog(details);
             else{
-                modello->editItem(modello->findItemIntoCatalog(details),details);
+                mainW->displayTheElementExist();
             }
         }
     }

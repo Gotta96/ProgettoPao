@@ -141,6 +141,33 @@
         <scanner>1</scanner>
         <fax>0</fax>
     </item>
+    <item type="c">
+        <vendor>HP</vendor>
+        <model>302</model>
+        <cost>15</cost>
+        <size>180</size>
+        <restored>1</restored>
+        <original>0</original>
+        <color_name>Blue</color_name>
+    </item>
+    <item type="c">
+        <vendor>HP</vendor>
+        <model>302</model>
+        <cost>25</cost>
+        <size>190</size>
+        <restored>0</restored>
+        <original>1</original>
+        <color_name>magenta</color_name>
+    </item>
+    <item type="c">
+        <vendor>HP</vendor>
+        <model>302</model>
+        <cost>25</cost>
+        <size>190</size>
+        <restored>0</restored>
+        <original>1</original>
+        <color_name>Nero</color_name>
+    </item>
     <item type="m">
         <vendor>HP</vendor>
         <model>Color LaserJet CP5225DN</model>
