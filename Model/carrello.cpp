@@ -8,23 +8,27 @@ Carrello::~Carrello(){
 }
 
 void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){    
-//    auto it=cart.find(i);
-//    if(cart.end()==it && !(cart.contains(i)) /*dynamic_cast<const Consumable*>(&(*(i)))->getColorName()==dynamic_cast<const Consumable*>(&(*(it.key())))->getColorName()*/)
-//        cart.insert(i,q);
-//    else {
-//        if(cart.end()==it || (it.key()==i))
-//            cart[i]+=q;
-//        else{
-//            cart.insert(i,q);
-//        }
-//    }
-
     if(cart.contains(i)){
-        auto it=cart.find(i);
-        if(dynamic_cast<const Consumable*>(&(*(i)))->getColorName()==dynamic_cast<const Consumable*>(&(*(it.key())))->getColorName())
+        auto it=cart.begin();
+        bool ok=false;
+        if(dynamic_cast<const Stampante*>(&(*(i))))
             cart[i]+=q;
-        else
-            cart.insert(i,q);
+        else {
+            while(!ok && it!=cart.end()){
+                if(dynamic_cast<const Consumable*>(&(*(it.key())))){
+                    if(dynamic_cast<const Consumable*>(&(*(i)))->getColorName()==dynamic_cast<const Consumable*>(&(*(it.key())))->getColorName())
+                        ok=true;
+                    else
+                        it++;
+                }
+                else
+                    it++;
+            }
+            if(ok)
+                it.value()+=q;
+            else
+                cart.insertMulti(i,q);
+        }
     }
     else
         cart.insert(i,q);
