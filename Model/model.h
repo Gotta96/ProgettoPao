@@ -27,32 +27,40 @@ private:
 public:
     explicit Model(QObject *parent = nullptr);
 
-    void removeIntoCatalog(unsigned int);
-    void removeIntoRent(unsigned int);
-    void removeIntoBuy(unsigned int);
-    void addIntoRent(unsigned int, unsigned int);
-    void addIntoBuy(unsigned int, unsigned int);
-    bool editItem(unsigned int, const QStringList);
-    QString getCatalogElementDetails(unsigned int) const;
-    QString getRentElementDetails(unsigned int) const;
-    QString getBuyElementDetails(unsigned int) const;
-    QStringList getCatalogElement(unsigned int) const;
-    QStringList getRentElement(unsigned int) const;
-    QStringList getBuyElement(unsigned int) const;
-    unsigned int getQuantityRent(unsigned int) const;
-    unsigned int getQuantityBuy(unsigned int) const;
-    void setQuantityRent(unsigned int, unsigned int);
-    void setQuantityBuy(unsigned int, unsigned int);
+    void removeIntoCatalog(const unsigned int);
+    void removeIntoRent(const unsigned int);
+    void removeIntoBuy(const unsigned int);
+
+    void addIntoRent(const unsigned int,const unsigned int);
+    void addIntoBuy(const unsigned int,const unsigned int);
+
+    bool editItem(const unsigned int,const QStringList);
+
+    QString getCatalogElementDetails(const unsigned int) const;
+    QString getRentElementDetails(const unsigned int) const;
+    QString getBuyElementDetails(const unsigned int) const;
+
+    QStringList getCatalogElement(const unsigned int) const;
+    QStringList getRentElement(const unsigned int) const;
+    QStringList getBuyElement(const unsigned int) const;
+
+    unsigned int getQuantityRent(const unsigned int) const;
+    unsigned int getQuantityBuy(const unsigned int) const;
+
+    void setQuantityRent(const unsigned int,const unsigned int);
+    void setQuantityBuy(const unsigned int,const unsigned int);
+
     QStringList getAllCatalog() const;
-    QStringList getFilteredCatalog(QString,QMap<unsigned int,unsigned int> &) const;
+    QStringList getFilteredCatalog(const QString,QMap<unsigned int,unsigned int> &) const;
     QStringList getAllRent() const;
     QStringList getAllBuyed() const;
 
     double getAllPriceIntoRent() const;
     double getAllPriceIntoBuy() const;
 
-    bool checkIfExistIntoCatalog(QStringList) const;
-    unsigned int findItemIntoCatalog(QStringList) const;
+    bool checkIfExistIntoCatalog(const QStringList) const;
+
+    unsigned int findItemIntoCatalog(const QStringList) const;
 
     bool thereIsSomething() const;
     void clearTheWorkspace();

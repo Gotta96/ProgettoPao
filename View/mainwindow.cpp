@@ -197,9 +197,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     connect(buttonbuy, SIGNAL(clicked()), this, SLOT(generateBuyed()));
     connect(buttonRemoveRent, SIGNAL(clicked()), this, SLOT(destroyRent()));
     connect(buttonRemoveBuyed, SIGNAL(clicked()), this, SLOT(destroyBuyed()));
-    connect(elements, SIGNAL(currentRowChanged(int)), this, SLOT(catalogSelected(int)));
-    connect(rent, SIGNAL(currentRowChanged(int)), this, SLOT(rentSelected(int)));
-    connect(buyed, SIGNAL(currentRowChanged(int)), this, SLOT(buyedSelected(int)));
+    connect(elements, SIGNAL(currentRowChanged(const int)), this, SLOT(catalogSelected(const int)));
+    connect(rent, SIGNAL(currentRowChanged(const int)), this, SLOT(rentSelected(const int)));
+    connect(buyed, SIGNAL(currentRowChanged(const int)), this, SLOT(buyedSelected(const int)));
 
 }
 
@@ -256,7 +256,7 @@ void MainWindow::displayDetails(const QString d)
     details->setText(d);
 }
 
-void MainWindow::displayTotals(double noleggiato, double comprato)
+void MainWindow::displayTotals(const double noleggiato, const double comprato)
 {
     totrent->clear();
     totbuyed->clear();
@@ -375,21 +375,21 @@ void MainWindow::destroyBuyed()
         displayNotSelection();
 }
 
-void MainWindow::catalogSelected(int index)
+void MainWindow::catalogSelected(const int index)
 {
     rent->reset();
     buyed->reset();
     emit requestDetailsCatalog((uint)index);
 }
 
-void MainWindow::rentSelected(int index)
+void MainWindow::rentSelected(const int index)
 {
     elements->reset();
     buyed->reset();
     emit requestDetailsRent((uint)index);
 }
 
-void MainWindow::buyedSelected(int index)
+void MainWindow::buyedSelected(const int index)
 {
     elements->reset();
     rent->reset();

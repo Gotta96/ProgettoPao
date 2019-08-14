@@ -11,11 +11,11 @@ private:
 public:
     explicit ModifyWindow(QWidget *parent = nullptr);
 
-    void loadDataForEdit(QStringList, unsigned int);
+    void loadDataForEdit(const QStringList,const unsigned int);
 public slots:
     void confirm() override;
 signals:
-    void replaceItem(unsigned int, QStringList);
+    void replaceItem(const unsigned int,const QStringList);
 };
 
 #endif // MODIFYWINDOW_H

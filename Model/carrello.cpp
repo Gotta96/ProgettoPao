@@ -8,12 +8,26 @@ Carrello::~Carrello(){
 }
 
 void Carrello::insertIntoCart(DeepPtr<Item> i, unsigned int q){    
-    auto it=searchIntoCart(i);
-        if(!(*it))
-            cart.insert(i,q);
-        else
-            cart[i]+=q;
+//    auto it=cart.find(i);
+//    if(cart.end()==it && !(cart.contains(i)) /*dynamic_cast<const Consumable*>(&(*(i)))->getColorName()==dynamic_cast<const Consumable*>(&(*(it.key())))->getColorName()*/)
+//        cart.insert(i,q);
+//    else {
+//        if(cart.end()==it || (it.key()==i))
+//            cart[i]+=q;
+//        else{
+//            cart.insert(i,q);
+//        }
+//    }
 
+    if(cart.contains(i)){
+        auto it=cart.find(i);
+        if(dynamic_cast<const Consumable*>(&(*(i)))->getColorName()==dynamic_cast<const Consumable*>(&(*(it.key())))->getColorName())
+            cart[i]+=q;
+        else
+            cart.insert(i,q);
+    }
+    else
+        cart.insert(i,q);
 }
 
 bool Carrello::removeIntoCart(DeepPtr<Item> i){

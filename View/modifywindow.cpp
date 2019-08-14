@@ -2,7 +2,7 @@
 
 ModifyWindow::ModifyWindow(QWidget *parent):InsertionWindow(parent){}
 
-void ModifyWindow::loadDataForEdit(QStringList e, unsigned int i){
+void ModifyWindow::loadDataForEdit(const QStringList e, const unsigned int i){
     ind=i;
     //setto i valori passati dalla QStringList
 

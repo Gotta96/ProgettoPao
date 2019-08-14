@@ -23,7 +23,7 @@ private:
 public:
     explicit Controller(QWidget *parent = nullptr);
 
-    void replaceIntoCatalog(unsigned int, QStringList);
+    void replaceIntoCatalog(const unsigned int,const QStringList);
 
 
 signals:
@@ -32,18 +32,18 @@ signals:
 public slots:
     void addToCatalogContainer(const QStringList);
 
-    void addToRentCart(unsigned int, unsigned int);
-    void addToBuyCart(unsigned int, unsigned int);
+    void addToRentCart(const unsigned int,const unsigned int);
+    void addToBuyCart(const unsigned int,const unsigned int);
 
-    void removeC(unsigned int);
-    void removeR(unsigned int);
-    void removeB(unsigned int);
+    void removeC(const unsigned int);
+    void removeR(const unsigned int);
+    void removeB(const unsigned int);
 
-    void getDetailsCatalogo(unsigned int) const;
-    void getDetailsRent(unsigned int) const;
-    void getDetailsBuyed(unsigned int) const;
+    void getDetailsCatalogo(const unsigned int) const;
+    void getDetailsRent(const unsigned int) const;
+    void getDetailsBuyed(const unsigned int) const;
 
-    void sendForReplace(unsigned int, QStringList);
+    void sendForReplace(const unsigned int,const QStringList);
 
     void refreshCatalog();
     void refreshRent();

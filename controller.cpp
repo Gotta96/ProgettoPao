@@ -8,16 +8,16 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     mainW->show();
 
     //connessioni segnali della main window
-    connect(mainW, SIGNAL(clickedNoleggia(unsigned int, unsigned int)), this, SLOT(addToRentCart(unsigned int, unsigned int)));
-    connect(mainW, SIGNAL(clickedCompra(unsigned int, unsigned int)), this, SLOT(addToBuyCart(unsigned int, unsigned int)));
-    connect(mainW, SIGNAL(clickedRemoveRent(unsigned int)), this, SLOT(removeR(unsigned int)));
-    connect(mainW, SIGNAL(clickedRemoveBuyed(unsigned int)), this, SLOT(removeB(unsigned int)));
-    connect(mainW, SIGNAL(requestDetailsCatalog(unsigned int)), this, SLOT(getDetailsCatalogo(unsigned int)));
-    connect(mainW, SIGNAL(requestDetailsRent(unsigned int)), this, SLOT(getDetailsRent(unsigned int)));
-    connect(mainW, SIGNAL(requestDetailsBuyed(unsigned int)), this, SLOT(getDetailsBuyed(unsigned int)));
+    connect(mainW, SIGNAL(clickedNoleggia(const unsigned int,const unsigned int)), this, SLOT(addToRentCart(const unsigned int,const unsigned int)));
+    connect(mainW, SIGNAL(clickedCompra(const unsigned int,const unsigned int)), this, SLOT(addToBuyCart(const unsigned int,const unsigned int)));
+    connect(mainW, SIGNAL(requestRemoveIntoCatalog(const unsigned int)), this, SLOT(removeC(const unsigned int)));
+    connect(mainW, SIGNAL(clickedRemoveRent(const unsigned int)), this, SLOT(removeR(const unsigned int)));
+    connect(mainW, SIGNAL(clickedRemoveBuyed(const unsigned int)), this, SLOT(removeB(const unsigned int)));
+    connect(mainW, SIGNAL(requestDetailsCatalog(const unsigned int)), this, SLOT(getDetailsCatalogo(const unsigned int)));
+    connect(mainW, SIGNAL(requestDetailsRent(const unsigned int)), this, SLOT(getDetailsRent(const unsigned int)));
+    connect(mainW, SIGNAL(requestDetailsBuyed(const unsigned int)), this, SLOT(getDetailsBuyed(const unsigned int)));
     connect(mainW, SIGNAL(openAddToCatalogWindow()), this, SLOT(openAdd()));
     connect(mainW, SIGNAL(requestToOpenModify()), this, SLOT(openModify()));
-    connect(mainW, SIGNAL(requestRemoveIntoCatalog(unsigned int)), this, SLOT(removeC(unsigned int)));
     connect(mainW, SIGNAL(openSaveWindow()), this, SLOT(openSave()));
     connect(mainW, SIGNAL(openLoadWindow()), this, SLOT(openLoad()));
     connect(mainW, SIGNAL(openSavePDFWindow()), this, SLOT(openSavePDF()));
@@ -27,7 +27,7 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
     //connessioni segnali della insertion e della modify window
     connect(insertionW, SIGNAL(sendItemsDetails(const QStringList)), this, SLOT(addToCatalogContainer(const QStringList)));
     connect(insertionW, SIGNAL(inputError()), this, SLOT(inputErrorRecived()));
-    connect(modifyW, SIGNAL(replaceItem(unsigned int, QStringList)), this, SLOT(sendForReplace(unsigned int, QStringList)));
+    connect(modifyW, SIGNAL(replaceItem(const unsigned int,const QStringList)), this, SLOT(sendForReplace(const unsigned int, QStringList)));
     connect(modifyW, SIGNAL(inputError()), this, SLOT(inputErrorRecived()));
 
     //connessioni segnali arrivanti dal modello
@@ -41,9 +41,93 @@ Controller::Controller(QWidget *parent) : QWidget(parent),
 
 }
 
-void Controller::replaceIntoCatalog(unsigned int index, QStringList details)
+void Controller::replaceIntoCatalog(const unsigned int index, const QStringList details)
 {
     modello->editItem(indexTranslate[index],details);
+}
+
+void Controller::addToCatalogContainer(const QStringList details)
+{
+    if(details.first()=="null")
+        mainW->displayInputError();
+    else {
+        if(details[1]=="null")
+            mainW->displayInputError();
+        else{
+            if(!modello->checkIfExistIntoCatalog(details))
+                modello->addIntoCatalog(details);
+            else{
+                mainW->displayTheElementExist();
+            }
+        }
+    }
+}
+
+void Controller::addToRentCart(const unsigned int index,const unsigned int quantity)
+{
+    if(quantity!=0)
+        modello->addIntoRent(indexTranslate[index],quantity);
+}
+
+void Controller::addToBuyCart(const unsigned int index,const  unsigned int quantity)
+{
+    if(quantity!=0)
+        modello->addIntoBuy(indexTranslate[index], quantity);
+}
+
+void Controller::removeC(const unsigned int index)
+{
+    modello->removeIntoCatalog(indexTranslate[index]);
+    refreshCatalog();
+}
+
+void Controller::removeR(const unsigned int index)
+{
+    modello->removeIntoRent(index);
+}
+
+void Controller::removeB(const unsigned int index)
+{
+    modello->removeIntoBuy(index);
+}
+
+void Controller::getDetailsCatalogo(const unsigned int index) const
+{
+    mainW->displayDetails(modello->getCatalogElementDetails(indexTranslate[index]));
+}
+
+void Controller::getDetailsRent(const unsigned int index) const
+{
+    mainW->displayDetails(modello->getRentElementDetails(index));
+}
+
+void Controller::getDetailsBuyed(const unsigned int index) const
+{
+    mainW->displayDetails(modello->getBuyElementDetails(index));
+}
+
+void Controller::sendForReplace(const unsigned int index,const QStringList elem)
+{
+    modello->editItem(indexTranslate[index], elem);
+    refreshCatalog();
+}
+
+void Controller::refreshCatalog()
+{
+    QString filter=mainW->getResearchWord();
+    mainW->displayCatalog(modello->getFilteredCatalog(filter,indexTranslate));
+}
+
+void Controller::refreshRent()
+{
+    mainW->displayRent(modello->getAllRent());
+    mainW->displayTotals(modello->getAllPriceIntoRent(), modello->getAllPriceIntoBuy());
+}
+
+void Controller::refreshBuyed()
+{
+    mainW->displayBuyed(modello->getAllBuyed());
+    mainW->displayTotals(modello->getAllPriceIntoRent(), modello->getAllPriceIntoBuy());
 }
 
 void Controller::openAdd() const
@@ -153,88 +237,3 @@ void Controller::inputErrorRecived()
 {
     insertionW->displayInputError();
 }
-
-void Controller::getDetailsCatalogo(unsigned int index) const
-{
-    mainW->displayDetails(modello->getCatalogElementDetails(indexTranslate[index]));
-}
-
-void Controller::getDetailsRent(unsigned int index) const
-{
-    mainW->displayDetails(modello->getRentElementDetails(index));
-}
-
-void Controller::getDetailsBuyed(unsigned int index) const
-{
-    mainW->displayDetails(modello->getBuyElementDetails(index));
-}
-
-void Controller::removeC(unsigned int index)
-{
-    modello->removeIntoCatalog(indexTranslate[index]);
-    refreshCatalog();
-}
-
-void Controller::removeR(unsigned int index)
-{
-    modello->removeIntoRent(index);
-}
-
-void Controller::removeB(unsigned int index)
-{
-    modello->removeIntoBuy(index);
-}
-
-void Controller::addToCatalogContainer(const QStringList details)
-{
-    if(details.first()=="null")
-        mainW->displayInputError();
-    else {
-        if(details[1]=="null")
-            mainW->displayInputError();
-        else{
-            if(!modello->checkIfExistIntoCatalog(details))
-                modello->addIntoCatalog(details);
-            else{
-                mainW->displayTheElementExist();
-            }
-        }
-    }
-}
-
-void Controller::addToRentCart(unsigned int index, unsigned int quantity)
-{
-    if(quantity!=0)
-        modello->addIntoRent(indexTranslate[index],quantity);
-}
-
-void Controller::addToBuyCart(unsigned int index, unsigned int quantity)
-{
-    if(quantity!=0)
-        modello->addIntoBuy(indexTranslate[index], quantity);
-}
-
-void Controller::sendForReplace(unsigned int index, QStringList elem)
-{
-    modello->editItem(indexTranslate[index], elem);
-    refreshCatalog();
-}
-
-void Controller::refreshCatalog()
-{
-    QString filter=mainW->getResearchWord();
-    mainW->displayCatalog(modello->getFilteredCatalog(filter,indexTranslate));
-}
-
-void Controller::refreshRent()
-{
-    mainW->displayRent(modello->getAllRent());
-    mainW->displayTotals(modello->getAllPriceIntoRent(), modello->getAllPriceIntoBuy());
-}
-
-void Controller::refreshBuyed()
-{
-    mainW->displayBuyed(modello->getAllBuyed());
-    mainW->displayTotals(modello->getAllPriceIntoRent(), modello->getAllPriceIntoBuy());
-}
-

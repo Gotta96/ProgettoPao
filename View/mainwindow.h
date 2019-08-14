@@ -26,7 +26,6 @@ private:
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    //~MainWindow() override;
 
     void displayCatalog(const QStringList);
     void displayRent(const QStringList);
@@ -34,7 +33,7 @@ public:
     void displayInputError();
     void displayNotSelection();
     void displayDetails(const QString);
-    void displayTotals(double, double);
+    void displayTotals(const double,const double);
     void displayErrorForConsumableRent();
     void displayOpenError();
     void displayIvaError();
@@ -57,27 +56,27 @@ public slots:
     void destroyRent();
     void destroyBuyed();
 
-    void catalogSelected(int);
-    void rentSelected(int);
-    void buyedSelected(int);
+    void catalogSelected(const int);
+    void rentSelected(const int);
+    void buyedSelected(const int);
 
     void removeRequest();
 
 signals:
     void openAddToCatalogWindow();
     void requestToOpenModify();
-    void requestRemoveIntoCatalog(unsigned int);
+    void requestRemoveIntoCatalog(const unsigned int);
     void openLoadWindow();
     void openSaveWindow();
     void openSavePDFWindow();
     void updateSearch();
-    void clickedNoleggia(unsigned int i, unsigned int q);
-    void clickedCompra(unsigned int i, unsigned int q);
-    void clickedRemoveRent(unsigned int i);
-    void clickedRemoveBuyed(unsigned int i);
-    void requestDetailsCatalog(unsigned int);
-    void requestDetailsRent(unsigned int);
-    void requestDetailsBuyed(unsigned int);
+    void clickedNoleggia(const unsigned int i,const unsigned int q);
+    void clickedCompra(const unsigned int i,const unsigned int q);
+    void clickedRemoveRent(const unsigned int i);
+    void clickedRemoveBuyed(const unsigned int i);
+    void requestDetailsCatalog(const unsigned int);
+    void requestDetailsRent(const unsigned int);
+    void requestDetailsBuyed(const unsigned int);
 
 };
 
