@@ -11,11 +11,11 @@ Consumable *Consumable::clone() const{
 Consumable::~Consumable(){};
 
 bool Consumable::operator==(const Item& i) const{
-    return dynamic_cast<const Consumable*>(&i) && Item::operator==(i) && size==(static_cast<const Consumable*>(&i))->getSize() && restore==(static_cast<const Consumable*>(&i))->isRestored() && original==static_cast<const Consumable*>(&i)->isOriginal();
+    return dynamic_cast<const Consumable*>(&i) && Item::operator==(i) && size==(static_cast<const Consumable*>(&i))->getSize() && restore==(static_cast<const Consumable*>(&i))->isRestored() && original==static_cast<const Consumable*>(&i)->isOriginal() && caseUnsensitiveMatch(color,static_cast<const Consumable*>(&i)->getColorName());
 }
 
 bool Consumable::operator!=(const Item& i) const{
-    return dynamic_cast<const Consumable*>(&i) && Item::operator!=(i) && size!=(static_cast<const Consumable*>(&i))->getSize() && restore!=(static_cast<const Consumable*>(&i))->isRestored() && original!=static_cast<const Consumable*>(&i)->isOriginal();
+    return dynamic_cast<const Consumable*>(&i) && Item::operator!=(i) && size!=(static_cast<const Consumable*>(&i))->getSize() && restore!=(static_cast<const Consumable*>(&i))->isRestored() && original!=static_cast<const Consumable*>(&i)->isOriginal() && !caseUnsensitiveMatch(color,static_cast<const Consumable*>(&i)->getColorName());
 }
 
 unsigned int Consumable::getSize() const{

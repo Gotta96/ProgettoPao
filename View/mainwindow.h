@@ -38,6 +38,7 @@ public:
     void displayErrorForConsumableRent();
     void displayOpenError();
     void displayIvaError();
+    void displayTheElementExist();
     void displayLoad(QString);
     void displaySave(QString);
 

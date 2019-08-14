@@ -285,6 +285,13 @@ void MainWindow::displayIvaError()
     messageBox.setFixedSize(500,200);
 }
 
+void MainWindow::displayTheElementExist()
+{
+    QMessageBox messageBox;
+    messageBox.critical(this,"Error","Esiste già un elemento con questi dettagli\n\ncontrolla la lista");
+    messageBox.setFixedSize(500,200);
+}
+
 void MainWindow::displayLoad(QString err)
 {
     QMessageBox messageBox;

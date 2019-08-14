@@ -20,6 +20,8 @@ class Item{
         virtual bool operator<(const Item&) const;
         virtual bool operator>(const Item&) const;
 
+        static bool caseUnsensitiveMatch(string, string);
+
         string getVendor() const;
         string getModel() const;
         double getCost() const;
