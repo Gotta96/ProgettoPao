@@ -10,8 +10,8 @@ class DeepPtr{
 private:
     T* pted;     //T puntato
 public:
-    DeepPtr(T* =nullptr);   //non esegue copia profonda
-    DeepPtr(const DeepPtr&);    //esegue copia profonda
+    DeepPtr(T* =nullptr);
+    DeepPtr(const DeepPtr&);
     DeepPtr& operator=(const DeepPtr&);
     T* operator->() const;
     T& operator*() const;

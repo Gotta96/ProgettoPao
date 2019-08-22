@@ -66,7 +66,6 @@ public:
         bool pte;
         Iterator(nodo*, bool =false);
     public:
-        //Iterator();   //pericoloso
         Iterator(const Container<T>::Iterator&);
         Iterator &operator++();
         T& operator*() const;
@@ -85,7 +84,6 @@ public:
         bool pte;
         Const_Iterator(nodo*, bool =false);
     public:
-        //Const_Iterator();     //pericoloso
         Const_Iterator(const Container<T>::Const_Iterator&);
         Const_Iterator &operator++();
         const T& operator*() const;
@@ -99,7 +97,6 @@ public:
 
     Iterator begin() const;
     Iterator end() const;               //restituisce il past the end
-    Iterator erase();
 
     //Metodi Iteratore costante
 
